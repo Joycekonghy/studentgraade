@@ -13,9 +13,19 @@ public class Student {
   private String username;
   private String email;
 
-  private List<Grade> grades = new ArrayList<Grade>();
+  private List<Grade> grades;
+  private List<Module> modules;
 
-  public Student() {}
+  public Student(Long id, String firstName, String lastName, String username, String email) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.username = username;
+    this.email = email;
+
+    this.grades = new ArrayList<Grade>();
+    this.modules = new ArrayList<Module>();
+  }
 
   public float computeAverage() throws NoGradeAvailableException {
     if (grades.isEmpty()) {
@@ -26,6 +36,27 @@ public class Student {
       total += grade.getScore();
     }
     return total / grades.size();
+  }
+
+  public void addGrade(Grade g) {
+    grades.Add(g);
+  }
+
+  public Grade getGrade(Module m) {
+    for (Grade grade : grades) {
+      if (grade.getModule().equals(m)) {
+        return grade;
+      }
+    }
+    // if not found
+    throw new NoGradeAvaliableException("No grade for this module");
+  }
+
+  public void registerModule(Module m) {
+    if (!modules.contains(m)) {
+      modules.add(m);
+      m.setRegistredStudent(this);
+    }
   }
 
 }
