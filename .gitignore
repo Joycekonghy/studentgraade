@@ -1,0 +1,68 @@
+# Maven
+/target/
+/.mvn/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Spring Boot
+/logs/
+/*.log
+*.log.*
+
+# IntelliJ IDEA
+.idea
+*.iws
+*.iml
+*.ipr
+
+# Eclipse
+.classpath
+.project
+.settings/
+.sts4-cache
+.springBeans
+
+# VS Code
+.vscode/
+
+# Compiled class files
+*.class
+
+# Temporary or backup files
+*.tmp
+*.swp
+*.bak
+*.old
+*.orig
+*.lock
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Linux
+*~
+.cache
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Virtual machine crash logs
+hs_err_pid*
+replay_pid*
