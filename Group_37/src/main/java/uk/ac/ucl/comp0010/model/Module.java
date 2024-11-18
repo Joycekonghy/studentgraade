@@ -17,7 +17,7 @@ public class Module {
         return name;
     }
 
-    public String setName(String name) {
+    public void setName(String name) {
         this.name =  name;
     }
     
@@ -25,7 +25,7 @@ public class Module {
         return code;
     }
 
-    public String setCode(String code) {
+    public void setCode(String code) {
         this.code =  code;
     }
     
@@ -33,7 +33,7 @@ public class Module {
         return mnc;
     }
     
-     public int setMnc(Boolean mnc) {
+     public void setMnc(Boolean mnc) {
         this.mnc =  mnc;
     }
     
