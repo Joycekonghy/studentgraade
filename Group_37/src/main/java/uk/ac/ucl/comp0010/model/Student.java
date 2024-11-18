@@ -39,17 +39,17 @@ public class Student {
   }
 
   public void addGrade(Grade g) {
-    grades.Add(g);
+    grades.add(g);
   }
 
-  public Grade getGrade(Module m) {
+  public Grade getGrade(Module m) throws NoGradeAvailableException {
     for (Grade grade : grades) {
       if (grade.getModule().equals(m)) {
         return grade;
       }
     }
     // if not found
-    throw new NoGradeAvaliableException("No grade for this module");
+    throw new NoGradeAvailableException("No grade for this module");
   }
 
   public void registerModule(Module m) {

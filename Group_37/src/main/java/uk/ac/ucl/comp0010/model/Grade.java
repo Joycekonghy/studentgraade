@@ -7,11 +7,12 @@ public class Grade {
     private int score;
     private Module module;
     
-    public Grade(Student student, int score, Module module) {
+
+    public Grade(Student student, Module module, int score) {
         validateScore(score);
         this.student = student;
-        this.score = score;
         this.module = module;
+        this.score = score;
     }
 
     private void validateScore(int score) {

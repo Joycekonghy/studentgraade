@@ -31,13 +31,18 @@ public class Module {
     public void setCode(String code) {
         this.code =  code;
     }
-    
-    public int getMnc() {
+
+    public Boolean getMnc() {
         return mnc;
     }
-    
-     public void setMnc(Boolean mnc) {
+
+    public void setMnc(Boolean mnc) {
         this.mnc =  mnc;
     }
+
+	public void setRegisteredStudent(Student student) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'setRegisteredStudent'");
+	}
     
 }
