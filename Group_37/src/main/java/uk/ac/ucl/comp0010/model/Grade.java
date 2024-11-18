@@ -7,6 +7,7 @@ public class Grade {
     private Module module;
     
     public Grade(Student student, int score, Module module) {
+        validateScore(score);
         this.student = student;
         this.score = score;
         this.module = module;
@@ -34,7 +35,14 @@ public class Grade {
     }
 
     public void setScore(int score) {
+        validateScore(score);
         this.score =  score;
+    }
+
+    private void validateScore(int score) {
+        if (score < 0 || score > 100) {
+            throw new IllegalArgumentException("Score must be between 0 and 100");
+        }
     }
     
 }
