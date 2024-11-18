@@ -20,7 +20,7 @@ public class Grade {
     public void setModule(Module module) {
         this.module =  module;
     }
-    
+
     public Student getStudent() {
         return student;
     }
