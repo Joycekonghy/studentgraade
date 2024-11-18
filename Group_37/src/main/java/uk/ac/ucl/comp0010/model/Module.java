@@ -6,13 +6,16 @@ public class Module {
     private String name;
     private String code;
     private Boolean mnc;
+    private Student registeredStudent;
     
     public Module(String name, String code, Boolean mnc) {
         this.name = name;
         this.code = code;
         this.mnc = mnc;
+        this.registeredStudent = null;
     }
     
+    // Get/Setters
     public String getName() {
         return name;
     }
