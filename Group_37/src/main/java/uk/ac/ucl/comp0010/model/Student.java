@@ -1,5 +1,12 @@
 package uk.ac.ucl.comp0010.model;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 import uk.ac.ucl.comp0010.exception.NoGradeAvailableException;
@@ -12,7 +19,13 @@ import uk.ac.ucl.comp0010.exception.NoGradeAvailableException;
  * register for modules and receive grades.
  * </p>
  */
+
+@Entity
+@Table(name = "students")
 public class Student {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String firstName;
@@ -20,7 +33,10 @@ public class Student {
   private String username;
   private String email;
 
+  @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Grade> grades;
+
+  @OneToMany(mappedBy = "registeredStudent", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Module> modules;
 
   /**
