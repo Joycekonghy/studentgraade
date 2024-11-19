@@ -1,5 +1,11 @@
 package uk.ac.ucl.comp0010.model;
 
+/**
+ * Represents a registration in the system.
+ * <p>
+ * A registration is a link between a student and a module.
+ * </p>
+ */
 public class Registration {
 
   private Student student;

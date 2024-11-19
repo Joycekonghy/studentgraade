@@ -5,6 +5,13 @@ import java.util.List;
 import uk.ac.ucl.comp0010.exception.NoGradeAvailableException;
 
 
+/**
+ * Represents a student in the system.
+ * <p>
+ * A student is a person who is registered in the system and can
+ * register for modules and receive grades.
+ * </p>
+ */
 public class Student {
   private Long id;
 
@@ -16,6 +23,15 @@ public class Student {
   private List<Grade> grades;
   private List<Module> modules;
 
+  /**
+   * Creates a new student with the given ID, first name, last name, username, and email.
+   *
+   * @param id the ID of the student
+   * @param firstName the first name of the student
+   * @param lastName the last name of the student
+   * @param username the username of the student
+   * @param email the email of the student
+   */
   public Student(Long id, String firstName, String lastName, String username, String email) {
     this.id = id;
     this.firstName = firstName;
@@ -27,6 +43,12 @@ public class Student {
     this.modules = new ArrayList<Module>();
   }
 
+  /**
+   * Computes the average grade of the student.
+   *
+   * @return the average grade of the student
+   * @throws NoGradeAvailableException if no grades are available for the student
+   */
   public float computeAverage() throws NoGradeAvailableException {
     if (grades.isEmpty()) {
       throw new NoGradeAvailableException("There are no grades available for student");
@@ -42,6 +64,13 @@ public class Student {
     grades.add(g);
   }
 
+  /**
+   * Gets the grade for a specific module.
+   *
+   * @param m the module to get the grade for
+   * @return the grade for the module
+   * @throws NoGradeAvailableException if no grade is available for the module
+   */
   public Grade getGrade(Module m) throws NoGradeAvailableException {
     for (Grade grade : grades) {
       if (grade.getModule().equals(m)) {
@@ -52,6 +81,11 @@ public class Student {
     throw new NoGradeAvailableException("No grade for this module");
   }
 
+  /**
+   * Registers the student for a module.
+   *
+   * @param m the module to register the student for
+   */
   public void registerModule(Module m) {
     if (!modules.contains(m)) {
       modules.add(m);
