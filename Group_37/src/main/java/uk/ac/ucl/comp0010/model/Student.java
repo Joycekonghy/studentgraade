@@ -12,6 +12,7 @@ import java.util.List;
 import uk.ac.ucl.comp0010.exception.NoGradeAvailableException;
 
 
+
 /**
  * Represents a student in the system.
  * <p>
@@ -23,20 +24,32 @@ import uk.ac.ucl.comp0010.exception.NoGradeAvailableException;
 @Entity
 @Table(name = "students")
 public class Student {
-
+  
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(nullable = false)
   private String firstName;
+
+  @Column(nullable = false)
   private String lastName;
+
+  @Column(nullable = false, unique = true)
   private String username;
+
+  @Column(nullable = false, unique = true)
   private String email;
 
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Grade> grades;
 
-  @OneToMany(mappedBy = "registeredStudent", cascade = CascadeType.ALL, orphanRemoval = true)
+@ManyToMany
+  @JoinTable(
+      name = "student_modules",
+      joinColumns = @JoinColumn(name = "student_id"),
+      inverseJoinColumns = @JoinColumn(name = "module_id")
+  )
   private List<Module> modules;
 
   /**

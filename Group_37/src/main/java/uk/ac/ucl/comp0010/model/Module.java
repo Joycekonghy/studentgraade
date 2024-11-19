@@ -1,16 +1,41 @@
 package uk.ac.ucl.comp0010.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
 /**
  * Represents a module in the system.
  * <p>
  * A module is a unit of study that students can register for.
  * </p>
  */
+
+@Entity
+@Table(name = "Modules")
 public class Module {
     
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+  
+  
+  @Column(nullable = false)
   private String name;
+
+  @Column(nullable = false)
   private String code;
+
+  @Column(nullable = false)
   private Boolean mnc;
+
+  @ManyToOne
+  @JoinColumn(name = "student_id", nullable = true)
   private Student registeredStudent;
 
   /**
