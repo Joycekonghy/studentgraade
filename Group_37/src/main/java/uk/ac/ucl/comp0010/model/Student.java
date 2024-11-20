@@ -16,6 +16,7 @@ import java.util.List;
 import uk.ac.ucl.comp0010.exception.NoGradeAvailableException;
 
 
+
 /**
  * Represents a student in the system.
  * <p>
@@ -27,7 +28,7 @@ import uk.ac.ucl.comp0010.exception.NoGradeAvailableException;
 @Entity
 @Table(name = "students")
 public class Student {
-
+  
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

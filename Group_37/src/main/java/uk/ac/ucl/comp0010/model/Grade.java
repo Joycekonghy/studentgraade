@@ -1,5 +1,15 @@
 package uk.ac.ucl.comp0010.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+
 
 /**
  * Represents a grade in the system.
@@ -7,10 +17,23 @@ package uk.ac.ucl.comp0010.model;
  * A grade is a score that a student receives for a module.
  * </p>
  */
+@Entity
+@Table(name = "Grades")
 public class Grade {
     
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  @ManyToOne
+  @JoinColumn(name = "student_id", nullable = false)
   private Student student;
+
+  @Column(nullable = false)
   private int score;
+
+  @ManyToOne
+  @JoinColumn(name = "module_id", nullable = false)
   private Module module;
 
   /**

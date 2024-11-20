@@ -1,14 +1,34 @@
 package uk.ac.ucl.comp0010.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
 /**
  * Represents a registration in the system.
  * <p>
  * A registration is a link between a student and a module.
  * </p>
  */
+
+@Entity
+@Table(name = "Registrations")
 public class Registration {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
+  @ManyToOne
+  @JoinColumn(name = "student_id", nullable = false)
   private Student student;
+
+  @ManyToOne
+  @JoinColumn(name = "module_id", nullable = false)
   private Module module;
 
   public Registration() {}
