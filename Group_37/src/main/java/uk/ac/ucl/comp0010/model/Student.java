@@ -1,10 +1,14 @@
 package uk.ac.ucl.comp0010.model;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
@@ -22,7 +26,7 @@ import uk.ac.ucl.comp0010.exception.NoGradeAvailableException;
  */
 
 @Entity
-@Table(name = "students")
+@Table(name = "Students")
 public class Student {
   
   @Id
@@ -44,7 +48,7 @@ public class Student {
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Grade> grades;
 
-@ManyToMany
+  @ManyToMany
   @JoinTable(
       name = "student_modules",
       joinColumns = @JoinColumn(name = "student_id"),
