@@ -19,18 +19,26 @@ import uk.ac.ucl.comp0010.model.Student;
 public class RestConfiguration implements RepositoryRestConfigurer {
 
   /**
-  * Expose entity IDs for {@link Student}, {@link Module}, and {@link Grade}.
-  *
-  * @param config the repository REST configuration
-  * @param cors the CORS registry
-  */
+   * Expose entity IDs for {@link Student}, {@link Module}, and {@link Grade}.
+   * 
+   * @param config the repository REST configuration
+   * @param cors the CORS registry
+   */
   @Override
   public void configureRepositoryRestConfiguration(
       RepositoryRestConfiguration config,
       CorsRegistry cors
   ) {
+    // Expose entity IDs for Student, Module, and Grade
     config.exposeIdsFor(Student.class);
     config.exposeIdsFor(Module.class);
     config.exposeIdsFor(Grade.class);
+    
+    // Enable CORS for the frontend (adjust the URL to match your frontend's address)
+    cors.addMapping("/**")
+        .allowedOrigins("http://localhost:5173") // адрес вашего фронтенда
+        .allowedMethods("GET", "POST", "PUT", "DELETE")
+        .allowedHeaders("*")
+        .allowCredentials(true);
   }
 }
