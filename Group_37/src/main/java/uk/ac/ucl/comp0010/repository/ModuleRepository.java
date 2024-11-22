@@ -1,7 +1,10 @@
 package uk.ac.ucl.comp0010.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 import uk.ac.ucl.comp0010.model.Module;
+
 
 /**
  * Repository interface for {@link Module} entities.
@@ -11,4 +14,6 @@ import uk.ac.ucl.comp0010.model.Module;
  * </p>
  */
 public interface ModuleRepository extends CrudRepository<Module, Long> {
+  Optional<Module> findByCode(String code);
 }
+

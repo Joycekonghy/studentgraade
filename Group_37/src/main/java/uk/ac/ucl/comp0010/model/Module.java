@@ -19,16 +19,15 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "Modules")
 public class Module {
-    
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  
-  
+
   @Column(nullable = false)
   private String name;
 
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true) // Ensure module codes are unique
   private String code;
 
   @Column(nullable = false)
@@ -38,6 +37,9 @@ public class Module {
   @JoinColumn(name = "student_id", nullable = true)
   private Student registeredStudent;
 
+  // Default constructor required by JPA
+  public Module() {}
+
   /**
    * Creates a new module with the given name, code, and MNC status.
    *
@@ -45,29 +47,32 @@ public class Module {
    * @param code the code of the module
    * @param mnc whether the module is an MNC module
    */
-    
   public Module(String name, String code, Boolean mnc) {
     this.name = name;
     this.code = code;
     this.mnc = mnc;
     this.registeredStudent = null;
   }
-    
-  // Get/Setters
+
+  // Getters and Setters
+  public Long getId() {
+    return id;
+  }
+
   public String getName() {
     return name;
   }
 
   public void setName(String name) {
-    this.name =  name;
+    this.name = name;
   }
-    
+
   public String getCode() {
     return code;
   }
 
   public void setCode(String code) {
-    this.code =  code;
+    this.code = code;
   }
 
   public Boolean getMnc() {
@@ -75,12 +80,14 @@ public class Module {
   }
 
   public void setMnc(Boolean mnc) {
-    this.mnc =  mnc;
+    this.mnc = mnc;
   }
 
-  public void setRegisteredStudent(Student student) {
-    //TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'setRegisteredStudent'");
+  public Student getRegisteredStudent() {
+    return registeredStudent;
   }
-    
+
+  public void setRegisteredStudent(Student registeredStudent) {
+    this.registeredStudent = registeredStudent;
+  }
 }
