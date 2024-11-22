@@ -17,10 +17,11 @@ function Modules() {
     axios
       .get(`${API_ENDPOINT}/modules`)
       .then((response) => {
-        setModules(response.data._embedded.modules);
+        const modules = response.data._embedded?.modules || []; // Fallback to empty array
+        setModules(modules);
       })
-      .catch((response) => {
-        setError(response.message);
+      .catch((err) => {
+        setError(err.response?.data?.message || err.message || "Failed to fetch modules.");
       });
   }
 

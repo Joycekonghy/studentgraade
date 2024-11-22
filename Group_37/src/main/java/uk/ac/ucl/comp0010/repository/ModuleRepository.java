@@ -15,5 +15,6 @@ import uk.ac.ucl.comp0010.model.Module;
  */
 public interface ModuleRepository extends CrudRepository<Module, Long> {
   Optional<Module> findByCode(String code);
+  
 }
 

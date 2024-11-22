@@ -12,11 +12,12 @@ CREATE TABLE student(
   email VARCHAR(50)
 );
 
-CREATE TABLE module(
-  code VARCHAR(10) PRIMARY KEY,
-  name VARCHAR(100),
-  mnc BOOLEAN
+CREATE TABLE module (
+    name VARCHAR(255) NOT NULL,
+    code VARCHAR(255) UNIQUE NOT NULL,
+    mnc BOOLEAN DEFAULT false NOT NULL
 );
+
 
 CREATE TABLE grade(
   id SERIAL PRIMARY KEY,
