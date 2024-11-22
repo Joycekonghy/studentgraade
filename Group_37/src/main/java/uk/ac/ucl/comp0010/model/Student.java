@@ -65,6 +65,9 @@ public class Student {
    * @param username the username of the student
    * @param email the email of the student
    */
+
+  public Student() {}
+  
   public Student(Long id, String firstName, String lastName, String username, String email) {
     this.id = id;
     this.firstName = firstName;
