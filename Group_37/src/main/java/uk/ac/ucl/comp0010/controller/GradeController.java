@@ -28,13 +28,10 @@ public class GradeController {
     @PostMapping(value = "/addGrade")
     public ResponseEntity<Grade> addGrade(@RequestBody Map<String, String> params) {
         // Find the student by ID
-        Long studentId = Long.parseLong(params.get("student_id"));
-        Student student = studentRepository.findById(studentId)
+        Student student = studentRepository.findById(Long.parseLong(params.get("student_id")))
           .orElseThrow(() -> new IllegalArgumentException("Student not found"));
-
-        // Find the module by code
-        Long moduleCode = Long.parseLong(params.get("module_code"));
-        Module module = moduleRepository.findById(moduleCode)
+        String moduleCode = params.get("module_code");
+        Module module = moduleRepository.findByCode(moduleCode)
           .orElseThrow(() -> new IllegalArgumentException("Module not found"));
 
         // Create a Grade object and set values
