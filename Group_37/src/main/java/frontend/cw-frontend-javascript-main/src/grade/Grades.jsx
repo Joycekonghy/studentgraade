@@ -47,12 +47,14 @@ function Grades() {
     axios
       .get(`${API_ENDPOINT}/grades`)
       .then((response) => {
-        setGrades(response.data._embedded.grades);
+        const grades = response.data._embedded?.grades || []; // Fallback to empty array
+        setGrades(grades);
       })
-      .catch((response) => {
-        setError(response.message);
+      .catch((err) => {
+        console.error("Error fetching grades:", err);
+        setError(err.response?.data?.message || err.message || "Failed to fetch grades.");
       });
-  }
+  }  
 
   return (
     <App>
