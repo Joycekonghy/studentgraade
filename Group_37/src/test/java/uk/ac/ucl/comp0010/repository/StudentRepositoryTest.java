@@ -18,7 +18,7 @@ public class StudentRepositoryTest {
     @Test
     public void testSaveAndFindById() {
         // Create and save a Student
-        Student student = new Student((long)123, "John", "Doe", "johndoe", "john@example.com");
+        Student student = new Student((long)123, "johndoe", "john@example.com", "John", "Doe");
         Student savedStudent = studentRepository.save(student);
 
         // Fetch the student by ID
@@ -33,7 +33,7 @@ public class StudentRepositoryTest {
     @Test
     public void testFindByUsername() {
         // Create and save a Student
-        Student student = new Student((long)1234, "Jane", "Smith", "janesmith", "jane@example.com");
+        Student student = new Student((long)1234, "janesmith", "jane@example.com", "Jane", "Smith");
         studentRepository.save(student);
 
         // Fetch the student by username

@@ -17,12 +17,15 @@ function Students() {
     axios
       .get(`${API_ENDPOINT}/students`)
       .then((response) => {
-        setStudents(response.data._embedded.students);
+        const students = response.data._embedded?.students || [];
+        setStudents(students);
       })
-      .catch((response) => {
-        setError(response.message);
+      .catch((err) => {
+        console.error("Error fetching students:", err);
+        setError(err.message || "Failed to fetch students.");
       });
   }
+  
 
   return (
     <App>

@@ -31,7 +31,7 @@ public class Module {
   private String code;
 
   @Column(nullable = false)
-  private Boolean mnc;
+  private Boolean mnc = false;
 
   @ManyToOne
   @JoinColumn(name = "student_id", nullable = true)
