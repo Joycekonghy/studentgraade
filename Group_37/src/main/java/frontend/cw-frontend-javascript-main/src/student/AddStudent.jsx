@@ -22,7 +22,10 @@ function AddStudent(props) {
         }
       });
   }
-  
+  function handleInputChange(field, value) {
+    setStudent({ ...student, [field]: value });
+    setError(""); // Clear the error state
+  }
 
   return (
     <Paper sx={{ padding: "30px" }}>
@@ -30,35 +33,25 @@ function AddStudent(props) {
       <br />
       <TextField
         label="Student ID"
-        onChange={(e) => {
-          setStudent({ ...student, id: Number(e.target.value) });
-        }}
+        onChange={(e) => handleInputChange("id", Number(e.target.value))}
       />
       <TextField
         label="Username"
-        onChange={(e) => {
-          setStudent({ ...student, username: e.target.value });
-        }}
+        onChange={(e) => handleInputChange("username", e.target.value)}
       />
       <TextField
         label="email"
-        onChange={(e) => {
-          setStudent({ ...student, email: e.target.value });
-        }}
+        onChange={(e) => handleInputChange("email", e.target.value)}
       />
       <br />
       <br />
       <TextField
         label="First Name"
-        onChange={(e) => {
-          setStudent({ ...student, firstName: e.target.value });
-        }}
+        onChange={(e) => handleInputChange("firstName", e.target.value)}
       />
       <TextField
         label="Last Name"
-        onChange={(e) => {
-          setStudent({ ...student, lastName: e.target.value });
-        }}
+        onChange={(e) => handleInputChange("lastName", e.target.value)}
       />
       <br />
       <br />
@@ -69,5 +62,4 @@ function AddStudent(props) {
     </Paper>
   );
 }
-
 export default AddStudent;

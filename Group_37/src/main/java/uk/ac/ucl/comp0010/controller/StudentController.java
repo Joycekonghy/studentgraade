@@ -40,59 +40,47 @@ public class StudentController {
     @PostMapping
     @Transactional
     public ResponseEntity<?> addOrUpdateStudent(@RequestBody Student student) {
-        // Validate input using a helper method
-        String validationError = validateStudentInput(student);
-        if (validationError != null) {
-            return ResponseEntity.badRequest().body(validationError);
+        // Validate input
+        if (Objects.isNull(student.getId()) || String.valueOf(student.getId()).isEmpty()) {
+          return ResponseEntity.badRequest().body("student id is required.");
         }
-    
+        if (student.getUsername() == null || student.getUsername().isEmpty()) {
+          return ResponseEntity.badRequest().body("student name is required.");
+        }
+        if (student.getEmail() == null || student.getEmail().isEmpty()) {
+          return ResponseEntity.badRequest().body("student code is required.");
+        }
+        if (student.getFirstName() == null || student.getFirstName().isEmpty()) {
+          return ResponseEntity.badRequest().body("student name is required.");
+        }
+        if (student.getLastName() == null || student.getLastName().isEmpty()) {
+          return ResponseEntity.badRequest().body("student code is required.");
+        }
+
         try {
-            // Check if the student already exists by ID
+            // Check for existing module by code
             Optional<Student> existingStudent = studentRepository.findById(student.getId());
             if (existingStudent.isPresent()) {
-                // Update the existing student's details
+                // Update existing module
                 Student existing = existingStudent.get();
                 existing.setUsername(student.getUsername());
                 existing.setEmail(student.getEmail());
                 existing.setFirstName(student.getFirstName());
                 existing.setLastName(student.getLastName());
                 Student updatedStudent = studentRepository.save(existing);
+                System.out.println("Updated student: " + updatedStudent);
                 return ResponseEntity.ok(updatedStudent);
             }
-    
-            // Save the new student record
+
+            // Save as a new module
             Student savedStudent = studentRepository.save(student);
             return ResponseEntity.ok(savedStudent);
         } catch (DataIntegrityViolationException e) {
-            // Handle database constraint violations (e.g., duplicate ID)
-            return ResponseEntity.status(409).body("Student ID already exists in the database.");
+            return ResponseEntity.status(409).body("A module with this code already exists.");
         } catch (Exception e) {
-            // Log unexpected exceptions and return a generic error message
-            return ResponseEntity.status(500).body("An unexpected error occurred: " + e.getMessage());
+            return ResponseEntity.status(500).body("Student ID already exists in the database.");
         }
     }
-    
-    // Helper method for input validation
-    private String validateStudentInput(Student student) {
-        if (Objects.isNull(student.getId()) || student.getId() <= 0) {
-            return "Student ID is required and must be a positive number.";
-        }
-        if (student.getUsername() == null || student.getUsername().trim().isEmpty()) {
-            return "Student username is required.";
-        }
-        if (student.getEmail() == null || student.getEmail().trim().isEmpty()) {
-            return "Student email is required.";
-        }
-        if (student.getFirstName() == null || student.getFirstName().trim().isEmpty()) {
-            return "Student first name is required.";
-        }
-        if (student.getLastName() == null || student.getLastName().trim().isEmpty()) {
-            return "Student last name is required.";
-        }
-        return null; // No validation errors
-    }
-    
-    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStudentById(@PathVariable Long id) {
         Optional<Student> student = studentRepository.findById(id);
