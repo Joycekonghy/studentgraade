@@ -11,12 +11,18 @@ function AddStudent(props) {
     axios
       .post(`${API_ENDPOINT}/students`, student)
       .then(() => {
-        props.update();
+        props.update(); // Call the update function on success
       })
-      .catch((response) => {
-        setError(response.message);
+      .catch((error) => {
+        // Check if the error has a response from the server
+        if (error.response && error.response.data) {
+          setError(error.response.data.error); // Use the custom error message from the backend
+        } else {
+          setError("An unexpected error occurred."); // Fallback for unexpected errors
+        }
       });
   }
+  
 
   return (
     <Paper sx={{ padding: "30px" }}>
