@@ -2,7 +2,11 @@ package uk.ac.ucl.comp0010.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import uk.ac.ucl.comp0010.model.Module;
 import uk.ac.ucl.comp0010.repository.ModuleRepository;
 
@@ -25,7 +29,7 @@ public class ModuleController {
      *
      * @return List of all modules
      */
-@GetMapping
+    @GetMapping
     public ResponseEntity<List<Module>> getAllModules() {
         List<Module> modules = (List<Module>) moduleRepository.findAll();
         return ResponseEntity.ok(modules);
@@ -34,12 +38,12 @@ public class ModuleController {
     /**
      * Get a module by its code.
      *
-     * @param id The ID of the module
+     * @param code The code of the module
      * @return The requested module
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<Module> getModuleById(@PathVariable Long id) {
-        Optional<Module> module = moduleRepository.findById(id);
+    @GetMapping("/{code}")
+    public ResponseEntity<Module> getModuleByCode(@PathVariable String code) {
+        Optional<Module> module = moduleRepository.findByCode(code);
         if (module.isPresent()) {
             return ResponseEntity.ok(module.get());
         }
@@ -53,28 +57,51 @@ public class ModuleController {
      * @return The saved module
      */
     @PostMapping
-    public ResponseEntity<Module> addOrUpdateModule(@RequestBody Module module) {
-        System.out.println("Received module: " + module);
+    @Transactional
+    public ResponseEntity<?> addOrUpdateModule(@RequestBody Module module) {
+        // Validate input
+        if (module.getCode() == null || module.getCode().isEmpty()) {
+            return ResponseEntity.badRequest().body("Module code is required.");
+        }
+        if (module.getName() == null || module.getName().isEmpty()) {
+            return ResponseEntity.badRequest().body("Module name is required.");
+        }
+
         try {
+            // Check for existing module by code
+            Optional<Module> existingModule = moduleRepository.findByCode(module.getCode());
+            if (existingModule.isPresent()) {
+                // Update existing module
+                Module existing = existingModule.get();
+                existing.setName(module.getName());
+                existing.setMnc(module.getMnc());
+                Module updatedModule = moduleRepository.save(existing);
+                System.out.println("Updated module: " + updatedModule);
+                return ResponseEntity.ok(updatedModule);
+            }
+
+            // Save as a new module
             Module savedModule = moduleRepository.save(module);
-            System.out.println("Saved Module: " + savedModule);
             return ResponseEntity.ok(savedModule);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(409).body("A module with this code already exists.");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(409).body(null);
+            return ResponseEntity.status(500).body("An unexpected error occurred.");
         }
     }
-    
+
     /**
-     * Delete a module by its ID.
+     * Delete a module by its code.
      *
-     * @param id The ID of the module to be deleted
+     * @param code The code of the module to be deleted
      * @return Response status
      */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteModule(@PathVariable Long id) {
-        if (moduleRepository.existsById(id)) {
-            moduleRepository.deleteById(id);
+    @DeleteMapping("/{code}")
+    public ResponseEntity<Void> deleteModuleByCode(@PathVariable String code) {
+        Optional<Module> module = moduleRepository.findByCode(code);
+        if (module.isPresent()) {
+            moduleRepository.delete(module.get());
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();

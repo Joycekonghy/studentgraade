@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
  * </p>
  */
 @Entity
-@Table(name = "Grades")
+@Table(name = "Grade")
 public class Grade {
     
   @Id

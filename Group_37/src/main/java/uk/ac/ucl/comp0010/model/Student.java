@@ -26,7 +26,7 @@ import uk.ac.ucl.comp0010.exception.NoGradeAvailableException;
  */
 
 @Entity
-@Table(name = "Students")
+@Table(name = "Student")
 public class Student {
   
   @Id
@@ -42,18 +42,13 @@ public class Student {
   @Column(nullable = false, unique = true)
   private String username;
 
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false)
   private String email;
 
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Grade> grades;
 
   @ManyToMany
-  @JoinTable(
-      name = "student_modules",
-      joinColumns = @JoinColumn(name = "student_id"),
-      inverseJoinColumns = @JoinColumn(name = "module_id")
-  )
   private List<Module> modules;
 
   /**
