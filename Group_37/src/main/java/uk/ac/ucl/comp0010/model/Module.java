@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
  */
 
 @Entity
-@Table(name = "Modules")
+@Table(name = "Module")
 public class Module {
 
   @Id

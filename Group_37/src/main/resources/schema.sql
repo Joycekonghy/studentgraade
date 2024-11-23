@@ -13,6 +13,7 @@ CREATE TABLE student(
 );
 
 CREATE TABLE module (
+    id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     code VARCHAR(255) UNIQUE NOT NULL,
     mnc BOOLEAN DEFAULT false NOT NULL
