@@ -76,7 +76,7 @@ function Modules() {
 
 export default Modules;
 
-// UN COMMENT THIS CODE TO SEE IMPORVED UI USING MOCK API (COMMENT CODE AHOVE)
+// UN COMMENT THIS CODE TO SEE IMPORVED UI USING mockAPI.js (COMMENT CODE ABOVE)
 
 // import React from "react";
 // import {

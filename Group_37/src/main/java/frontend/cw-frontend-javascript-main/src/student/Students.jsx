@@ -89,3 +89,105 @@ function Students() {
 }
 
 export default Students;
+
+// UN COMMENT THIS CODE TO SEE IMPORVED UI USING mockApiStudents.js (COMMENT CODE ABOVE)
+
+// import React from "react";
+// import {
+//   Breadcrumbs,
+//   Link,
+//   Typography,
+//   Alert,
+//   Table,
+//   TableBody,
+//   TableCell,
+//   TableHead,
+//   TableRow,
+//   Paper,
+//   Button,
+// } from "@mui/material";
+// import App from "../App.jsx";
+// import AddStudent from "./AddStudent";
+// import { getStudents, deleteStudent } from "../mockApiStudents"; // Import mock API functions
+
+// function Students() {
+//   const [students, setStudents] = React.useState([]);
+//   const [error, setError] = React.useState(null);
+//   const [studentToEdit, setStudentToEdit] = React.useState(null);
+
+//   React.useEffect(() => {
+//     updateStudents();
+//   }, []);
+
+//   function updateStudents() {
+//     getStudents()
+//       .then((data) => {
+//         setStudents(data);
+//         setError(null);
+//       })
+//       .catch((err) => setError(err.message));
+//   }
+
+//   function handleEdit(student) {
+//     setStudentToEdit(student);
+//   }
+
+//   function handleDelete(studentId) {
+//     deleteStudent(studentId)
+//       .then(() => updateStudents())
+//       .catch((err) => setError(err.message));
+//   }
+
+//   return (
+//     <App>
+//       <Breadcrumbs sx={{ marginBottom: "30px" }}>
+//         <Link underline="hover" color="inherit" href="/">
+//           Home
+//         </Link>
+//         <Typography sx={{ color: "text.primary" }}>Students</Typography>
+//       </Breadcrumbs>
+//       {error && <Alert severity="error">{error}</Alert>}
+//       {!error && students.length < 1 && (
+//         <Alert severity="warning">No students available.</Alert>
+//       )}
+//       {students.length > 0 && (
+//         <Table component={Paper} sx={{ marginTop: "20px" }}>
+//           <TableHead>
+//             <TableRow>
+//               <TableCell>First Name</TableCell>
+//               <TableCell>Last Name</TableCell>
+//               <TableCell>Email</TableCell>
+//               <TableCell>Username</TableCell>
+//               <TableCell>Actions</TableCell>
+//             </TableRow>
+//           </TableHead>
+//           <TableBody>
+//             {students.map((s) => (
+//               <TableRow key={s.id}>
+//                 <TableCell>{s.firstName}</TableCell>
+//                 <TableCell>{s.lastName}</TableCell>
+//                 <TableCell>{s.email}</TableCell>
+//                 <TableCell>{s.username}</TableCell>
+//                 <TableCell>
+//                   <Button
+//                     variant="outlined"
+//                     onClick={() => handleEdit(s)}
+//                     sx={{ marginRight: "8px" }}
+//                   >
+//                     Edit
+//                   </Button>
+//                   <Button color="error" onClick={() => handleDelete(s.id)}>
+//                     Delete
+//                   </Button>
+//                 </TableCell>
+//               </TableRow>
+//             ))}
+//           </TableBody>
+//         </Table>
+//       )}
+//       <AddStudent update={updateStudents} studentToEdit={studentToEdit} />
+//     </App>
+//   );
+// }
+
+// export default Students;
