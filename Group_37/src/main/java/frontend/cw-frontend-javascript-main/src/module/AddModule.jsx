@@ -66,7 +66,7 @@ function AddModule(props) {
 
 export default AddModule;
 
-// UN COMMENT THIS CODE TO SEE IMPORVED UI USING MOCK API (COMMENT CODE AHOVE)
+// UN COMMENT THIS CODE TO SEE IMPORVED UI USING mockAPI.js (COMMENT CODE ABOVE)
 
 // import React from "react";
 // import { Paper, TextField, Switch, FormControlLabel, Button, Typography, Alert } from "@mui/material";
