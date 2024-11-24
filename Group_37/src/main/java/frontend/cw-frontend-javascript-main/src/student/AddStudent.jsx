@@ -9,7 +9,7 @@ function AddStudent(props) {
 
   function request() {
     axios
-      .post(`${API_ENDPOINT}/students`, student)
+      .post(`${API_ENDPOINT}/Student`, student)
       .then(() => {
         props.update(); // Call the update function on success
       })

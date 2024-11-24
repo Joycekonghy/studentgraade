@@ -1,3 +1,4 @@
+
 package uk.ac.ucl.comp0010.repository;
 
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ public class StudentRepositoryTest {
     @Test
     public void testSaveAndFindById() {
         // Create and save a Student
-        Student student = new Student((long)123, "johndoe", "john@example.com", "John", "Doe");
+        Student student = new Student((long)123, "John", "Doe", "johndoe", "johndoe@example.com");
         Student savedStudent = studentRepository.save(student);
 
         // Fetch the student by ID
@@ -33,7 +34,7 @@ public class StudentRepositoryTest {
     @Test
     public void testFindByUsername() {
         // Create and save a Student
-        Student student = new Student((long)1234, "janesmith", "jane@example.com", "Jane", "Smith");
+        Student student = new Student((long)1234, "Jane", "Smith", "janesmith", "jane@example.com");
         studentRepository.save(student);
 
         // Fetch the student by username
@@ -45,3 +46,4 @@ public class StudentRepositoryTest {
         assertEquals("Smith", retrievedStudent.get().getLastName());
     }
 }
+

@@ -1,3 +1,4 @@
+
 package uk.ac.ucl.comp0010.repository;
 
 import org.junit.jupiter.api.Test;
@@ -30,8 +31,8 @@ public class GradeRepositoryTest {
         Module module = new Module("Intro to CS", "CS101", true);
         moduleRepository.save(module);
 
-        Student student1 = new Student(null, "John", "Doe", "johndoe", "john@example.com");
-        Student student2 = new Student(null, "Jane", "Smith", "janesmith", "jane@example.com");
+        Student student1 = new Student((long)123, "John", "Doe", "johndoe", "john@example.com");
+        Student student2 = new Student((long)123423, "Jane", "Smith", "janesmith", "jane@example.com");
         studentRepository.saveAll(List.of(student1, student2));
 
         Grade grade1 = new Grade(student1, module, 85);
@@ -50,7 +51,7 @@ public class GradeRepositoryTest {
     @Test
     public void testFindByStudentId() {
         // Create and save test data
-        Student student = new Student(null, "Alice", "Brown", "aliceb", "alice@example.com");
+        Student student = new Student((long)5490731, "Alice", "Brown", "aliceb", "alice@example.com");
         studentRepository.save(student);
 
         Module module1 = new Module("Intro to CS", "CS101", true);
@@ -73,7 +74,7 @@ public class GradeRepositoryTest {
     @Test
     public void testFindByStudentAndModule() {
         // Create and save test data
-        Student student = new Student(null, "Bob", "White", "bobw", "bob@example.com");
+        Student student = new Student((long)12454, "Bob", "White", "bobw", "bob@example.com");
         studentRepository.save(student);
 
         Module module = new Module("Advanced Algorithms", "CS201", true);

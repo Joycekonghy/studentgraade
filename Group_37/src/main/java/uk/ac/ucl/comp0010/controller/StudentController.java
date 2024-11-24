@@ -12,7 +12,7 @@ import uk.ac.ucl.comp0010.repository.StudentRepository;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/students")
+@RequestMapping("/Student")
 public class StudentController {
 
     @Autowired
