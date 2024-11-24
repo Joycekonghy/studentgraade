@@ -1,6 +1,6 @@
-//// UN COMMENT THIS CODE TO SEE IMPORVED UI USING MOCK API
+// UN COMMENT THIS CODE TO SEE IMPORVED UI FOR MODULES
 
-// // src/mockApi.js
+
 
 // let modules = [
 //     { code: "COMP001", name: "Introduction to Programming", mnc: true },
