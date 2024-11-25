@@ -17,7 +17,7 @@ function AddModule(props) {
 
   function request() {
     axios
-      .post(`${API_ENDPOINT}/modules`, module)
+      .post(`${API_ENDPOINT}/Module`, module)
       .then(() => {
         props.update();
       })

@@ -18,7 +18,7 @@ import java.util.Optional;
  * Provides REST endpoints for creating, retrieving, updating, and deleting modules.
  */
 @RestController
-@RequestMapping("/modules")
+@RequestMapping("/Module")
 public class ModuleController {
 
     @Autowired

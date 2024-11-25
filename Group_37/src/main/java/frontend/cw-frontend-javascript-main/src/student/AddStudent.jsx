@@ -9,13 +9,22 @@ function AddStudent(props) {
 
   function request() {
     axios
-      .post(`${API_ENDPOINT}/students`, student)
+      .post(`${API_ENDPOINT}/Student`, student)
       .then(() => {
-        props.update();
+        props.update(); // Call the update function on success
       })
-      .catch((response) => {
-        setError(response.message);
+      .catch((error) => {
+        // Check if the error has a response from the server
+        if (error.response && error.response.data) {
+          setError(error.response.data.error); // Use the custom error message from the backend
+        } else {
+          setError("An unexpected error occurred."); // Fallback for unexpected errors
+        }
       });
+  }
+  function handleInputChange(field, value) {
+    setStudent({ ...student, [field]: value });
+    setError(""); // Clear the error state
   }
 
   return (
@@ -24,35 +33,25 @@ function AddStudent(props) {
       <br />
       <TextField
         label="Student ID"
-        onChange={(e) => {
-          setStudent({ ...student, id: Number(e.target.value) });
-        }}
+        onChange={(e) => handleInputChange("id", Number(e.target.value))}
       />
       <TextField
         label="Username"
-        onChange={(e) => {
-          setStudent({ ...student, username: e.target.value });
-        }}
+        onChange={(e) => handleInputChange("username", e.target.value)}
       />
       <TextField
         label="email"
-        onChange={(e) => {
-          setStudent({ ...student, email: e.target.value });
-        }}
+        onChange={(e) => handleInputChange("email", e.target.value)}
       />
       <br />
       <br />
       <TextField
         label="First Name"
-        onChange={(e) => {
-          setStudent({ ...student, firstName: e.target.value });
-        }}
+        onChange={(e) => handleInputChange("firstName", e.target.value)}
       />
       <TextField
         label="Last Name"
-        onChange={(e) => {
-          setStudent({ ...student, lastName: e.target.value });
-        }}
+        onChange={(e) => handleInputChange("lastName", e.target.value)}
       />
       <br />
       <br />
@@ -63,7 +62,6 @@ function AddStudent(props) {
     </Paper>
   );
 }
-
 export default AddStudent;
 
 // UN COMMENT THIS CODE TO SEE IMPORVED UI USING mockApiStudents.js (COMMENT CODE ABOVE)

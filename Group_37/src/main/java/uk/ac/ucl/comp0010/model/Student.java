@@ -30,7 +30,6 @@ import uk.ac.ucl.comp0010.exception.NoGradeAvailableException;
 public class Student {
   
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(nullable = false)
@@ -63,7 +62,7 @@ public class Student {
 
   public Student() {}
 
-  public Student(Long id, String username, String email, String firstName, String lastName) {
+  public Student(Long id, String firstName, String lastName, String username, String email) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;

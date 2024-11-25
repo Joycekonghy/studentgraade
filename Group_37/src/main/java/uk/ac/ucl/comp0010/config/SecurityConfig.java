@@ -1,4 +1,4 @@
-
+/** 
 package uk.ac.ucl.comp0010.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,7 @@ public class SecurityConfig {
         return http.build();
     }
 }
-/** 
+*/
 package uk.ac.ucl.comp0010.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -62,4 +62,4 @@ public class SecurityConfig{
 
     return source;
   }
-}*/
+}

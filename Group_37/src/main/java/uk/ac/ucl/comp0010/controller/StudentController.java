@@ -1,86 +1,95 @@
 package uk.ac.ucl.comp0010.controller;
 
-import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import uk.ac.ucl.comp0010.exception.StudentNotFoundException;
+import jakarta.transaction.Transactional;
 import uk.ac.ucl.comp0010.model.Student;
 import uk.ac.ucl.comp0010.repository.StudentRepository;
+import java.util.Objects;
 
 @RestController
+@RequestMapping("/Student")
 public class StudentController {
 
     @Autowired
     private StudentRepository studentRepository;
 
     // Retrieve all students
-    @GetMapping("/students")
-    public List<Student> retrieveAllStudents() {
-        System.out.println("Fetching all students...");
-        List<Student> students = new ArrayList<>();
-        studentRepository.findAll().forEach(students::add);
-        System.out.println("Students retrieved: " + students);
-        return students;
+
+    @GetMapping
+    public ResponseEntity<List<Student>> getAllstudents() {
+        List<Student> students = (List<Student>) studentRepository.findAll();
+        return ResponseEntity.ok(students);
     }
 
     // Retrieve a student by ID
-    @GetMapping("/students/{id}")
-    public Student retrieveStudent(@PathVariable int id) {
-        System.out.println("Fetching student with ID: " + id);
-        Optional<Student> student = studentRepository.findById((long) id);
-        if (student.isEmpty()) {
-            System.out.println("Student with ID " + id + " not found.");
-            throw new StudentNotFoundException("id-" + id);
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Student> getStudentById(@PathVariable Long id) {
+        Optional<Student> student = studentRepository.findById(id);
+        if (student.isPresent()) {
+            return ResponseEntity.ok(student.get());
         }
-        System.out.println("Student retrieved: " + student.get());
-        return student.get();
+        return ResponseEntity.notFound().build();
     }
 
-    // Delete a student by ID
-    @DeleteMapping("/students/{id}")
-    public void deleteStudent(@PathVariable int id) {
-        System.out.println("Deleting student with ID: " + id);
-        studentRepository.deleteById((long) id);
-        System.out.println("Student with ID " + id + " deleted.");
-    }
-
-    // Create a new student
-    @PostMapping("/students")
-    public ResponseEntity<Object> createStudent(@RequestBody Student student) {
-        System.out.println("Received student for creation: " + student);
-    
-        Student savedStudent = studentRepository.save(student);
-    
-        System.out.println("Saved student: " + savedStudent);
-    
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{id}")
-            .buildAndExpand(savedStudent.getId())
-            .toUri();
-    
-        return ResponseEntity.created(location).build();
-    }
-    
-    // Update an existing student by ID
-    @PutMapping("/students/{id}")
-    public ResponseEntity<Object> updateStudent(@RequestBody Student student, @PathVariable int id) {
-        System.out.println("Updating student with ID: " + id);
-        Optional<Student> studentOptional = studentRepository.findById((long) id);
-
-        if (studentOptional.isEmpty()) {
-            System.out.println("Student with ID " + id + " not found for update.");
-            return ResponseEntity.notFound().build();
+    @PostMapping
+    @Transactional
+    public ResponseEntity<?> addOrUpdateStudent(@RequestBody Student student) {
+        // Validate input
+        if (Objects.isNull(student.getId()) || String.valueOf(student.getId()).isEmpty()) {
+          return ResponseEntity.badRequest().body("student id is required.");
+        }
+        if (student.getUsername() == null || student.getUsername().isEmpty()) {
+          return ResponseEntity.badRequest().body("student name is required.");
+        }
+        if (student.getEmail() == null || student.getEmail().isEmpty()) {
+          return ResponseEntity.badRequest().body("student code is required.");
+        }
+        if (student.getFirstName() == null || student.getFirstName().isEmpty()) {
+          return ResponseEntity.badRequest().body("student name is required.");
+        }
+        if (student.getLastName() == null || student.getLastName().isEmpty()) {
+          return ResponseEntity.badRequest().body("student code is required.");
         }
 
-        student.setId((long) id);
-        Student updatedStudent = studentRepository.save(student);
-        System.out.println("Updated student: " + updatedStudent);
+        try {
+            // Check for existing module by code
+            Optional<Student> existingStudent = studentRepository.findById(student.getId());
+            if (existingStudent.isPresent()) {
+                // Update existing module
+                Student existing = existingStudent.get();
+                existing.setUsername(student.getUsername());
+                existing.setEmail(student.getEmail());
+                existing.setFirstName(student.getFirstName());
+                existing.setLastName(student.getLastName());
+                Student updatedStudent = studentRepository.save(existing);
+                System.out.println("Updated student: " + updatedStudent);
+                return ResponseEntity.ok(updatedStudent);
+            }
 
-        return ResponseEntity.noContent().build();
+            // Save as a new module
+            Student savedStudent = studentRepository.save(student);
+            return ResponseEntity.ok(savedStudent);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(409).body("A module with this code already exists.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Student ID already exists in the database.");
+        }
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteStudentById(@PathVariable Long id) {
+        Optional<Student> student = studentRepository.findById(id);
+        if (student.isPresent()) {
+            studentRepository.delete(student.get());
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+  
 }
