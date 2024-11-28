@@ -24,11 +24,11 @@ CREATE TABLE grade(
   id SERIAL PRIMARY KEY,
   score INT,
   student_id INT,
-  module_code VARCHAR(10),
+  module_id VARCHAR(10),
   FOREIGN KEY (student_id)
     REFERENCES student (id),
-  FOREIGN KEY (module_code)
-    REFERENCES module (code)
+  FOREIGN KEY (module_id)
+    REFERENCES module (id)
 );
 
 

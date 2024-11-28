@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
  * </p>
  */
 @Entity
-@Table(name = "Grade")
+@Table(name = "grades")
 public class Grade {
     
   @Id
@@ -43,6 +43,8 @@ public class Grade {
    * @param module the module for which the grade was received
    * @param score the score of the grade
    */
+  public Grade() {}
+  
   public Grade(Student student, Module module, int score) {
     validateScore(score);
     this.student = student;
@@ -76,10 +78,13 @@ public class Grade {
   public int getScore() {
     return score;
   }
+  public Long getId() {
+    return id;
+  }
 
-  public void setScore(int score) {
-    validateScore(score);
-    this.score =  score;
+  public void setScore(Integer score2) {
+    validateScore(score2);
+    this.score =  score2;
   }
     
 }
