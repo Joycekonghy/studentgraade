@@ -1,10 +1,9 @@
 package uk.ac.ucl.comp0010.repository;
 
+import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import uk.ac.ucl.comp0010.model.Grade;
 
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Repository interface for {@link Grade} entities.
@@ -15,5 +14,5 @@ import java.util.Optional;
  */
 public interface GradeRepository extends CrudRepository<Grade, Long> {
 
-    Optional<Grade> findByStudentIdAndModuleId(Long studentId, Long moduleId);
+  Optional<Grade> findByStudentIdAndModuleId(Long studentId, Long moduleId);
 }
