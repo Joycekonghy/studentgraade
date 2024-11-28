@@ -33,7 +33,7 @@ function AddGrade(props) {
 
   function request() {
     axios
-      .post(`${API_ENDPOINT}/grades/addGrade`, grade)
+      .post(`${API_ENDPOINT}/grades/addGrades`, grade)
       .then(() => {
         props.update();
       })
@@ -65,24 +65,24 @@ function AddGrade(props) {
       </Select>
       <Select
         sx={{ minWidth: "300px" }}
-        value={grade.module_code ?? ""}
-        onChange={(e) => setGrade({ ...grade, module_code: e.target.value })}
+        value={grade.module_id ?? ""}
+        onChange={(e) => setGrade({ ...grade, module_id: e.target.value })}
         label="Module"
       >
         {modules &&
           modules.map((m) => {
             return (
               <MenuItem
-                key={m.code}
-                value={m.code}
-              >{`${m.code} ${m.name}`}</MenuItem>
+                key={m.id}
+                value={m.id}
+              >{`${m.code} ${m.name}(${m.id})`}</MenuItem>
             );
           })}
       </Select>
       <TextField
         label="Score"
         value={grade.score ?? 0}
-        onChange={(e) => setGrade({ ...grade, score: e.target.value })}
+        onChange={(e) => setGrade({ ...grade, score: parseInt(e.target.value, 10) })}
       />
       <br />
       <br />
@@ -96,77 +96,3 @@ function AddGrade(props) {
 
 export default AddGrade;
 
-// UN COMMENT THIS CODE TO SEE IMPORVED UI USING mockApiGrades.js (COMMENT CODE ABOVE)
-
-// import React from "react";
-// import { Paper, TextField, Button, Typography, Alert } from "@mui/material";
-// import { addGrade, updateGrade } from "../mockApiGrades";
-
-// function AddGrade({ update, gradeToEdit }) {
-//   const [grade, setGrade] = React.useState(gradeToEdit || {});
-//   const [error, setError] = React.useState(null);
-
-//   React.useEffect(() => {
-//     if (gradeToEdit) {
-//       setGrade(gradeToEdit);
-//     } else {
-//       setGrade({});
-//     }
-//   }, [gradeToEdit]);
-
-//   function request() {
-//     if (!grade.studentId || !grade.moduleCode || grade.score === undefined) {
-//       setError("All fields are required.");
-//       return;
-//     }
-
-//     const apiFunction = gradeToEdit ? updateGrade : addGrade;
-//     apiFunction(grade)
-//       .then(() => {
-//         update();
-//         setGrade({});
-//         setError(null);
-//       })
-//       .catch((err) => setError(err.message));
-//   }
-
-//   return (
-//     <Paper sx={{ padding: "30px", marginTop: "20px" }}>
-//       <Typography variant="h5">Add/Update Grade</Typography>
-//       <br />
-//       <TextField
-//         label="Student ID"
-//         value={grade.studentId || ""}
-//         onChange={(e) => setGrade({ ...grade, studentId: e.target.value })}
-//         fullWidth
-//         sx={{ marginBottom: "16px" }}
-//       />
-//       <TextField
-//         label="Module Code"
-//         value={grade.moduleCode || ""}
-//         onChange={(e) => setGrade({ ...grade, moduleCode: e.target.value })}
-//         fullWidth
-//         sx={{ marginBottom: "16px" }}
-//       />
-//       <TextField
-//         label="Score"
-//         type="number"
-//         value={grade.score || ""}
-//         onChange={(e) => setGrade({ ...grade, score: e.target.value })}
-//         fullWidth
-//         sx={{ marginBottom: "16px" }}
-//       />
-//       <Button
-//         variant="contained"
-//         color="primary"
-//         onClick={request}
-//         sx={{ marginTop: "16px" }}
-//       >
-//         Submit
-//       </Button>
-//       {error && <Alert severity="error" sx={{ marginTop: "16px" }}>{error}</Alert>}
-//     </Paper>
-//   );
-// }
-
-// export default AddGrade;

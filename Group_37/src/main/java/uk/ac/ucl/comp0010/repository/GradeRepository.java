@@ -14,12 +14,6 @@ import java.util.Optional;
  * </p>
  */
 public interface GradeRepository extends CrudRepository<Grade, Long> {
-  // Fetch all grades for a specific module
-  List<Grade> findByModule_Id(Long moduleId);
 
-  // Fetch all grades for a specific student
-  List<Grade> findByStudent_Id(Long studentId);
-
-  // Fetch a specific grade for a student and module
-  Optional<Grade> findByStudent_IdAndModule_Id(Long studentId, Long moduleId);
+    Optional<Grade> findByStudentIdAndModuleId(Long studentId, Long moduleId);
 }
