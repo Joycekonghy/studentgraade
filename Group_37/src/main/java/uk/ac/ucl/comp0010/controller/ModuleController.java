@@ -31,10 +31,10 @@ public class ModuleController {
   private ModuleRepository moduleRepository;
 
   /**
-   * Retrieve all modules.
-   *
-   * @return All modules
-   */
+     * Retrieve all modules.
+     *
+     * @return A response entity containing a list of all modules
+     */
   @GetMapping
   public ResponseEntity<List<Module>> getAllModules() {
     List<Module> modules = (List<Module>) moduleRepository.findAll();
@@ -59,8 +59,8 @@ public class ModuleController {
   /**
      * Add a new module or update an existing one.
      *
-     * @param module The module to be added or updated
-     * @return The saved module
+     * @param module The module to add or update
+     * @return A response entity containing the saved module
      */
   @PostMapping
   @Transactional
