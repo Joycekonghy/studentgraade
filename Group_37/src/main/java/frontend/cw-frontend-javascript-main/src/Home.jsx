@@ -8,7 +8,7 @@ function Home() {
   const navigate = useNavigate(); // Initialize the useNavigate hook
 
   const handleButtonClick = () => {
-    navigate("/grades"); // Navigate to the Grades page when the button is clicked
+    navigate("/advice"); // Navigate to the Advice page when the button is clicked
   };
 
   return (
@@ -22,6 +22,7 @@ function Home() {
           <a href="/students">Students</a>
           <a href="/modules">Modules</a>
           <a href="/grades">Grades</a>
+          <a href="/advice">Advice</a> {/* New Advice Section in Header */}
         </nav>
       </div>
 
@@ -35,7 +36,7 @@ function Home() {
               Keep track of your academic performance.
             </p>
             <button className="cta-button" onClick={handleButtonClick}>
-              Add A Grade Now
+              Get Advice Now
             </button>
           </div>
         </div>

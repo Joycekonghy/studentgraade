@@ -9,11 +9,13 @@ import Home from "./Home";
 import Modules from "./module/Modules";
 import Students from "./student/Students";
 import Grades from "./grade/Grades";
+import Advice from "./Advice"; // Import the Advice component
 
 const router = createBrowserRouter([
   { path: "/modules", element: <Modules /> },
   { path: "/students", element: <Students /> },
   { path: "/grades", element: <Grades /> },
+  { path: "/advice", element: <Advice /> }, // Add route for Advice
   { path: "/", element: <Home /> },
 ]);
 
