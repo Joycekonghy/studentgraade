@@ -6,12 +6,13 @@ body, html, #root {
   font-family: "Albert Sans", sans-serif;
   background-color: #d2f0ff; /* Matches homepage background */
   color: #1c3a63; /* General text color */
+  
 }
 
 /* Container Utility */
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 0 15px;
 }
