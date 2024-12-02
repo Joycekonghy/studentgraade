@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import "./styles/advice.css";
+import { Link } from "react-router-dom";
 import graduateStudent from "./Icons/graduate_student.png";
+import "./styles/advice.css";
 
 function Advice() {
   const [open, setOpen] = useState(null);
@@ -176,18 +177,19 @@ function Advice() {
     },
   ];
 
+  
   return (
     <div className="advice-page">
-      {/* Header */}
+      {/* Navbar */}
       <div className="navbar">
         <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
         <span className="navbar-text">MyGrades</span>
         <nav className="navbar-links">
-          <a href="/">Home</a>
-          <a href="/students">Students</a>
-          <a href="/modules">Modules</a>
-          <a href="/grades">Grades</a>
-          <a href="/advice" className="active-link">Advice</a>
+          <Link to="/">Home</Link>
+          <Link to="/students">Students</Link>
+          <Link to="/modules">Modules</Link>
+          <Link to="/grades">Grades</Link>
+          <Link to="/advice" className="active-link">Advice</Link>
         </nav>
       </div>
 

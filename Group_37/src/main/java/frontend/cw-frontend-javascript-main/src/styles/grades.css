@@ -1,0 +1,105 @@
+/* Grades Page */
+.grades-page {
+  background-color: #d2f0ff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Albert Sans", sans-serif;
+  overflow: hidden;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #d2f0ff;
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-icon {
+  height: 50px;
+  margin-right: 5px;
+}
+
+.navbar-text {
+  font-size: 35px;
+  font-weight: bold;
+  color: #1c3a63;
+  margin-right: auto;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: #1c3a63;
+  margin: 0 15px;
+  font-size: 25px;
+}
+
+.navbar-links a:hover {
+  text-decoration: underline;
+}
+
+.navbar-links .active-link {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/* Add Grade Section */
+.add-grade-section {
+  background-color: #669bbc;
+  padding: 20px 30px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px auto;
+  width: 80%;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Student Group */
+.student-group {
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+/* Student Header */
+.student-header {
+  background-color: #1c3a63;
+  color: #ffffff;
+  padding: 15px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 8px 8px 0 0;
+}
+
+.student-header:hover {
+  background-color: #557a99;
+}
+
+/* Grades Table */
+.grades-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.grades-table th,
+.grades-table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.grades-table th {
+  background-color: #f2f2f2;
+}
+
+.grades-table td {
+  font-size: 16px;
+}
