@@ -1,7 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Home";
-import Grades from "./grade/Grades"; // Correct path to Grades.jsx
-import Advice from "./Advice"; // Correct path to Advice.jsx
+import Grades from "./grade/Grades";
+import Modules from "./module/Modules";
+import Students from "./student/Students";
+import Advice from "./Advice";
+import "./App";
 
 function App() {
   return (
@@ -9,6 +12,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/grades" element={<Grades />} />
+        <Route path="/modules" element={<Modules />} />
+        <Route path="/students" element={<Students />} />
         <Route path="/advice" element={<Advice />} />
       </Routes>
     </Router>
@@ -16,3 +21,4 @@ function App() {
 }
 
 export default App;
+

@@ -6,7 +6,7 @@
   flex-direction: column;
   font-family: "Albert Sans", sans-serif;
   overflow: hidden;
-  position: relative; /* Allows absolute positioning for elements */
+  position: relative; 
 }
 
 /* Navbar */
