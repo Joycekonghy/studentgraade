@@ -60,46 +60,47 @@ public class StudentController {
   @PostMapping
   @Transactional
   public ResponseEntity<?> addOrUpdateStudent(@RequestBody Student student) {
-    // Validate input
-    if (Objects.isNull(student.getId()) || String.valueOf(student.getId()).isEmpty()) {
-      return ResponseEntity.badRequest().body("student id is required.");
-    }
-    if (student.getUsername() == null || student.getUsername().isEmpty()) {
-      return ResponseEntity.badRequest().body("student name is required.");
-    }
-    if (student.getEmail() == null || student.getEmail().isEmpty()) {
-      return ResponseEntity.badRequest().body("student code is required.");
-    }
-    if (student.getFirstName() == null || student.getFirstName().isEmpty()) {
-      return ResponseEntity.badRequest().body("student name is required.");
-    }
-    if (student.getLastName() == null || student.getLastName().isEmpty()) {
-      return ResponseEntity.badRequest().body("student code is required.");
-    }
-
-    try {
-      // Check for existing module by code
-      Optional<Student> existingStudent = studentRepository.findById(student.getId());
-      if (existingStudent.isPresent()) {
-        // Update existing module
-        Student existing = existingStudent.get();
-        existing.setUsername(student.getUsername());
-        existing.setEmail(student.getEmail());
-        existing.setFirstName(student.getFirstName());
-        existing.setLastName(student.getLastName());
-        Student updatedStudent = studentRepository.save(existing);
-        System.out.println("Updated student: " + updatedStudent);
-        return ResponseEntity.ok(updatedStudent);
+      // Validate input
+      if (student.getUsername() == null || student.getUsername().isEmpty()) {
+          return ResponseEntity.badRequest().body("Student username is required.");
       }
-      // Save as a new module
-      Student savedStudent = studentRepository.save(student);
-      return ResponseEntity.ok(savedStudent);
-    } catch (DataIntegrityViolationException e) {
-      return ResponseEntity.status(409).body("A module with this code already exists.");
-    } catch (Exception e) {
-      return ResponseEntity.status(500).body("Student ID already exists in the database.");
-    }
+      if (student.getEmail() == null || student.getEmail().isEmpty()) {
+          return ResponseEntity.badRequest().body("Student email is required.");
+      }
+      if (student.getFirstName() == null || student.getFirstName().isEmpty()) {
+          return ResponseEntity.badRequest().body("Student first name is required.");
+      }
+      if (student.getLastName() == null || student.getLastName().isEmpty()) {
+          return ResponseEntity.badRequest().body("Student last name is required.");
+      }
+  
+      try {
+        if (Objects.isNull(student.getId())) {
+          // Add new student
+          Student savedStudent = studentRepository.save(student);
+          return ResponseEntity.ok(savedStudent);
+        } else {
+          // Update existing student
+          Optional<Student> existingStudent = studentRepository.findById(student.getId());
+          if (existingStudent.isPresent()) {
+            Student existing = existingStudent.get();
+            existing.setUsername(student.getUsername());
+            existing.setEmail(student.getEmail());
+            existing.setFirstName(student.getFirstName());
+            existing.setLastName(student.getLastName());
+            Student updatedStudent = studentRepository.save(existing);
+            return ResponseEntity.ok(updatedStudent);
+          } else {
+            return ResponseEntity.notFound().build();
+            }
+          }
+      } catch (DataIntegrityViolationException e) {
+          return ResponseEntity.status(409).body("A student with the same username or email already exists.");
+      } catch (Exception e) {
+          return ResponseEntity.status(500).body("An unexpected error occurred: " + e.getMessage());
+      }
   }
+  
 
   /**
    * Delete a student by their unique ID.
@@ -107,13 +108,18 @@ public class StudentController {
    * @param id the unique identifier of the student to be deleted
    * @return a ResponseEntity indicating the outcome of the deletion
    */
+  @Transactional
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteStudentById(@PathVariable Long id) {
-    Optional<Student> student = studentRepository.findById(id);
-    if (student.isPresent()) {
-      studentRepository.delete(student.get());
-      return ResponseEntity.ok().build();
-    }
-    return ResponseEntity.notFound().build();
-  } 
+  public ResponseEntity<?> deleteStudentById(@PathVariable Long id) {
+      
+      try {
+          studentRepository.deleteById(id);
+          return ResponseEntity.noContent().build();
+      } catch (DataIntegrityViolationException e) {
+          return ResponseEntity.status(409).body("Cannot delete student. It is referenced by other data.");
+      } catch (Exception e) {
+          return ResponseEntity.status(500).body("An unexpected error occurred.");
+      }
+  }
 }
+  

@@ -3,6 +3,7 @@ import Home from "./Home";
 import Grades from "./grade/Grades";
 import Modules from "./module/Modules";
 import Students from "./student/Students";
+import Registrations from "./registration/Registrations";
 import Advice from "./Advice";
 import "./App";
 
@@ -14,6 +15,7 @@ function App() {
         <Route path="/grades" element={<Grades />} />
         <Route path="/modules" element={<Modules />} />
         <Route path="/students" element={<Students />} />
+        <Route path="/registrations" element={<Registrations />} />
         <Route path="/advice" element={<Advice />} />
       </Routes>
     </Router>
