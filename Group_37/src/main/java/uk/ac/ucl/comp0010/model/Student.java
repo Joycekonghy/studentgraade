@@ -60,7 +60,10 @@ public class Student {
    * @param email the email of the student
    */
 
-  public Student() {}
+  public Student() {
+    this.modules = new ArrayList<>();
+    this.grades = new ArrayList<>();
+  }
 
   public Student(Long id, String firstName, String lastName, String username, String email) {
     this.id = id;

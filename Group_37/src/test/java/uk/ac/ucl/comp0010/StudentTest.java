@@ -10,9 +10,11 @@ import uk.ac.ucl.comp0010.model.Module;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentTest {
@@ -43,7 +45,63 @@ public class StudentTest {
         student.registerModule(module1);
         student.registerModule(module2);
     }
-    
+
+    @Test
+    public void testSetAndGetId() {
+        student.setId(123L);
+        assertEquals(123L, student.getId(), "setId or getId failed");
+    }
+
+    @Test
+    public void testSetAndGetFirstName() {
+        student.setFirstName("Alice");
+        assertEquals("Alice", student.getFirstName(), "setFirstName or getFirstName failed");
+    }
+
+    @Test
+    public void testSetAndGetLastName() {
+        student.setLastName("Smith");
+        assertEquals("Smith", student.getLastName(), "setLastName or getLastName failed");
+    }
+
+    @Test
+    public void testSetAndGetUsername() {
+        student.setUsername("asmith");
+        assertEquals("asmith", student.getUsername(), "setUsername or getUsername failed");
+    }
+
+    @Test
+    public void testSetAndGetEmail() {
+        student.setEmail("alice.smith@example.com");
+        assertEquals("alice.smith@example.com", student.getEmail(), "setEmail or getEmail failed");
+    }
+
+    @Test
+    public void testSetAndGetRegisteredModules() {
+        List<Module> modules = new ArrayList<>();
+        Module module1 = new Module("Mathematics", "MATH001", false);
+        Module module2 = new Module("Computer Science", "COMP001", false);
+        modules.add(module1);
+        modules.add(module2);
+
+        student.setRegisteredModules(modules);
+        assertEquals(modules, student.getRegisteredModules(), "setRegisteredModules or getRegisteredModules failed");
+    }
+
+    @Test
+    public void testDefaultConstructor() {
+        Student defaultStudent = new Student(); // Используем конструктор по умолчанию
+        assertNotNull(defaultStudent, "Default constructor failed");
+        assertNull(defaultStudent.getFirstName(), "First name should be null by default");
+        assertNull(defaultStudent.getLastName(), "Last name should be null by default");
+        assertNull(defaultStudent.getUsername(), "Username should be null by default");
+        assertNull(defaultStudent.getEmail(), "Email should be null by default");
+        assertNotNull(defaultStudent.getRegisteredModules(), "Modules list should be initialized");
+        assertTrue(defaultStudent.getRegisteredModules().isEmpty(), "Modules list should be empty by default");
+        assertNotNull(defaultStudent.getGrades(), "Grades list should be initialized");
+        assertTrue(defaultStudent.getGrades().isEmpty(), "Grades list should be empty by default");
+    }
+
     @Test
     void testAddGrade() {
         List<Grade> grades = student.getGrades();
