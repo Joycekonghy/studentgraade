@@ -3,5 +3,8 @@
     "java.configuration.updateBuildConfiguration": "interactive",
     "files.readonlyFromPermissions": false,
     "editor.unicodeHighlight.includeComments": true,
-    "editor.unicodeHighlight.nonBasicASCII": true
+    "editor.unicodeHighlight.nonBasicASCII": true,
+    "files.readonlyInclude": {
+        "{**/.c4z/.extsrcs/*.PROTSYM.cbl,**/.c4z/.extsrcs/*.PROTSYM.listing}": true
+    }
 }
