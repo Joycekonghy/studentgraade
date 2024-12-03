@@ -26,7 +26,7 @@ import uk.ac.ucl.comp0010.exception.NoGradeAvailableException;
  */
 
 @Entity
-@Table(name = "Student")
+@Table(name = "student")
 public class Student {
   
   @Id

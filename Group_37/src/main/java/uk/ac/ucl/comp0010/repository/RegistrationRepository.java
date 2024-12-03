@@ -2,7 +2,7 @@ package uk.ac.ucl.comp0010.repository;
 
 import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
-import uk.ac.ucl.comp0010.model.Module;
+import uk.ac.ucl.comp0010.model.Registration;
 
 
 /**
@@ -12,8 +12,7 @@ import uk.ac.ucl.comp0010.model.Module;
  * entities, identified by a {@code Long} ID.
  * </p>
  */
-public interface Registration extends CrudRepository<Registration, Long> {
-  Optional<Registration> findByCode(String code);
-  
+public interface RegistrationRepository extends CrudRepository<Registration, Long> {
+  Optional<Registration> findByStudentIdAndModuleId(Long studentId, Long moduleId);
 }
 

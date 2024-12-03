@@ -17,6 +17,7 @@ function Home() {
           <Link to="/" className="active-link">Home</Link>
           <Link to="/students">Students</Link>
           <Link to="/modules">Modules</Link>
+          <Link to="/registrations">Registrations</Link>
           <Link to="/grades">Grades</Link>
           <Link to="/advice">Advice</Link>
         </nav>

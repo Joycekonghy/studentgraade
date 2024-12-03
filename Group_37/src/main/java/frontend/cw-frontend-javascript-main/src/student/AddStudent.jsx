@@ -9,7 +9,7 @@ function AddStudent(props) {
 
   function request() {
     axios
-      .post(`${API_ENDPOINT}/Student`, student)
+      .post(`${API_ENDPOINT}/students`, student)
       .then(() => {
         props.update(); // Call the update function on success
       })
@@ -29,7 +29,7 @@ function AddStudent(props) {
 
   return (
     <Paper sx={{ padding: "30px" }}>
-      <Typography variant="h5">Add/Update Student</Typography>
+      <Typography variant="h5">Add Student</Typography>
       <br />
       <TextField
         label="Student ID"
@@ -55,7 +55,7 @@ function AddStudent(props) {
       />
       <br />
       <br />
-      <Button onClick={request}>Add/Update</Button>
+      <Button onClick={request}>Add</Button>
       <br />
       <br />
       {error && <Alert color="error">{error}</Alert>}

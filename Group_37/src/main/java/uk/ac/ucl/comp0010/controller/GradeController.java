@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ucl.comp0010.model.Grade;
-import uk.ac.ucl.comp0010.model.Module;
-import uk.ac.ucl.comp0010.model.Student;
+import uk.ac.ucl.comp0010.model.Registration;
 import uk.ac.ucl.comp0010.repository.GradeRepository;
-import uk.ac.ucl.comp0010.repository.ModuleRepository;
-import uk.ac.ucl.comp0010.repository.StudentRepository;
+import uk.ac.ucl.comp0010.repository.RegistrationRepository;
 
 /**
  * The GradeController class is a REST controller that handles HTTP requests related to grades.
@@ -27,8 +25,7 @@ import uk.ac.ucl.comp0010.repository.StudentRepository;
 public class GradeController {
 
   private final GradeRepository gradeRepository;
-  private final StudentRepository studentRepository;
-  private final ModuleRepository moduleRepository;
+  private final RegistrationRepository registrationRepository;
 
   /**
  * Constructor for the GradeController class.
@@ -39,11 +36,9 @@ public class GradeController {
  */
 
   public GradeController(GradeRepository gradeRepository, 
-                        ModuleRepository moduleRepository, 
-                        StudentRepository studentRepository) {
+                        RegistrationRepository registrationRepository) {
     this.gradeRepository = gradeRepository;
-    this.studentRepository = studentRepository;
-    this.moduleRepository = moduleRepository;
+    this.registrationRepository = registrationRepository;
   }
 
   @GetMapping("/grades")
@@ -78,15 +73,9 @@ public class GradeController {
     Long studentId = ((Number) payload.get("student_id")).longValue();
     Long moduleId = ((Number) payload.get("module_id")).longValue();
     
-    // Find the student by ID
-    Optional<Student> existingStudent = studentRepository.findById(studentId);
-    if (!existingStudent.isPresent()) {
-      return ResponseEntity.badRequest().body("Student not found with ID: " + studentId);
-    }
-    // Find the module by ID
-    Optional<Module> existingModule = moduleRepository.findById(moduleId);
-    if (!existingModule.isPresent()) {
-      return ResponseEntity.badRequest().body("Module not found with ID: " + moduleId);
+    Optional<Registration> existingRegistration = registrationRepository.findByStudentIdAndModuleId(studentId, moduleId);
+    if (!existingRegistration.isPresent()) {
+      return ResponseEntity.badRequest().body("Student is not registered for the module.");
     }
 
     List<Grade> existingGrades = (List<Grade>) gradeRepository.findAll();
@@ -99,8 +88,9 @@ public class GradeController {
     // Save the new grade
     Integer score = (Integer) payload.get("score");
     Grade grade = new Grade();
-    grade.setStudent(existingStudent.get()); // Set the student entity
-    grade.setModule(existingModule.get());   // Set the module entity
+    Registration registration = existingRegistration.get();
+    grade.setStudent(registration.getStudent()); // Set the student entity
+    grade.setModule(registration.getModule());   // Set the module entity
     grade.setScore(score);                   // Set the score
     gradeRepository.save(grade);
     return ResponseEntity.ok("Grade saved successfully");
