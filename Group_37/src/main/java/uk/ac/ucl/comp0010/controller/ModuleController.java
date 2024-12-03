@@ -95,20 +95,4 @@ public class ModuleController {
       return ResponseEntity.status(500).body("An unexpected error occurred.");
     }
   }
-
-  /**
-     * Delete a module by its code.
-     *
-     * @param code The code of the module to delete
-     * @return A response entity indicating the result of the operation
-     */
-  @DeleteMapping("/{code}")
-  public ResponseEntity<Void> deleteModuleByCode(@PathVariable String code) {
-    Optional<Module> module = moduleRepository.findByCode(code);
-    if (module.isPresent()) {
-      moduleRepository.delete(module.get());
-      return ResponseEntity.ok().build();
-    }
-    return ResponseEntity.notFound().build();
-  }
 }
