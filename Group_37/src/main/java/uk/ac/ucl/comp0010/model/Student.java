@@ -56,7 +56,10 @@ public class Student {
    * @param email the email of the student
    */
 
-  public Student() {}
+  public Student() {
+    this.modules = new ArrayList<>();
+    this.grades = new ArrayList<>();
+  }
 
   public Student(Long id, String firstName, String lastName, String username, String email) {
     this.id = id;
@@ -106,6 +109,16 @@ public class Student {
     // if not found
     throw new NoGradeAvailableException("No grade for this module");
   }
+
+  /**
+   * Gets the grades for all modules.
+   *
+   * @return the grades for all modules
+   */
+  public List<Grade> getGrades() {
+    return grades;
+  }
+
 
   /**
    * Registers the student for a module.
@@ -158,6 +171,14 @@ public class Student {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public List<Module> getRegisteredModules() {
+    return modules;
+  }
+
+  public void setRegisteredModules(List<Module> modules) {
+    this.modules = modules;
   }
 
 }
