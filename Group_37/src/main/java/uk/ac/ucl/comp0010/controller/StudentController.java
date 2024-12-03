@@ -8,7 +8,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -101,25 +100,5 @@ public class StudentController {
       }
   }
   
-
-  /**
-   * Delete a student by their unique ID.
-   *
-   * @param id the unique identifier of the student to be deleted
-   * @return a ResponseEntity indicating the outcome of the deletion
-   */
-  @Transactional
-  @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteStudentById(@PathVariable Long id) {
-      
-      try {
-          studentRepository.deleteById(id);
-          return ResponseEntity.noContent().build();
-      } catch (DataIntegrityViolationException e) {
-          return ResponseEntity.status(409).body("Cannot delete student. It is referenced by other data.");
-      } catch (Exception e) {
-          return ResponseEntity.status(500).body("An unexpected error occurred.");
-      }
-  }
 }
   
