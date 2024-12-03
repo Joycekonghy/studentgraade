@@ -112,6 +112,16 @@ public class Student {
   }
 
   /**
+   * Gets the grades for all modules.
+   *
+   * @return the grades for all modules
+   */
+  public List<Grade> getGrades() {
+    return grades;
+  }
+
+
+  /**
    * Registers the student for a module.
    *
    * @param m the module to register the student for
@@ -171,6 +181,5 @@ public class Student {
   public void setRegisteredModules(List<Module> modules) {
     this.modules = modules;
   }
-
 
 }
