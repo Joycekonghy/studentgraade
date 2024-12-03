@@ -88,6 +88,7 @@ function Grades() {
           <Link to="/">Home</Link>
           <Link to="/students">Students</Link>
           <Link to="/modules">Modules</Link>
+          <Link to="/registrations">Registrations</Link>
           <Link to="/grades" className="active-link">
             Grades
           </Link>
