@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import uk.ac.ucl.comp0010.exception.NoGradeAvailableException;
 
-
-
 /**
  * Represents a student in the system.
  * <p>
@@ -24,7 +22,7 @@ import uk.ac.ucl.comp0010.exception.NoGradeAvailableException;
 @Entity
 @Table(name = "student")
 public class Student {
-  
+
   @Id
   private Long id;
 
@@ -47,16 +45,20 @@ public class Student {
   private List<Module> modules;
 
   /**
-   * Creates a new student with the given ID, first name, last name, username, and email.
+   * Creates a new student with the given ID, first name, last name, username, and
+   * email.
    *
-   * @param id the ID of the student
+   * @param id        the ID of the student
    * @param firstName the first name of the student
-   * @param lastName the last name of the student
-   * @param username the username of the student
-   * @param email the email of the student
+   * @param lastName  the last name of the student
+   * @param username  the username of the student
+   * @param email     the email of the student
    */
 
-  public Student() {}
+  public Student() {
+    this.modules = new ArrayList<>();
+    this.grades = new ArrayList<>();
+  }
 
   public Student(Long id, String firstName, String lastName, String username, String email) {
     this.id = id;
@@ -105,6 +107,15 @@ public class Student {
     }
     // if not found
     throw new NoGradeAvailableException("No grade for this module");
+  }
+
+  /**
+   * Gets the grades for all modules.
+   *
+   * @return the grades for all modules
+   */
+  public List<Grade> getGrades() {
+    return grades;
   }
 
   /**
@@ -158,6 +169,14 @@ public class Student {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public List<Module> getRegisteredModules() {
+    return modules;
+  }
+
+  public void setRegisteredModules(List<Module> modules) {
+    this.modules = modules;
   }
 
 }
