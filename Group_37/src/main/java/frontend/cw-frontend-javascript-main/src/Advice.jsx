@@ -188,6 +188,7 @@ function Advice() {
           <Link to="/">Home</Link>
           <Link to="/students">Students</Link>
           <Link to="/modules">Modules</Link>
+          <Link to="/registrations">Registrations</Link>
           <Link to="/grades">Grades</Link>
           <Link to="/advice" className="active-link">Advice</Link>
         </nav>
