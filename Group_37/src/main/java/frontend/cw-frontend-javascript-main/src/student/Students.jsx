@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import { API_ENDPOINT } from "../config";
 import graduateStudent from "../Icons/graduate_student.png";
 import AddStudent from "./AddStudent";
+import "../styles/students.css";
 
 function Students() {
   const [students, setStudents] = useState([]);
@@ -44,11 +45,11 @@ function Students() {
   };
 
   return (
-    <div className="students-page">
+    <div className="modules-page">
       {/* Navbar */}
       <div className="navbar">
         <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
-        <span className="navbar-text">Students</span>
+        <span className="navbar-text">MyGrades</span>
         <nav className="navbar-links">
           <Link to="/">Home</Link>
           <Link to="/students" className="active-link">Students</Link>

@@ -4,6 +4,7 @@ import RegisterModule from "./RegisterModule";
 import axios from "axios";
 import graduateStudent from "../Icons/graduate_student.png";
 import { API_ENDPOINT } from "../config";
+import "../styles/registration.css";
 
 function Registrations() {
   const [registrations, setRegistrations] = useState([]);
@@ -64,19 +65,17 @@ function Registrations() {
   }, {});
 
   return (
-    <div className="registrations-page">
+    <div className="modules-page">
       {/* Navbar */}
       <div className="navbar">
         <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
-        <span className="navbar-text">Myregistrations</span>
+        <span className="navbar-text">MyGrades</span>
         <nav className="navbar-links">
           <Link to="/">Home</Link>
           <Link to="/students">Students</Link>
           <Link to="/modules">Modules</Link>
+          <Link to="/registrations" className="active-link">Registrations</Link>
           <Link to="/grades">Grades</Link>
-          <Link to="/registrations" className="active-link">
-            Registrations
-          </Link>
           <Link to="/advice">Advice</Link>
         </nav>
       </div>

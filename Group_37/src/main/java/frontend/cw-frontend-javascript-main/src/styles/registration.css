@@ -1,0 +1,49 @@
+/* General Styles */
+.registration-page {
+    background-color: #d2f0ff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: "Albert Sans", sans-serif;
+    overflow: hidden;
+    position: relative; /* Allows absolute positioning for elements */
+  }
+
+
+/* Navbar */
+.navbar {
+    background-color: #d2f0ff;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .navbar-icon {
+    height: 50px;
+    margin-right: 5px;
+  }
+  
+  .navbar-text {
+    font-size: 35px;
+    font-weight: bold;
+    color: #1c3a63;
+    margin-right: auto;
+  }
+  
+  .navbar-links a {
+    text-decoration: none;
+    color: #1c3a63;
+    margin: 0 15px;
+    font-size: 25px;
+  }
+  
+  .navbar-links a:hover {
+    text-decoration: underline;
+  }
+  
+  .navbar-links .active-link {
+    text-decoration: underline;
+    font-weight: bold;
+  }
+  

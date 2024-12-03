@@ -1,8 +1,13 @@
 import React from "react";
 import axios from "axios";
-import { Breadcrumbs, Link, Typography, Alert, Grid } from "@mui/material";
+import { Typography, Alert, Grid } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import { API_ENDPOINT } from "../config";
 import AddModule from "./AddModule";
+import graduateStudent from "../Icons/graduate_student.png"; 
+import "../styles/modules.css";
+
+
 
 function Modules() {
   const [modules, setModules] = React.useState([]);
@@ -11,6 +16,7 @@ function Modules() {
   React.useEffect(() => {
     updateModules();
   }, []);
+
 
   function updateModules() {
     axios
@@ -25,13 +31,23 @@ function Modules() {
   }
 
   return (
-    <>
-      <Breadcrumbs sx={{ marginBottom: "30px" }}>
-        <Link underline="hover" color="inherit" href="/">
-          Home
-        </Link>
-        <Typography sx={{ color: "text.primary" }}>Modules</Typography>
-      </Breadcrumbs>
+    <div className="modules-page">
+      {/* Navbar */}
+      <div className="navbar">
+        <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
+        <span className="navbar-text">MyGrades</span>
+        <nav className="navbar-links">
+          <Link to="/">Home</Link>
+          <Link to="/students">Students</Link>
+          <Link to="/modules" className="active-link">Modules</Link>
+          <Link to="/registrations">Registrations</Link>
+          <Link to="/grades">Grades</Link>
+          <Link to="/advice">Advice</Link>
+        </nav>
+      </div>
+
+    
+
       {error && <Alert color="error">{error}</Alert>}
       {!error && modules.length < 1 && (
         <Alert color="warning">No modules</Alert>
@@ -69,7 +85,7 @@ function Modules() {
       <br />
       <br />
       <AddModule update={updateModules} />
-    </>
+    </div>
   );
 }
 

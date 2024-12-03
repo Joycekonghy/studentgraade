@@ -5,7 +5,7 @@ import Modules from "./module/Modules";
 import Students from "./student/Students";
 import Registrations from "./registration/Registrations";
 import Advice from "./Advice";
-import "./App";
+import "./styles/home.css";
 
 function App() {
   return (
