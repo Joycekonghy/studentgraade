@@ -145,7 +145,7 @@ const ModuleRow = ({ registration, updateRegistrations }) => {
     axios
       .delete(`${registration._links.self.href}`)
       .then(() => updateRegistrations())
-      .catch((err) => console.error("Failed to delete registration", err));
+      .catch((err) => console.error("Failed to drop registration", err));
   };
 
   return (
@@ -153,11 +153,8 @@ const ModuleRow = ({ registration, updateRegistrations }) => {
       <td>{module ? `${module.code} ${module.name}` : "Loading..."}</td>
       <td>{registration.score}</td>
       <td>
-        <button className="update-button" onClick={() => setIsEditing(true)}>
-          register
-        </button>
         <button className="delete-button" onClick={handleDelete}>
-          Delete
+          Drop
         </button>
         {isEditing && (
           <updateRegistration
