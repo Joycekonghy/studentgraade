@@ -25,7 +25,7 @@ function Registrations() {
         if (registrations.length === 0) {
           setRegistrations([]);
           setStudents({});
-          setError("No registrations available.");
+          setError(""); // Clear any existing error
           return;
         }
     
@@ -38,10 +38,10 @@ function Registrations() {
           studentUrls.map((url) =>
             axios.get(url).catch((err) => {
               console.error(`Failed to fetch student details for ${url}`, err);
-              return null; // Avoid breaking the Promise.all chain
+              return null;
             })
           )
-        ).then(results => results.filter(detail => detail !== null)); // Filter out null values
+        ).then(results => results.filter(detail => detail !== null));
     
         // Create student map
         const studentMap = studentUrls.reduce((acc, url, index) => {
@@ -76,14 +76,10 @@ function Registrations() {
     const studentId = student.id;
     if (!acc[studentId]) {
         acc[studentId] = [];
-        console.log("Student URL:", studentUrl);
     }
     acc[studentId].push(reg);
-    console.log("Student ID:", studentId);
     return acc;
   }, {});
-
-
 
   const toggleExpand = (studentId) => {
     setExpandedStudents(prev => ({
@@ -91,7 +87,6 @@ function Registrations() {
       [studentId]: !prev[studentId]
     }));
   };
-  
 
   return (
     <div className="registration-page">
@@ -202,174 +197,3 @@ const ModuleRow = ({ registration, updateRegistrations }) => {
 };
 
 export default Registrations;
-
-// import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
-// import RegisterModule from "./RegisterModule";
-// import axios from "axios";
-// import graduateStudent from "../Icons/graduate_student.png";
-// import { API_ENDPOINT } from "../config";
-// import "../styles/registration.css";
-
-// function Registrations() {
-//   const [registrations, setRegistrations] = useState([]);
-//   const [students, setStudents] = useState([]); // Fetch students for mapping
-//   const [error, setError] = useState("");
-//   const [expandedStudents, setExpandedStudents] = useState({});
-
-//   useEffect(() => {
-//     updateRegistrations();
-//     updateStudents(); // Fetch students on load
-//   }, []);
-
-//   const updateRegistrations = () => {
-//     axios
-//       .get(`${API_ENDPOINT}/registrations`)
-//       .then((response) => {
-//         const registrations = response.data._embedded?.registrations || [];
-//         setRegistrations(registrations);
-//       })
-//       .catch((err) => {
-//         setError(err.response?.data?.message || err.message || "Failed to fetch grades.");
-//       });
-//   };
-
-//   const updateStudents = () => {
-//     axios
-//       .get(`${API_ENDPOINT}/students`)
-//       .then((response) => {
-//         const students = response.data._embedded?.students || [];
-//         setStudents(students);
-//       })
-//       .catch((err) => {
-//         console.error("Error fetching students:", err);
-//         setError(err.message || "Failed to fetch students.");
-//       });
-//   };
-
-//   const toggleStudent = (studentId) => {
-//     setExpandedStudents((prev) => ({
-//       ...prev,
-//       [studentId]: !prev[studentId],
-//     }));
-//   };
-
-
-//   // Map student ID to full name
-//   const getStudentName = (studentId) => {
-//     const student = students.find((s) => s.id.toString() === studentId);
-//     return student ? `${student.firstName} ${student.lastName}` : `Student ID: ${studentId}`;
-//   };
-
-//   // Group registrations by student
-//   const groupedregistrations = registrations.reduce((grouped, registration) => {
-//     const studentId = registration._links.student.href.split("/").pop();
-//     if (!grouped[studentId]) grouped[studentId] = [];
-//     grouped[studentId].push(registration);
-//     return grouped;
-//   }, {});
-
-//   return (
-//     <div className="modules-page">
-//       {/* Navbar */}
-//       <div className="navbar">
-//         <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
-//         <span className="navbar-text">MyGrades</span>
-//         <nav className="navbar-links">
-//           <Link to="/">Home</Link>
-//           <Link to="/students">Students</Link>
-//           <Link to="/modules">Modules</Link>
-//           <Link to="/registrations" className="active-link">Registrations</Link>
-//           <Link to="/grades">Grades</Link>
-//           <Link to="/advice">Advice</Link>
-//         </nav>
-//       </div>
-
-//       {/* Add registration Section */}
-//       <div className="add-registration-section">
-//         <RegisterModule update={updateRegistrations} />
-//       </div>
-
-//       {/* Grouped registrations */}
-//       <div className="registrations-table-wrapper">
-//         {error && <div className="error-message">{error}</div>}
-//         {!error && registrations.length < 1 && <div className="warning-message">No registrations available</div>}
-
-//         {/* Render grouped student registrations */}
-//         {Object.entries(groupedregistrations).map(([studentId, studentregistrations]) => {
-
-//           return (
-//             <div key={studentId} className="student-group">
-//               {/* Student Header */}
-//               <div
-//                 className="student-header"
-//                 onClick={() => toggleStudent(studentId)}
-//               >
-//                 <span>{getStudentName(studentId)}</span>
-//               </div>
-
-//               {/* Modules Table */}
-//               {expandedStudents[studentId] && (
-//                 <table className="registrations-table">
-//                   <thead>
-//                     <tr>
-//                       <th>Module</th>
-//                       <th>Actions</th>
-//                     </tr>
-//                   </thead>
-//                   <tbody>
-//                     {studentregistrations.map((registration) => (
-//                       <ModuleRow
-//                         key={registration.id}
-//                         registration={registration}
-//                         updateRegistrations={updateRegistrations}
-//                       />
-//                     ))}
-//                   </tbody>
-//                 </table>
-//               )}
-//             </div>
-//           );
-//         })}
-//       </div>
-//     </div>
-//   );
-// }
-
-// // Component for each module row
-// const ModuleRow = ({ registration, updateRegistrations }) => {
-//   const [module, setModule] = useState(null);
-//   const [isEditing, setIsEditing] = useState(false);
-
-//   useEffect(() => {
-//     axios.get(registration._links.module.href).then((res) => setModule(res.data));
-//   }, [registration]);
-
-//   const handleDelete = () => {
-//     axios
-//       .delete(`${registration._links.self.href}`)
-//       .then(() => updateRegistrations())
-//       .catch((err) => console.error("Failed to drop registration", err));
-//   };
-
-//   return (
-//     <tr>
-//       <td>{module ? `${module.code} ${module.name}` : "Loading..."}</td>
-//       <td>{registration.score}</td>
-//       <td>
-//         <button className="delete-button" onClick={handleDelete}>
-//           Drop
-//         </button>
-//         {isEditing && (
-//           <updateRegistration
-//             registration={registration}
-//             onClose={() => setIsEditing(false)}
-//             onUpdate={updateRegistrations}
-//           />
-//         )}
-//       </td>
-//     </tr>
-//   );
-// };
-
-// export default Registrations;
