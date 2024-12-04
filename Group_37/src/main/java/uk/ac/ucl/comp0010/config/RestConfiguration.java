@@ -36,7 +36,7 @@ public class RestConfiguration implements RepositoryRestConfigurer {
     
     // Enable CORS for the frontend (adjust the URL to match your frontend's address)
     cors.addMapping("/**")
-        .allowedOrigins("http://localhost:5173") // адрес вашего фронтенда
+        .allowedOrigins("http://localhost:5173")
         .allowedMethods("GET", "POST", "PUT", "DELETE")
         .allowedHeaders("*")
         .allowCredentials(true);

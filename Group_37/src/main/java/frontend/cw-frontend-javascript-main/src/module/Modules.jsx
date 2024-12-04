@@ -1,34 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import { Typography, Alert, Grid } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
-import { API_ENDPOINT } from "../config";
 import AddModule from "./AddModule";
-import graduateStudent from "../Icons/graduate_student.png"; 
+import { API_ENDPOINT } from "../config";
+import graduateStudent from "../Icons/graduate_student.png";
 import "../styles/modules.css";
 
-
-
 function Modules() {
-  const [modules, setModules] = React.useState([]);
-  const [error, setError] = React.useState();
+  const [modules, setModules] = useState([]);
+  const [error, setError] = useState("");
 
-  React.useEffect(() => {
+  useEffect(() => {
     updateModules();
   }, []);
 
-
-  function updateModules() {
+  const updateModules = () => {
+    console.log("Fetching modules...");
     axios
       .get(`${API_ENDPOINT}/modules`)
       .then((response) => {
-        const modules = response.data._embedded?.modules || []; // Fallback to empty array
+        const modules = response.data._embedded?.modules || [];
         setModules(modules);
+        console.log("Fetched modules:", modules);
       })
       .catch((err) => {
-        setError(err.response?.data?.message || err.message || "Failed to fetch modules.");
+        const errorMessage = err.response?.data?.message || err.message || "Failed to fetch modules.";
+        setError(errorMessage);
+        console.error("Error fetching modules:", err);
       });
-  }
+  };
 
   return (
     <div className="modules-page">
@@ -46,45 +46,38 @@ function Modules() {
         </nav>
       </div>
 
-    
+      {/* Add Module Section */}
+      <div className="add-student-section">
+        <AddModule update={updateModules} />
+      </div>
 
-      {error && <Alert color="error">{error}</Alert>}
-      {!error && modules.length < 1 && (
-        <Alert color="warning">No modules</Alert>
-      )}
-      {modules.length > 0 && (
-        <>
-          <Grid container style={{ padding: "10px 0" }}>
-            <Grid item xs={2}>
-              Module Code
-            </Grid>
-            <Grid item xs={8}>
-              Module Name
-            </Grid>
-            <Grid item xs={2}>
-              Is MNC
-            </Grid>
-          </Grid>
-          {modules.map((m) => {
-            return (
-              <Grid container key={m.code} style={{ padding: "10px 0" }}>
-                <Grid item xs={2}>
-                  {m.code}
-                </Grid>
-                <Grid item xs={8}>
-                  {m.name}
-                </Grid>
-                <Grid item xs={2}>
-                  {m.mnc ? "Yes" : "No"}
-                </Grid>
-              </Grid>
-            );
-          })}
-        </>
-      )}
-      <br />
-      <br />
-      <AddModule update={updateModules} />
+      {/* Main Content */}
+      <div className="students-table-wrapper">
+        {error && <div className="error-message">{error}</div>}
+        {!error && modules.length < 1 && (
+          <div className="warning-message">No modules available</div>
+        )}
+
+        {/* Render Modules Table */}
+        <table className="students-table">
+          <thead>
+            <tr>
+              <th>Module Code</th>
+              <th>Module Name</th>
+              <th>Is MNC</th>
+            </tr>
+          </thead>
+          <tbody>
+            {modules.map((module) => (
+              <tr key={module.code}>
+                <td>{module.code}</td>
+                <td>{module.name}</td>
+                <td>{module.mnc ? "Yes" : "No"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
