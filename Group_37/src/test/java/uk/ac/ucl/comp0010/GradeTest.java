@@ -103,6 +103,15 @@ public class GradeTest {
   }
 
   @Test
+  public void testSetId() {
+    Grade grade = new Grade(student, module, 85);
+
+    // Test if setting the ID works correctly
+    grade.setId(1L);
+    assertEquals(1L, grade.getId(), "ID should be updated to the new value");
+  }
+
+  @Test
   public void testDefaultConstructor() {
     // Test default constructor
     Grade grade = new Grade();

@@ -79,7 +79,6 @@ public class StudentController {
           Student savedStudent = studentRepository.save(student);
           return ResponseEntity.ok(savedStudent);
         } else {
-          // Update existing student
           Optional<Student> existingStudent = studentRepository.findById(student.getId());
           if (existingStudent.isPresent()) {
             Student existing = existingStudent.get();
