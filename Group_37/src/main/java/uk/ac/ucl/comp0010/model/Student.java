@@ -41,7 +41,7 @@ public class Student {
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Grade> grades;
 
-  @ManyToMany
+  @OneToMany(mappedBy = "registeredStudent", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Module> modules;
 
   /**
