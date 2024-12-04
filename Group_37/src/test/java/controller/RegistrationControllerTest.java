@@ -174,4 +174,74 @@ class RegistrationControllerTest {
         verify(moduleRepository, times(1)).findById(moduleId);
         verify(registrationRepository, times(0)).save(any(Registration.class));
     }
+
+    @Test
+    void testRegisterModuleNotExists_differentModule() {
+        // Mock data
+        Long studentId = 1L;
+        Long moduleId = 101L;
+        Student mockStudent = new Student(studentId, "John", "Doe", "jdoe", "jdoe@example.com");
+        Module mockModule = new Module("Software Engineering", "COMP0010", Boolean.TRUE);
+        mockModule.setId(123L);
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("student_id", studentId);
+        payload.put("module_id", moduleId);
+
+        // Existing registration
+        Registration existingRegistration = new Registration();
+        existingRegistration.setStudent(mockStudent);
+        existingRegistration.setModule(mockModule);
+        List<Registration> existingRegistrations = new ArrayList<>();
+        existingRegistrations.add(existingRegistration);
+
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(mockStudent));
+        when(moduleRepository.findById(moduleId)).thenReturn(Optional.of(mockModule));
+        when(registrationRepository.findAll()).thenReturn(existingRegistrations);
+
+        // Call controller
+        ResponseEntity<String> response = registrationController.registerModule(payload);
+
+        // Verify
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Registration saved successfully", response.getBody());
+        verify(studentRepository, times(1)).findById(studentId);
+        verify(moduleRepository, times(1)).findById(moduleId);
+        verify(registrationRepository, times(1)).save(any(Registration.class));
+    }
+
+    @Test
+    void testRegisterModuleNotExists_differentStudent() {
+        // Mock data
+        Long studentId = 1L;
+        Long moduleId = 101L;
+        Student mockStudent = new Student(123L, "John", "Doe", "jdoe", "jdoe@example.com");
+        Module mockModule = new Module("Software Engineering", "COMP0010", Boolean.TRUE);
+        mockModule.setId(moduleId);
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("student_id", studentId);
+        payload.put("module_id", moduleId);
+
+        // Existing registration
+        Registration existingRegistration = new Registration();
+        existingRegistration.setStudent(mockStudent);
+        existingRegistration.setModule(mockModule);
+        List<Registration> existingRegistrations = new ArrayList<>();
+        existingRegistrations.add(existingRegistration);
+
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(mockStudent));
+        when(moduleRepository.findById(moduleId)).thenReturn(Optional.of(mockModule));
+        when(registrationRepository.findAll()).thenReturn(existingRegistrations);
+
+        // Call controller
+        ResponseEntity<String> response = registrationController.registerModule(payload);
+
+        // Verify
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Registration saved successfully", response.getBody());
+        verify(studentRepository, times(1)).findById(studentId);
+        verify(moduleRepository, times(1)).findById(moduleId);
+        verify(registrationRepository, times(1)).save(any(Registration.class));
+    }
 }

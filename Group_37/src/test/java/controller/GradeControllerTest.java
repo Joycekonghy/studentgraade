@@ -1,5 +1,6 @@
 package controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -136,7 +137,127 @@ class GradeControllerTest {
         verify(registrationRepository, times(1)).findByStudentIdAndModuleId(1L, 1L);
         verify(gradeRepository, times(0)).save(any());
     }
+    @Test
+    void testGradeExistsFalse() {
+        // Mock data
+        Long studentId = 1L;
+        Long moduleId = 102L;
 
+
+        Student student = new Student();
+        student.setId(studentId);
+        Module module = new Module();
+        module.setId(moduleId);
+        Registration mockRegistration = new Registration(student, module);
+        List<Grade> existingGrades = new ArrayList<>(); 
+
+        when(registrationRepository.findByStudentIdAndModuleId(1L, 102L))
+        .thenReturn(Optional.of( mockRegistration));
+        when(gradeRepository.findAll()).thenReturn(existingGrades);
+
+// No grades exist in this case
+
+        Grade newGrade = new Grade();
+        newGrade.setStudent(mockRegistration.getStudent());
+        newGrade.setModule(mockRegistration.getModule());
+        newGrade.setScore(85);
+
+        when(gradeRepository.save(any(Grade.class))).thenReturn(newGrade);
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("student_id", studentId);
+        payload.put("module_id", moduleId);
+        payload.put("score", 85);
+
+        // Call the method with the mocked data
+        ResponseEntity<String> response = gradeController.addGrade(payload);
+
+        // Verify
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Grade saved successfully", response.getBody());
+        verify(gradeRepository, times(1)).save(any(Grade.class));
+    }
+    @Test
+    void testGradeExistsFalse_differentModule() {
+        // Mock data
+        Long studentId = 1L;
+        Long moduleId = 102L;
+
+
+        Student student = new Student();
+        student.setId(studentId);
+        Module module = new Module();
+        module.setId(123L);
+        Registration mockRegistration = new Registration(student, module);
+
+        Grade newGrades = new Grade(student, module, 85);
+        List<Grade> existingGrades = new ArrayList<>(); 
+        existingGrades.add(newGrades);
+
+        when(registrationRepository.findByStudentIdAndModuleId(1L, 102L))
+        .thenReturn(Optional.of( mockRegistration));
+        when(gradeRepository.findAll()).thenReturn(existingGrades);
+        Grade newGrade = new Grade();
+        newGrade.setStudent(mockRegistration.getStudent());
+        newGrade.setModule(mockRegistration.getModule());
+        newGrade.setScore(85);
+
+        when(gradeRepository.save(any(Grade.class))).thenReturn(newGrade);
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("student_id", studentId);
+        payload.put("module_id", moduleId);
+        payload.put("score", 85);
+
+        // Call the method with the mocked data
+        ResponseEntity<String> response = gradeController.addGrade(payload);
+
+        // Verify
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Grade saved successfully", response.getBody());
+        verify(gradeRepository, times(1)).save(any(Grade.class));
+    }
+
+    @Test
+    void testGradeExistsFalse_differentStudent() {
+        // Mock data
+        Long studentId = 1L;
+        Long moduleId = 102L;
+
+
+        Student student = new Student();
+        student.setId(123L);
+        Module module = new Module();
+        module.setId(moduleId);
+        Registration mockRegistration = new Registration(student, module);
+
+        Grade newGrades = new Grade(student, module, 85);
+        List<Grade> existingGrades = new ArrayList<>(); 
+        existingGrades.add(newGrades);
+
+        when(registrationRepository.findByStudentIdAndModuleId(1L, 102L))
+        .thenReturn(Optional.of( mockRegistration));
+        when(gradeRepository.findAll()).thenReturn(existingGrades);
+        Grade newGrade = new Grade();
+        newGrade.setStudent(mockRegistration.getStudent());
+        newGrade.setModule(mockRegistration.getModule());
+        newGrade.setScore(85);
+
+        when(gradeRepository.save(any(Grade.class))).thenReturn(newGrade);
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("student_id", studentId);
+        payload.put("module_id", moduleId);
+        payload.put("score", 85);
+
+        // Call the method with the mocked data
+        ResponseEntity<String> response = gradeController.addGrade(payload);
+
+        // Verify
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Grade saved successfully", response.getBody());
+        verify(gradeRepository, times(1)).save(any(Grade.class));
+    }
     @Test
     void testAddGradeAlreadyExists() {
         // Mock data

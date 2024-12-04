@@ -1,7 +1,9 @@
 package controller;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
-import org.springframework.dao.DataIntegrityViolationException;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +13,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import uk.ac.ucl.comp0010.model.Registration;
 import uk.ac.ucl.comp0010.model.Student;
 import uk.ac.ucl.comp0010.repository.StudentRepository;
 import uk.ac.ucl.comp0010.controller.StudentController;
@@ -60,6 +64,7 @@ class StudentControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNull(response.getBody());
     }
+
     @Test
     void testAddOrUpdateStudent_Success() {
         // Arrange
@@ -73,39 +78,116 @@ class StudentControllerTest {
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody(), "should not be null");
-        assertTrue(response.getBody() instanceof Student);
-        assertEquals(2L, ((Student) response.getBody()).getId());
+        assertEquals("student saved successfully", response.getBody());
     }
     @Test
-    void testAddOrUpdateStudent_ValidationError() {
-        // Arrange
+    void testAddOrUpdateStudent_EmailValidationError() {
         Student invalidStudent = new Student(2L, "John", "Doe", "johndoe", "");
-        // Act
+        Student invalidStudent2 = new Student(2L, "John", "Doe", "johndoe", null);
+        
         ResponseEntity<?> response = studentController.addOrUpdateStudent(invalidStudent);
-        // Assert
+        ResponseEntity<?> response2 = studentController.addOrUpdateStudent(invalidStudent2);
+        
+        assertNotNull(response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Student email is required.", response.getBody());
+        
+        assertNotNull(response2);
+        assertEquals(HttpStatus.BAD_REQUEST, response2.getStatusCode());
+        assertEquals("Student email is required.", response2.getBody());
     }
+
+    @Test
+    void testAddOrUpdateStudent_firstNameValidationError() {
+        Student invalidStudent = new Student(2L, "", "Doe", "johndoe", "jd@example.com");
+        Student invalidStudent2 = new Student(2L, null, "Doe", "johndoe", "jd@example.com");
+
+        ResponseEntity<?> response = studentController.addOrUpdateStudent(invalidStudent);
+        ResponseEntity<?> response2 = studentController.addOrUpdateStudent(invalidStudent2);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Student first name is required.", response.getBody());
+
+        assertNotNull(response2);
+        assertEquals(HttpStatus.BAD_REQUEST, response2.getStatusCode());
+        assertEquals("Student first name is required.", response2.getBody());
+    }
+
+    @Test
+    void testAddOrUpdateStudent_lastNameValidationError() {
+        Student invalidStudent = new Student(2L, "John", "", "johndoe", "jd@example.com");
+        Student invalidStudent2 = new Student(2L, "John", null, "johndoe", "jd@example.com");
+
+
+        ResponseEntity<?> response = studentController.addOrUpdateStudent(invalidStudent);
+        ResponseEntity<?> response2 = studentController.addOrUpdateStudent(invalidStudent2);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Student last name is required.", response.getBody());
+
+        assertNotNull(response2);
+        assertEquals(HttpStatus.BAD_REQUEST, response2.getStatusCode());
+        assertEquals("Student last name is required.", response2.getBody());
+    }
+
+    @Test
+    void testAddOrUpdateStudent_usernameValidationError() {
+
+        Student invalidStudent = new Student(2L, "John", "Doe", "", "jd@example.com");
+        Student invalidStudent2 = new Student(2L, "John", "Doe", null, "jd@exmaple.com");
+
+        ResponseEntity<?> response = studentController.addOrUpdateStudent(invalidStudent);
+        ResponseEntity<?> response2 = studentController.addOrUpdateStudent(invalidStudent2);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Student username is required.", response.getBody());
+
+        assertNotNull(response2);
+        assertEquals(HttpStatus.BAD_REQUEST, response2.getStatusCode());
+        assertEquals("Student username is required.", response2.getBody());
+    }
+
     @Test
     void testAddOrUpdateStudent_Conflict() {
         // Arrange
-        Student existingStudent = new Student(2L, "John", "Doe", "johndoe", "johndoe@example.com");
-        Student newStudent = new Student(2L, "John", "Doe", "johndoe", "johndoe@example.com");
+        Student existingStudent = new Student(2L, "existing", "user", "exist", "exist@example.com");
+        Student newStudent = new Student(2L, "Joh", "Doe", "johndoe", "johndoe@example.com");
     
         // Mock findById to return an existing student
         when(studentRepository.findById(2L)).thenReturn(Optional.of(existingStudent));
-    
-        // Mock save to throw a DataIntegrityViolationException
-        when(studentRepository.save(any(Student.class))).thenThrow(new DataIntegrityViolationException("Conflict"));
     
         // Act
         ResponseEntity<?> response = studentController.addOrUpdateStudent(newStudent);
     
         // Assert
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
-        assertEquals("A student with the same username or email already exists.", response.getBody());
+        assertEquals("A student with this id already exists.", response.getBody());
     }
-    
+
+    @Test
+    void testAddOrUpdateStudent_noExistingStudent() {
+        // Arrange
+        Student existingStudent = new Student(4L, "existing", "user", "exist", "exist@example.com");
+        Student newStudent = new Student(2L, "Joh", "Doe", "johndoe", "johndoe@example.com");
+        
+        // Mock findById to return an existing student
+        List<Student> existingStudents = new ArrayList<>();
+        existingStudents.add(existingStudent);
+
+        when(studentRepository.findAll()).thenReturn(existingStudents);
+        
+        // Act
+        ResponseEntity<?> response = studentController.addOrUpdateStudent(newStudent);
+        
+        // Assert
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("student saved successfully", response.getBody());
+    }
+
     @Test
     void testAddOrUpdateStudent_InternalServerError() {
         // Arrange
