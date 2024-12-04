@@ -33,7 +33,18 @@ function AddGrade(props) {
       .then((response) => setModules(response.data._embedded.modules)) // Save modules to state
       .catch((err) => setError("Failed to fetch modules")); // Set error on failure
   }, []); // Empty dependency array ensures this runs once on component mount
+  
+  const validateAndSubmit = () => {
+    // Validate that required fields are not empty
+    if (grade.score<0 || grade.score>100) {
+      setError("Score must be between 0 and 100."); // Show an error message
+      return;
 
+
+    }
+    setError(""); // Clear any existing error messages
+    request(); // Submit the form
+  };
   const handleAddGrade = () => {
     // Prepare the payload, ensuring IDs are converted to numbers
     const payload = {
@@ -106,7 +117,7 @@ function AddGrade(props) {
       <Button
         sx={{ marginTop: "20px" }}
         variant="contained"
-        onClick={handleAddGrade} // Handle form submission
+        onClick={validateAndSubmit} // Handle form submission
       >
         Add
       </Button>
