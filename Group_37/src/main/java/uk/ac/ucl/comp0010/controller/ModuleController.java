@@ -72,21 +72,14 @@ public class ModuleController {
     if (module.getName() == null || module.getName().isEmpty()) {
       return ResponseEntity.badRequest().body("Module name is required.");
     }
-    Optional<Module> existingModule = moduleRepository.findByCode(module.getCode());
+    Optional<Module> existingModule = moduleRepository.findById(module.getId());
     if (existingModule.isPresent() && !existingModule.get().equals(module)) {
       return ResponseEntity
           .status(HttpStatus.CONFLICT)
           .body("A module with this code already exists.");
   }
-
-  try {
       // Save only if no conflict
       Module savedModule = moduleRepository.save(module);
-      return ResponseEntity.ok(savedModule);
-  } catch (DataIntegrityViolationException e) {
-      return ResponseEntity
-          .status(HttpStatus.CONFLICT)
-          .body("A module with this code already exists.");
-  }
+      return ResponseEntity.ok("module saved successfully");
 }
 }

@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import uk.ac.ucl.comp0010.model.Student;
 import uk.ac.ucl.comp0010.model.Module;
 import uk.ac.ucl.comp0010.model.Registration;

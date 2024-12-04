@@ -41,6 +41,11 @@
             <optional>true</optional>
         </dependency>
         
+        <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>6.3.1.Final</version> <!-- Use the version compatible with your project -->
+        </dependency>
 
         <!-- Database Support -->
         <dependency>

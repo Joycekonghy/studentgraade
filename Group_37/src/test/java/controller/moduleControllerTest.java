@@ -82,31 +82,17 @@ class ModuleControllerTest {
         verify(moduleRepository, times(1)).findByCode(moduleCode);
     }
 
-    @Test
-    void testAddOrUpdateModuleNewModule() {
-        // Mock repository
-        Module newModule = new Module("Software Engineering", "COMP0010", Boolean.TRUE);
-        when(moduleRepository.save(newModule)).thenReturn(newModule);
-
-        // Call controller
-        ResponseEntity<?> response = moduleController.addOrUpdateModule(newModule);
-
-        // Verify
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertTrue(response.getBody() instanceof Module);
-        assertEquals("COMP0010", ((Module) response.getBody()).getCode());
-        verify(moduleRepository, times(1)).save(newModule);
-    }
 
 
     @Test
     void testAddOrUpdateModuleConflict() {
         // Mock existing module with the same code
         Module existingModule = new Module("System Engineering", "COMP0010", Boolean.FALSE);
+        existingModule.setId(1L);
         Module newModule = new Module("Software Engineering", "COMP0010", Boolean.FALSE);
+        newModule.setId(1L);
         
-        when(moduleRepository.findByCode("COMP0010")).thenReturn(Optional.of(existingModule));
+        when(moduleRepository.findById(1L)).thenReturn(Optional.of(existingModule));
         
         // Call the controller
         ResponseEntity<?> response = moduleController.addOrUpdateModule(newModule);
@@ -116,28 +102,80 @@ class ModuleControllerTest {
         assertEquals("A module with this code already exists.", response.getBody());
     
         // Verify repository calls
-        verify(moduleRepository, times(1)).findByCode("COMP0010");
+        verify(moduleRepository, times(1)).findById(1L);
         verify(moduleRepository, times(0)).save(any()); // Ensure save is not called
     }
     
     
- 
+    @Test
+    void testAddOrUpdateModuleNoConflict_existsAndSame() {
+        // Mock existing module with the same code and same details
+        Module existingModule = new Module("Software Engineering", "COMP0010", Boolean.FALSE);
+        existingModule.setId(1L);
+        Module newModule = new Module("Software Engineering", "COMP0010", Boolean.FALSE);
+        newModule.setId(1L);
+    
+        when(moduleRepository.findById(1L)).thenReturn(Optional.of(existingModule));
+        when(moduleRepository.save(any(Module.class))).thenReturn(newModule);
+    
+        // Call the controller
+        ResponseEntity<?> response = moduleController.addOrUpdateModule(existingModule);
+    
+        // Verify response
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("module saved successfully", response.getBody());
+    
+    }
+    
+    @Test
+    void testAddOrUpdateModuleNoConflict_moduleDoesNotExist() {
+        // Mock no existing modules
+        Module newModule = new Module("Software Engineering", "COMP0010", Boolean.FALSE);
+        newModule.setId(1L);
+
+        when(moduleRepository.findById(1L)).thenReturn(Optional.empty());
+        when(moduleRepository.save(any(Module.class))).thenReturn(newModule);
+
+        // Call the controller
+        ResponseEntity<?> response = moduleController.addOrUpdateModule(newModule);
+
+        // Verify response
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("module saved successfully", response.getBody());
+
+        // Verify repository calls
+        verify(moduleRepository, times(1)).findById(1L);
+        verify(moduleRepository, times(1)).save(any(Module.class));
+    }
+    
     @Test
     void testAddOrUpdateModuleInvalidInput() {
         // Test invalid module (null name)
         Module invalidModule = new Module(null, "COMP0010", Boolean.TRUE);
+        Module invalidModule2 = new Module("", "COMP0010", Boolean.TRUE);
 
         ResponseEntity<?> response = moduleController.addOrUpdateModule(invalidModule);
+        ResponseEntity<?> response2 = moduleController.addOrUpdateModule(invalidModule2);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Module name is required.", response.getBody());
 
+        assertEquals(HttpStatus.BAD_REQUEST, response2.getStatusCode());
+        assertEquals("Module name is required.", response2.getBody());
+
         // Test invalid module (empty code)
         invalidModule = new Module("software engineering", "",  Boolean.FALSE);
+        invalidModule2 = new Module("software engineering", null,  Boolean.FALSE);
         response = moduleController.addOrUpdateModule(invalidModule);
+        response2 = moduleController.addOrUpdateModule(invalidModule2);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Module code is required.", response.getBody());
+
+        assertEquals(HttpStatus.BAD_REQUEST, response2.getStatusCode());
+        assertEquals("Module code is required.", response2.getBody());
 
         verify(moduleRepository, times(0)).save(any());
     }
