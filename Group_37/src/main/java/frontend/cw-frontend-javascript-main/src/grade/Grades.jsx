@@ -61,6 +61,20 @@ function Grades() {
     }
   };
 
+  const getUKClassification = (average) => {
+    if (average >= 70) return "First Class (1st)";
+    if (average >= 60) return "Upper Second Class (2:1)";
+    if (average >= 50) return "Lower Second Class (2:2)";
+    if (average >= 40) return "Third Class (3rd)";
+    return "Fail";
+  };
+
+  const calculateAverage = (grades) => {
+    if (!grades || grades.length === 0) return 0;
+    const sum = grades.reduce((acc, grade) => acc + grade.score, 0);
+    return (sum / grades.length).toFixed(1);
+  };
+
   const groupedGrades = grades.reduce((acc, grade) => {
     const studentUrl = grade._links.student.href;
     const student = students[studentUrl];
@@ -107,45 +121,63 @@ function Grades() {
           <div className="warning-message">No grades available</div>
         )}
 
-        {Object.entries(groupedGrades).map(([studentId, { student, grades: studentGrades }]) => (
-          <div key={studentId} className="student-section">
-            <div 
-              className="student-header" 
-              onClick={() => toggleExpand(studentId)}
-            >
-              <span className="student-info">
-                {student.firstName} {student.lastName} (ID: {student.id})
-              </span>
-              <span className="module-count">
-                {studentGrades.length} grade{studentGrades.length !== 1 ? 's' : ''} {expandedStudents[studentId] ? '▼' : '▶'}
-              </span>
-            </div>
-
-            {expandedStudents[studentId] && (
-              <div className="student-modules">
-                <table className="students-table">
-                  <thead>
-                    <tr>
-                      <th>Module Code</th>
-                      <th>Module Name</th>
-                      <th>Score</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {studentGrades.map(grade => (
-                      <GradeRow
-                        key={grade.id}
-                        grade={grade}
-                        updateGrades={updateGrades}
-                      />
-                    ))}
-                  </tbody>
-                </table>
+        {Object.entries(groupedGrades).map(([studentId, { student, grades: studentGrades }]) => {
+          const average = calculateAverage(studentGrades);
+          const classification = getUKClassification(average);
+          
+          return (
+            <div key={studentId} className="student-section">
+              <div 
+                className="student-header" 
+                onClick={() => toggleExpand(studentId)}
+              >
+                <div className="header-content">
+                  <span className="student-info">
+                    {student.firstName} {student.lastName} (ID: {student.id})
+                  </span>
+                  <div className="grade-info">
+                    <span className="average-grade">
+                      Average: {average}%
+                    </span>
+                    <span 
+                      className="uk-classification"
+                      data-classification={classification}
+                    >
+                      {classification}
+                    </span>
+                    <span className="module-count">
+                      {studentGrades.length} grade{studentGrades.length !== 1 ? 's' : ''} {expandedStudents[studentId] ? '▼' : '▶'}
+                    </span>
+                  </div>
+                </div>
               </div>
-            )}
-          </div>
-        ))}
+
+              {expandedStudents[studentId] && (
+                <div className="student-modules">
+                  <table className="students-table">
+                    <thead>
+                      <tr>
+                        <th>Module Code</th>
+                        <th>Module Name</th>
+                        <th>Score</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {studentGrades.map(grade => (
+                        <GradeRow
+                          key={grade.id}
+                          grade={grade}
+                          updateGrades={updateGrades}
+                        />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -163,6 +195,24 @@ const GradeRow = ({ grade, updateGrades }) => {
     }
   }, [grade]);
 
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`${API_ENDPOINT}/grades/${grade.id}`);
+      updateGrades();
+    } catch (err) {
+      console.error("Error deleting grade:", err);
+    }
+  };
+
+  const confirmDelete = () => {
+    const confirmResult = window.confirm(
+      `Are you sure you want to delete this grade for ${module?.name || 'this module'}?`
+    );
+    if (confirmResult) {
+      handleDelete();
+    }
+  };
+
   return (
     <>
       <tr>
@@ -170,12 +220,20 @@ const GradeRow = ({ grade, updateGrades }) => {
         <td>{module?.name || "Loading..."}</td>
         <td>{grade.score}</td>
         <td>
-          <button 
-            className="edit-button" 
-            onClick={() => setIsEditing(true)}
-          >
-            Update Grade
-          </button>
+          <div className="action-buttons">
+            <button 
+              className="edit-button" 
+              onClick={() => setIsEditing(true)}
+            >
+              Update
+            </button>
+            <button 
+              className="delete-button"
+              onClick={confirmDelete}
+            >
+              Delete
+            </button>
+          </div>
         </td>
       </tr>
       {isEditing && (
