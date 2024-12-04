@@ -58,9 +58,6 @@
   background-color: #1c3a63;
   color: white;
   padding: 12px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   cursor: pointer;
   transition: background-color 0.2s;
 }
@@ -69,14 +66,68 @@
   background-color: #2c4a73;
 }
 
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
 .student-info {
   font-size: 16px;
   font-weight: 500;
 }
 
+.grade-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.average-grade {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.uk-classification {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.uk-classification[data-classification="First Class (1st)"] {
+  background-color: rgba(76, 175, 80, 0.3);
+}
+
+.uk-classification[data-classification="Upper Second Class (2:1)"] {
+  background-color: rgba(33, 150, 243, 0.3);
+}
+
+.uk-classification[data-classification="Lower Second Class (2:2)"] {
+  background-color: rgba(255, 152, 0, 0.3);
+}
+
+.uk-classification[data-classification="Third Class (3rd)"] {
+  background-color: rgba(255, 87, 34, 0.3);
+}
+
+.uk-classification[data-classification="Fail"] {
+  background-color: rgba(244, 67, 54, 0.3);
+}
+
 .module-count {
   font-size: 14px;
   opacity: 0.9;
+  min-width: 80px;
+  text-align: right;
 }
 
 .student-modules {
@@ -111,11 +162,21 @@
   border-bottom: 1px solid #ddd;
 }
 
+.students-table td:last-child {
+  padding: 8px 12px;
+  width: 200px;
+}
+
 .students-table tr:hover {
   background-color: #f5f5f5;
 }
 
-/* Button Styles */
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
 .edit-button {
   background-color: #4CAF50;
   color: white;
@@ -123,7 +184,8 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-right: 8px;
+  font-size: 14px;
+  transition: background-color 0.2s;
 }
 
 .edit-button:hover {
@@ -137,6 +199,8 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
 }
 
 .delete-button:hover {
