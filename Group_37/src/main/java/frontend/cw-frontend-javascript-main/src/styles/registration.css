@@ -1,248 +1,236 @@
 /* General Styles */
+/* Styling the main page container for the registration page */
 .registration-page {
-  background-color: #d2f0ff;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-family: "Albert Sans", sans-serif;
-  overflow: hidden;
-  position: relative;
+  background-color: #d2f0ff; /* Light blue background for a clean look */
+  min-height: 100vh; /* Ensures the page occupies the full height of the viewport */
+  display: flex; /* Enables flexbox layout */
+  flex-direction: column; /* Arranges elements in a vertical stack */
+  font-family: "Albert Sans", sans-serif; /* Sets a modern sans-serif font */
+  overflow: hidden; /* Prevents unwanted scrolling */
+  position: relative; /* Allows child elements to use absolute positioning */
 }
 
 /* Navbar */
+/* Styling the navigation bar */
 .navbar {
-  background-color: #d2f0ff;
-  padding: 15px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  background-color: #d2f0ff; /* Matches the page background */
+  padding: 15px 30px; /* Adds internal spacing for better visuals */
+  display: flex; /* Flexbox layout for horizontal alignment */
+  align-items: center; /* Vertically centers the items */
+  justify-content: space-between; /* Spreads items to the edges */
 }
 
 .navbar-icon {
-  height: 50px;
-  margin-right: 5px;
+  height: 50px; /* Sets a fixed height for the icon */
+  margin-right: 5px; /* Adds spacing to the right of the icon */
 }
 
 .navbar-text {
-  font-size: 35px;
-  font-weight: bold;
-  color: #1c3a63;
-  margin-right: auto;
+  font-size: 35px; /* Larger font size for prominent branding */
+  font-weight: bold; /* Makes the text visually distinct */
+  color: #1c3a63; /* Deep blue for readability */
+  margin-right: auto; /* Pushes the text to the left */
 }
 
 .navbar-links a {
-  text-decoration: none;
-  color: #1c3a63;
-  margin: 0 15px;
-  font-size: 25px;
+  text-decoration: none; /* Removes underline from links */
+  color: #1c3a63; /* Matches the deep blue theme */
+  margin: 0 15px; /* Spacing between the links */
+  font-size: 25px; /* Larger font size for easy readability */
 }
 
 .navbar-links a:hover {
-  text-decoration: underline;
+  text-decoration: underline; /* Adds underline on hover for clarity */
 }
 
 .navbar-links .active-link {
-  text-decoration: underline;
-  font-weight: bold;
+  text-decoration: underline; /* Indicates the active page */
+  font-weight: bold; /* Highlights the active link */
 }
 
 /* Student Sections */
+/* Container for individual student sections */
 .student-section {
-  margin-bottom: 8px;
+  margin-bottom: 8px; /* Adds spacing between student sections */
 }
 
 .student-header {
-  background-color: #1c3a63;
-  color: white;
-  padding: 12px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
+  background-color: #1c3a63; /* Dark blue background for headers */
+  color: white; /* White text for contrast */
+  padding: 12px 20px; /* Internal padding for readability */
+  display: flex; /* Flexbox layout for alignment */
+  justify-content: space-between; /* Space between header items */
+  align-items: center; /* Vertically centers the header content */
+  cursor: pointer; /* Changes cursor to pointer on hover */
+  border-radius: 4px; /* Rounds the corners of the header */
+  transition: background-color 0.2s ease; /* Smooth transition for hover effects */
 }
 
 .student-header:hover {
-  background-color: #2c4a73;
+  background-color: #2c4a73; /* Slightly lighter blue on hover */
 }
 
 .student-info {
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 16px; /* Normal font size for info text */
+  font-weight: 500; /* Slightly bolder text */
 }
 
 .module-count {
-  font-size: 14px;
-  opacity: 0.9;
+  font-size: 14px; /* Smaller text size for module counts */
+  opacity: 0.9; /* Slight transparency for subtle effect */
 }
 
 .student-modules {
-  background-color: white;
-  border: 1px solid #e0e0e0;
-  border-top: none;
-  border-radius: 0 0 4px 4px;
+  background-color: white; /* White background for module details */
+  border: 1px solid #e0e0e0; /* Light gray border for structure */
+  border-top: none; /* Removes border on top for seamless look */
+  border-radius: 0 0 4px 4px; /* Rounds the bottom corners */
 }
 
 /* Register Module Form Container */
+/* Container for the module registration form */
 .register-module-form-container {
-  padding: 24px;
-  margin: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 24px; /* Internal spacing for the form */
+  margin: 20px; /* External spacing from other elements */
+  background-color: white; /* Clean white background */
+  border-radius: 8px; /* Rounds the corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 /* Form Controls */
+/* Container for form controls with vertical spacing */
 .register-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 20px;
+  display: flex; /* Flexbox layout */
+  flex-direction: column; /* Vertical stacking of form elements */
+  gap: 16px; /* Spacing between form elements */
+  margin-top: 20px; /* Top margin for separation */
 }
 
 .select-group {
-  display: flex;
-  gap: 16px;
+  display: flex; /* Horizontal arrangement of select elements */
+  gap: 16px; /* Space between selects */
 }
 
 .select-wrapper {
-  flex: 1;
-  max-width: 300px;
+  flex: 1; /* Allows selects to take up equal space */
+  max-width: 300px; /* Sets a maximum width for individual selects */
 }
 
 .register-select {
-  width: 100% !important;
-  height: 40px !important;
+  width: 100% !important; /* Ensures select elements span their container */
+  height: 40px !important; /* Sets a consistent height */
 }
 
 /* Table Styles */
+/* Wrapper for the students table */
 .students-table-wrapper {
-  padding: 20px;
-  margin: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px; /* Internal spacing around the table */
+  margin: 20px; /* External spacing from other elements */
+  background-color: white; /* White background for a clean look */
+  border-radius: 8px; /* Rounds the corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .students-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 0;
+  width: 100%; /* Full width table */
+  border-collapse: collapse; /* Removes spacing between table cells */
+  margin-top: 0; /* No extra margin at the top */
 }
 
 .students-table th {
-  background-color: #f5f5f5;
-  color: #1c3a63;
-  text-align: left;
-  padding: 12px;
-  font-weight: 500;
+  background-color: #f5f5f5; /* Light gray background for headers */
+  color: #1c3a63; /* Dark blue text */
+  text-align: left; /* Align text to the left */
+  padding: 12px; /* Padding for readability */
+  font-weight: 500; /* Medium weight for emphasis */
 }
 
 .students-table td {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
+  padding: 12px; /* Consistent padding for table cells */
+  border-bottom: 1px solid #ddd; /* Light gray border between rows */
 }
 
 .students-table tr:hover {
-  background-color: #f5f5f5;
+  background-color: #f5f5f5; /* Light gray background on hover */
 }
 
 /* Button Styles */
+/* Styling the register button */
 .register-button {
-  align-self: flex-start;
-  height: 40px;
-  padding: 0 24px;
-  background-color: #1976d2;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  text-transform: uppercase;
-  transition: background-color 0.2s ease;
-  margin-top: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  align-self: flex-start; /* Aligns the button to the start of the container */
+  height: 40px; /* Fixed height for the button */
+  padding: 0 24px; /* Horizontal padding for spacing */
+  background-color: #1976d2; /* Blue background */
+  color: white; /* White text */
+  border: none; /* Removes default border */
+  border-radius: 4px; /* Rounds the corners */
+  cursor: pointer; /* Pointer cursor for clickable buttons */
+  font-size: 14px; /* Standard button font size */
+  font-weight: 500; /* Slightly bold text */
+  text-transform: uppercase; /* Uppercase text for emphasis */
+  transition: background-color 0.2s ease; /* Smooth color change on hover */
+  margin-top: 16px; /* Top margin for separation */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow for depth */
 }
 
 .register-button:hover {
-  background-color: #2867a0;
+  background-color: #2867a0; /* Darker blue on hover */
 }
 
+/* Styling the delete button */
 .delete-button {
-  background-color: #f44336;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+  background-color: #f44336; /* Red background for destructive action */
+  color: white; /* White text for contrast */
+  padding: 8px 16px; /* Internal padding */
+  border: none; /* Removes default border */
+  border-radius: 4px; /* Rounds the corners */
+  cursor: pointer; /* Pointer cursor for clickable buttons */
+  transition: background-color 0.2s ease; /* Smooth color change on hover */
 }
 
 .delete-button:hover {
-  background-color: #da190b;
+  background-color: #da190b; /* Darker red on hover */
 }
 
 /* Message Styles */
+/* Error message styling */
 .error-message {
-  background-color: #ffebee;
-  color: #c62828;
-  padding: 12px;
-  margin: 20px;
-  border-radius: 4px;
-  border: 1px solid #ef9a9a;
+  background-color: #ffebee; /* Light red background */
+  color: #c62828; /* Dark red text */
+  padding: 12px; /* Internal padding */
+  margin: 20px; /* External spacing */
+  border-radius: 4px; /* Rounds the corners */
+  border: 1px solid #ef9a9a; /* Light red border */
 }
 
+/* Warning message styling */
 .warning-message {
-  background-color: #fff3e0;
-  color: #ef6c00;
-  padding: 12px;
-  margin: 20px;
-  border-radius: 4px;
-  border: 1px solid #ffcc80;
-}
-
-.error-alert {
-  margin-top: 16px;
-  margin-bottom: 16px;
-}
-
-/* Material UI Overrides */
-.MuiPaper-root {
-  box-shadow: none !important;
-}
-
-.MuiSelect-select {
-  padding: 8px 16px !important;
-}
-
-.MuiMenuItem-root {
-  padding: 8px 16px !important;
-}
-
-/* Add Student Section */
-.add-student-section {
-  margin: 20px;
+  background-color: #fff3e0; /* Light orange background */
+  color: #ef6c00; /* Dark orange text */
+  padding: 12px; /* Internal padding */
+  margin: 20px; /* External spacing */
+  border-radius: 4px; /* Rounds the corners */
+  border: 1px solid #ffcc80; /* Light orange border */
 }
 
 /* Responsive Styles */
+/* Adjustments for smaller screens */
 @media (max-width: 768px) {
   .navbar-links a {
-      font-size: 20px;
-      margin: 0 8px;
+      font-size: 20px; /* Smaller font size for links */
+      margin: 0 8px; /* Reduced spacing between links */
   }
 
   .select-group {
-      flex-direction: column;
+      flex-direction: column; /* Stacks selects vertically */
   }
 
   .select-wrapper {
-      max-width: 100%;
+      max-width: 100%; /* Allows full-width selects */
   }
 
   .register-button {
-      width: 100%;
-      margin-top: 24px;
+      width: 100%; /* Button spans full width */
+      margin-top: 24px
   }
 }
