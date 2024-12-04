@@ -18,55 +18,55 @@ function Registrations() {
 
   const updateRegistrations = async () => {
     try {
-        console.log("Fetching registrations...");
-        const response = await axios.get(`${API_ENDPOINT}/registrations`);
-        const registrations = response.data._embedded?.registrations || [];
-        
-        if (registrations.length === 0) {
-          setRegistrations([]);
-          setStudents({});
-          setError(""); // Clear any existing error
-          return;
-        }
-    
-        // Get unique student URLs
-        const studentUrls = [...new Set(registrations.map((reg) => reg._links.student.href))];
-        console.log("Student URLs:", studentUrls);
-    
-        // Fetch all student details in parallel
-        const studentDetails = await Promise.all(
-          studentUrls.map((url) =>
-            axios.get(url).catch((err) => {
-              console.error(`Failed to fetch student details for ${url}`, err);
-              return null;
-            })
-          )
-        ).then(results => results.filter(detail => detail !== null));
-    
-        // Create student map
-        const studentMap = studentUrls.reduce((acc, url, index) => {
-          if (studentDetails[index]) {
-            acc[url] = studentDetails[index].data;
-          } else {
-            console.warn(`No student data for URL: ${url}`);
-          }
-          return acc;
-        }, {});
-        console.log("Student map:", studentMap);
-    
-        // Update state
-        setRegistrations(registrations);
-        setStudents(studentMap);
-        setError("");
-      } catch (err) {
-        const errorMessage =
-          err.code === "ERR_NETWORK"
-            ? "Could not connect to server. Please check if the server is running."
-            : err.response?.data?.message || err.message || "Failed to fetch registrations.";
-        setError(errorMessage);
-        console.error("Error fetching registrations:", err);
+      console.log("Fetching registrations...");
+      const response = await axios.get(`${API_ENDPOINT}/registrations`);
+      const registrations = response.data._embedded?.registrations || [];
+
+      if (registrations.length === 0) {
+        setRegistrations([]);
+        setStudents({});
+        setError(""); // Clear any existing error
+        return;
       }
-    };
+
+      // Get unique student URLs
+      const studentUrls = [...new Set(registrations.map((reg) => reg._links.student.href))];
+      console.log("Student URLs:", studentUrls);
+
+      // Fetch all student details in parallel
+      const studentDetails = await Promise.all(
+        studentUrls.map((url) =>
+          axios.get(url).catch((err) => {
+            console.error(`Failed to fetch student details for ${url}`, err);
+            return null;
+          })
+        )
+      ).then(results => results.filter(detail => detail !== null));
+
+      // Create student map
+      const studentMap = studentUrls.reduce((acc, url, index) => {
+        if (studentDetails[index]) {
+          acc[url] = studentDetails[index].data;
+        } else {
+          console.warn(`No student data for URL: ${url}`);
+        }
+        return acc;
+      }, {});
+      console.log("Student map:", studentMap);
+
+      // Update state
+      setRegistrations(registrations);
+      setStudents(studentMap);
+      setError("");
+    } catch (err) {
+      const errorMessage =
+        err.code === "ERR_NETWORK"
+          ? "Could not connect to server. Please check if the server is running."
+          : err.response?.data?.message || err.message || "Failed to fetch registrations.";
+      setError(errorMessage);
+      console.error("Error fetching registrations:", err);
+    }
+  };
 
   // Group registrations by student
   const groupedRegistrations = registrations.reduce((acc, reg) => {
@@ -75,7 +75,7 @@ function Registrations() {
     if (!student) return acc;
     const studentId = student.id;
     if (!acc[studentId]) {
-        acc[studentId] = [];
+      acc[studentId] = [];
     }
     acc[studentId].push(reg);
     return acc;
@@ -119,8 +119,8 @@ function Registrations() {
 
           return (
             <div key={studentId} className="student-section">
-              <div 
-                className="student-header" 
+              <div
+                className="student-header"
                 onClick={() => toggleExpand(studentId)}
               >
                 <span className="student-info">

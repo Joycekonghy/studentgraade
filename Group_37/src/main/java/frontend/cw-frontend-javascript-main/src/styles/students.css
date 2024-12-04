@@ -1,54 +1,84 @@
 /* General Styles */
 /* Styling the main container for the students page */
 .students-page {
-  background-color: #d2f0ff; /* Light blue background for the entire page */
-  min-height: 100vh; /* Ensures the page takes up the full viewport height */
-  display: flex; /* Enables flexbox layout */
-  flex-direction: column; /* Arranges elements vertically */
-  font-family: "Albert Sans", sans-serif; /* Sets the font for the page */
-  overflow: hidden; /* Prevents scrolling if content overflows */
-  position: relative; /* Allows child elements to use absolute positioning */
+  background-color: #d2f0ff;
+  /* Light blue background for the entire page */
+  min-height: 100vh;
+  /* Ensures the page takes up the full viewport height */
+  display: flex;
+  /* Enables flexbox layout */
+  flex-direction: column;
+  /* Arranges elements vertically */
+  font-family: "Albert Sans", sans-serif;
+  /* Sets the font for the page */
+  overflow: hidden;
+  /* Prevents scrolling if content overflows */
+  position: relative;
+  /* Allows child elements to use absolute positioning */
 }
 
 /* Navbar */
 /* Styling the navigation bar */
 .navbar {
-  background-color: #d2f0ff; /* Matches the page background */
-  padding: 15px 30px; /* Adds spacing around the navbar content */
-  display: flex; /* Flexbox for horizontal alignment of items */
-  align-items: center; /* Vertically centers items within the navbar */
-  justify-content: space-between; /* Ensures space between navbar sections */
+  background-color: #d2f0ff;
+  /* Matches the page background */
+  padding: 15px 30px;
+  /* Adds spacing around the navbar content */
+  display: flex;
+  /* Flexbox for horizontal alignment of items */
+  align-items: center;
+  /* Vertically centers items within the navbar */
+  justify-content: space-between;
+  /* Ensures space between navbar sections */
 }
 
 /* Styling the navbar icon (e.g., logo or image) */
 .navbar-icon {
-  height: 50px; /* Sets a fixed height for the icon */
-  margin-right: 5px; /* Adds space to the right of the icon */
+  height: 50px;
+  /* Sets a fixed height for the icon */
+  margin-right: 5px;
+  /* Adds space to the right of the icon */
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
 }
 
 /* Styling the main text in the navbar */
 .navbar-text {
-  font-size: 35px; /* Larger font size for prominence */
-  font-weight: bold; /* Makes the text bold */
-  color: #1c3a63; /* Deep blue color for contrast and visibility */
-  margin-right: auto; /* Pushes the text to the left, separating it from links */
+  font-size: 35px;
+  /* Larger font size for prominence */
+  font-weight: bold;
+  /* Makes the text bold */
+  color: #1c3a63;
+  /* Deep blue color for contrast and visibility */
+  margin-right: auto;
+  /* Pushes the text to the left, separating it from links */
 }
 
 /* Styling the links in the navbar */
 .navbar-links a {
-  text-decoration: none; /* Removes underlines from links */
-  color: #1c3a63; /* Matches the deep blue theme */
-  margin: 0 15px; /* Adds horizontal spacing between links */
-  font-size: 25px; /* Sets a readable font size for links */
+  text-decoration: none;
+  /* Removes underlines from links */
+  color: #1c3a63;
+  /* Matches the deep blue theme */
+  margin: 0 15px;
+  /* Adds horizontal spacing between links */
+  font-size: 25px;
+  /* Sets a readable font size for links */
 }
 
 /* Hover effect for links in the navbar */
 .navbar-links a:hover {
-  text-decoration: underline; /* Adds underline on hover for emphasis */
+  text-decoration: underline;
+  /* Adds underline on hover for emphasis */
 }
 
 /* Styling the active link in the navbar */
 .navbar-links .active-link {
-  text-decoration: underline; /* Underline to indicate the active page */
-  font-weight: bold; /* Makes the active link visually distinct */
+  text-decoration: underline;
+  /* Underline to indicate the active page */
+  font-weight: bold;
+  /* Makes the active link visually distinct */
 }

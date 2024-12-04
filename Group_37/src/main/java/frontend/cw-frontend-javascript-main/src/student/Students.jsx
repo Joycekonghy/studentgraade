@@ -46,8 +46,10 @@ function Students() {
   return (
     <div className="registration-page">
       <div className="navbar">
-        <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
-        <span className="navbar-text">MyGrades</span>
+        <div className="navbar-logo">
+          <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
+          <span className="navbar-text">MyGrades</span>
+        </div>
         <nav className="navbar-links">
           <Link to="/">Home</Link>
           <Link to="/students" className="active-link">Students</Link>

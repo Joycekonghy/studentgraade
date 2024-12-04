@@ -1,112 +1,173 @@
 /* General Styles */
 /* Main container for the advice page layout */
 .advice-page {
-  background-color: #d2f0ff; /* Light blue background for a refreshing look */
-  min-height: 100vh; /* Ensures the page spans the full height of the viewport */
-  display: flex; /* Flexbox layout for alignment */
-  flex-direction: column; /* Stacks elements vertically */
-  font-family: "Albert Sans", sans-serif; /* Modern sans-serif font */
-  overflow: hidden; /* Prevents unwanted scrolling */
-  position: relative; /* Allows child elements to use absolute positioning */
+  background-color: #d2f0ff;
+  /* Light blue background for a refreshing look */
+  min-height: 100vh;
+  /* Ensures the page spans the full height of the viewport */
+  display: flex;
+  /* Flexbox layout for alignment */
+  flex-direction: column;
+  /* Stacks elements vertically */
+  font-family: "Albert Sans", sans-serif;
+  /* Modern sans-serif font */
+  overflow: hidden;
+  /* Prevents unwanted scrolling */
+  position: relative;
+  /* Allows child elements to use absolute positioning */
 }
 
 /* Navbar */
 /* Styling the navigation bar */
 .navbar {
-  background-color: #d2f0ff; /* Matches page background for consistency */
-  padding: 15px 30px; /* Spacing around navbar content */
-  display: flex; /* Flexbox for horizontal alignment */
-  align-items: center; /* Vertically centers items */
-  justify-content: space-between; /* Spreads navbar sections to the edges */
+  background-color: #d2f0ff;
+  /* Matches page background for consistency */
+  padding: 15px 30px;
+  /* Spacing around navbar content */
+  display: flex;
+  /* Flexbox for horizontal alignment */
+  align-items: center;
+  /* Vertically centers items */
+  justify-content: space-between;
+  /* Spreads navbar sections to the edges */
 }
 
 .navbar-icon {
-  height: 50px; /* Fixed height for the icon */
-  margin-right: 5px; /* Spacing to the right of the icon */
+  height: 50px;
+  /* Fixed height for the icon */
+  margin-right: 5px;
+  /* Spacing to the right of the icon */
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
 }
 
 .navbar-text {
-  font-size: 35px; /* Large font size for brand text */
-  font-weight: bold; /* Bold font for emphasis */
-  color: #1c3a63; /* Dark blue for readability */
-  margin-right: 450px !important; /* Custom spacing for alignment */
+  font-size: 35px;
+  /* Large font size for brand text */
+  font-weight: bold;
+  /* Bold font for emphasis */
+  color: #1c3a63;
+  /* Dark blue for readability */
+  margin-right: 450px !important;
+  /* Custom spacing for alignment */
 }
 
 .navbar-links {
-  display: flex; /* Flexbox layout for navigation links */
-  align-items: center; /* Vertically centers links */
+  display: flex;
+  /* Flexbox layout for navigation links */
+  align-items: center;
+  /* Vertically centers links */
 }
 
 .navbar-links a {
-  text-decoration: none; /* Removes underline from links */
-  color: #1c3a63; /* Matches dark blue theme */
-  margin: 0 10px; /* Spacing between links */
-  font-size: 25px; /* Medium font size for readability */
+  text-decoration: none;
+  /* Removes underline from links */
+  color: #1c3a63;
+  /* Matches dark blue theme */
+  margin: 0 10px;
+  /* Spacing between links */
+  font-size: 25px;
+  /* Medium font size for readability */
 }
 
 .navbar-links a:hover {
-  text-decoration: underline; /* Adds underline on hover for clarity */
+  text-decoration: underline;
+  /* Adds underline on hover for clarity */
 }
 
 .navbar-links .active-link {
-  text-decoration: underline; /* Indicates the active link */
-  font-weight: bold; /* Highlights the active link */
+  text-decoration: underline;
+  /* Indicates the active link */
+  font-weight: bold;
+  /* Highlights the active link */
 }
 
 /* Advice Page Styles */
 /* Styling the title of the advice page */
 .advice-title {
-  font-size: 48px; /* Large font size for the title */
-  color: #1c3a63; /* Dark blue for emphasis */
-  font-weight: bold; /* Bold font for prominence */
-  text-align: center; /* Centers the title horizontally */
-  margin-bottom: 30px; /* Adds spacing below the title */
+  font-size: 48px;
+  /* Large font size for the title */
+  color: #1c3a63;
+  /* Dark blue for emphasis */
+  font-weight: bold;
+  /* Bold font for prominence */
+  text-align: center;
+  /* Centers the title horizontally */
+  margin-bottom: 30px;
+  /* Adds spacing below the title */
 }
 
 /* Advice Items */
 /* Container for individual advice items */
 .advice-item {
-  background-color: #457b9d; /* Dark blue background for advice item */
-  border-radius: 10px; /* Rounded corners for modern look */
-  margin-bottom: 15px; /* Spacing between advice items */
-  overflow: hidden; /* Ensures content stays within the container */
+  background-color: #457b9d;
+  /* Dark blue background for advice item */
+  border-radius: 10px;
+  /* Rounded corners for modern look */
+  margin-bottom: 15px;
+  /* Spacing between advice items */
+  overflow: hidden;
+  /* Ensures content stays within the container */
 }
 
 /* Styling the question section of an advice item */
 .advice-question {
-  background-color: #457b9d; /* Matches the advice item background */
-  color: #ade8f4; /* Light blue text for contrast */
-  font-size: 24px; /* Medium font size for readability */
-  font-weight: bold; /* Bold font for emphasis */
-  padding: 20px; /* Internal padding for spacing */
-  text-align: left; /* Aligns text to the left */
-  border: none; /* Removes default borders */
-  width: 100%; /* Ensures the question spans the full width */
-  cursor: pointer; /* Pointer cursor for interactivity */
-  transition: background-color 0.3s ease; /* Smooth transition for hover effects */
+  background-color: #457b9d;
+  /* Matches the advice item background */
+  color: #ade8f4;
+  /* Light blue text for contrast */
+  font-size: 24px;
+  /* Medium font size for readability */
+  font-weight: bold;
+  /* Bold font for emphasis */
+  padding: 20px;
+  /* Internal padding for spacing */
+  text-align: left;
+  /* Aligns text to the left */
+  border: none;
+  /* Removes default borders */
+  width: 100%;
+  /* Ensures the question spans the full width */
+  cursor: pointer;
+  /* Pointer cursor for interactivity */
+  transition: background-color 0.3s ease;
+  /* Smooth transition for hover effects */
 }
 
 .advice-question:hover {
-  background-color: #3a5a75; /* Darker shade of blue on hover */
+  background-color: #3a5a75;
+  /* Darker shade of blue on hover */
 }
 
 /* Styling the answer section of an advice item */
 .advice-answer {
-  background-color: #ade8f4; /* Light blue background for answer section */
-  color: #457b9d; /* Dark blue text for readability */
-  font-size: 20px; /* Standard font size for clarity */
-  padding: 20px; /* Internal padding for spacing */
-  line-height: 1.6; /* Increases line spacing for better readability */
-  border-top: 1px solid #457b9d; /* Thin border to separate question and answer */
+  background-color: #ade8f4;
+  /* Light blue background for answer section */
+  color: #457b9d;
+  /* Dark blue text for readability */
+  font-size: 20px;
+  /* Standard font size for clarity */
+  padding: 20px;
+  /* Internal padding for spacing */
+  line-height: 1.6;
+  /* Increases line spacing for better readability */
+  border-top: 1px solid #457b9d;
+  /* Thin border to separate question and answer */
 }
 
 /* Link Styles */
 /* General link styling */
 a {
-  color: #264653; /* Dark green text for visibility */
-  text-decoration: underline; /* Underline links for clarity */
+  color: #264653;
+  /* Dark green text for visibility */
+  text-decoration: underline;
+  /* Underline links for clarity */
 }
 
 a:hover {
-  color: #2a9d8f; /* Lighter green on hover for feedback */
+  color: #2a9d8f;
+  /* Lighter green on hover for feedback */
 }
