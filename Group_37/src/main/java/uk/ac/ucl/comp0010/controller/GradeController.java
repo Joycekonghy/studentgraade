@@ -31,8 +31,7 @@ public class GradeController {
  * Constructor for the GradeController class.
  *
  * @param gradeRepository The repository for grades
- * @param moduleRepository The repository for modules
- * @param studentRepository The repository for students
+ * @param registrationRepository The repository for registrations
  */
 
   public GradeController(GradeRepository gradeRepository, 

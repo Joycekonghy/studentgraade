@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,27 +72,14 @@ public class ModuleController {
     if (module.getName() == null || module.getName().isEmpty()) {
       return ResponseEntity.badRequest().body("Module name is required.");
     }
-
-    try {
-      // Check for existing module by code
-      Optional<Module> existingModule = moduleRepository.findByCode(module.getCode());
-      if (existingModule.isPresent()) {
-        // Update existing module
-        Module existing = existingModule.get();
-        existing.setName(module.getName());
-        existing.setMnc(module.getMnc());
-        Module updatedModule = moduleRepository.save(existing);
-        System.out.println("Updated module: " + updatedModule);
-        return ResponseEntity.ok(updatedModule);
-      }
-      // Save as a new module
-      Module savedModule = moduleRepository.save(module);
-      return ResponseEntity.ok(savedModule);
-    } catch (DataIntegrityViolationException e) {
-      return ResponseEntity.status(409).body("A module with this code already exists.");
-    } catch (Exception e) {
-      e.printStackTrace();
-      return ResponseEntity.status(500).body("An unexpected error occurred.");
-    }
+    Optional<Module> existingModule = moduleRepository.findById(module.getId());
+    if (existingModule.isPresent() && !existingModule.get().equals(module)) {
+      return ResponseEntity
+          .status(HttpStatus.CONFLICT)
+          .body("A module with this code already exists.");
   }
+      // Save only if no conflict
+      Module savedModule = moduleRepository.save(module);
+      return ResponseEntity.ok("module saved successfully");
+}
 }

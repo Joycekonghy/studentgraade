@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,27 +75,15 @@ public class StudentController {
       }
   
       try {
-        if (Objects.isNull(student.getId())) {
-          // Add new student
-          Student savedStudent = studentRepository.save(student);
-          return ResponseEntity.ok(savedStudent);
-        } else {
-          // Update existing student
-          Optional<Student> existingStudent = studentRepository.findById(student.getId());
-          if (existingStudent.isPresent()) {
-            Student existing = existingStudent.get();
-            existing.setUsername(student.getUsername());
-            existing.setEmail(student.getEmail());
-            existing.setFirstName(student.getFirstName());
-            existing.setLastName(student.getLastName());
-            Student updatedStudent = studentRepository.save(existing);
-            return ResponseEntity.ok(updatedStudent);
-          } else {
-            return ResponseEntity.notFound().build();
-            }
-          }
-      } catch (DataIntegrityViolationException e) {
-          return ResponseEntity.status(409).body("A student with the same username or email already exists.");
+        Optional<Student> existingStudent = studentRepository.findById(student.getId());
+        if (existingStudent.isPresent() && !existingStudent.get().equals(student)) {
+        return ResponseEntity
+            .status(HttpStatus.CONFLICT)
+            .body("A student with this id already exists.");
+      }
+      // Save only if no conflict
+        Student savedStudent = studentRepository.save(student);
+        return ResponseEntity.ok("student saved successfully");
       } catch (Exception e) {
           return ResponseEntity.status(500).body("An unexpected error occurred: " + e.getMessage());
       }

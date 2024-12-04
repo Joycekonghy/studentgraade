@@ -45,6 +45,7 @@ function Grades() {
           <Link to="/advice">Advice</Link>
         </nav>
       </div>
+      
 
       {/* Add Grade Section */}
       <div className="add-student-section">

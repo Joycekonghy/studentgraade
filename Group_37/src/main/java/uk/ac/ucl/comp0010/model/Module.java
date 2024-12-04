@@ -38,14 +38,15 @@ public class Module {
   private Student registeredStudent;
 
   // Default constructor required by JPA
-  public Module() {}
+  public Module() {
+  }
 
   /**
    * Creates a new module with the given name, code, and MNC status.
    *
    * @param name the name of the module
    * @param code the code of the module
-   * @param mnc whether the module is an MNC module
+   * @param mnc  whether the module is an MNC module
    */
   public Module(String name, String code, Boolean mnc) {
     this.name = name;
@@ -57,6 +58,11 @@ public class Module {
   // Getters and Setters
   public Long getId() {
     return id;
+  }
+
+  // only for testing
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getName() {
