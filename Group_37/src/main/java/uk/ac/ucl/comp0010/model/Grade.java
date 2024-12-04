@@ -36,6 +36,8 @@ public class Grade {
   @JoinColumn(name = "module_id", nullable = false)
   private Module module;
 
+  public Grade() {}
+  
   /**
    * Creates a new grade with the given student, module, and score.
    *
@@ -43,8 +45,7 @@ public class Grade {
    * @param module the module for which the grade was received
    * @param score the score of the grade
    */
-  public Grade() {}
-  
+
   public Grade(Student student, Module module, int score) {
     validateScore(score);
     this.student = student;
@@ -78,6 +79,7 @@ public class Grade {
   public int getScore() {
     return score;
   }
+  
   public Long getId() {
     return id;
   }

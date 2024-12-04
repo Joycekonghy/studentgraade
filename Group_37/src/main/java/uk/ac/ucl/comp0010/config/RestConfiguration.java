@@ -19,11 +19,14 @@ import uk.ac.ucl.comp0010.model.Student;
 public class RestConfiguration implements RepositoryRestConfigurer {
 
   /**
-   * Expose entity IDs for {@link Student}, {@link Module}, and {@link Grade}.
-   * 
-   * @param config the repository REST configuration
-   * @param cors the CORS registry
-   */
+ * Exposes entity IDs for {@link Student}, {@link Module}, and {@link Grade}.
+ * 
+ * <p>This method configures the repository REST settings and registers CORS mappings.</p>
+ *
+ * @param config the repository REST configuration
+ * @param cors the CORS registry
+ */
+
   @Override
   public void configureRepositoryRestConfiguration(
       RepositoryRestConfiguration config,

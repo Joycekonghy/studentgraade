@@ -60,33 +60,32 @@ public class StudentController {
   @PostMapping
   @Transactional
   public ResponseEntity<?> addOrUpdateStudent(@RequestBody Student student) {
-      // Validate input
-      if (student.getUsername() == null || student.getUsername().isEmpty()) {
-          return ResponseEntity.badRequest().body("Student username is required.");
-      }
-      if (student.getEmail() == null || student.getEmail().isEmpty()) {
-          return ResponseEntity.badRequest().body("Student email is required.");
-      }
-      if (student.getFirstName() == null || student.getFirstName().isEmpty()) {
-          return ResponseEntity.badRequest().body("Student first name is required.");
-      }
-      if (student.getLastName() == null || student.getLastName().isEmpty()) {
-          return ResponseEntity.badRequest().body("Student last name is required.");
-      }
-  
-      try {
-        Optional<Student> existingStudent = studentRepository.findById(student.getId());
-        if (existingStudent.isPresent() && !existingStudent.get().equals(student)) {
+    // Validate input
+    if (student.getUsername() == null || student.getUsername().isEmpty()) {
+      return ResponseEntity.badRequest().body("Student username is required.");
+    }
+    if (student.getEmail() == null || student.getEmail().isEmpty()) {
+      return ResponseEntity.badRequest().body("Student email is required.");
+    }
+    if (student.getFirstName() == null || student.getFirstName().isEmpty()) {
+      return ResponseEntity.badRequest().body("Student first name is required.");
+    }
+    if (student.getLastName() == null || student.getLastName().isEmpty()) {
+      return ResponseEntity.badRequest().body("Student last name is required.");
+    }
+    try {
+      Optional<Student> existingStudent = studentRepository.findById(student.getId());
+      if (existingStudent.isPresent() && !existingStudent.get().equals(student)) {
         return ResponseEntity
             .status(HttpStatus.CONFLICT)
             .body("A student with this id already exists.");
       }
       // Save only if no conflict
-        Student savedStudent = studentRepository.save(student);
-        return ResponseEntity.ok("student saved successfully");
-      } catch (Exception e) {
-          return ResponseEntity.status(500).body("An unexpected error occurred: " + e.getMessage());
-      }
+      Student savedStudent = studentRepository.save(student);
+      return ResponseEntity.ok("student saved successfully");
+    } catch (Exception e) {
+      return ResponseEntity.status(500).body("An unexpected error occurred: " + e.getMessage());
+    }
   }
   
 }

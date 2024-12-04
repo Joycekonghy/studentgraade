@@ -44,6 +44,10 @@ public class Student {
   @OneToMany(mappedBy = "registeredStudent", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Module> modules;
 
+  public Student() {
+    this.modules = new ArrayList<>();
+    this.grades = new ArrayList<>();
+  }
   /**
    * Creates a new student with the given ID, first name, last name, username, and
    * email.
@@ -55,10 +59,7 @@ public class Student {
    * @param email     the email of the student
    */
 
-  public Student() {
-    this.modules = new ArrayList<>();
-    this.grades = new ArrayList<>();
-  }
+
 
   public Student(Long id, String firstName, String lastName, String username, String email) {
     this.id = id;

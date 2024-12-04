@@ -77,9 +77,9 @@ public class ModuleController {
       return ResponseEntity
           .status(HttpStatus.CONFLICT)
           .body("A module with this code already exists.");
+    }
+    // Save only if no conflict
+    Module savedModule = moduleRepository.save(module);
+    return ResponseEntity.ok("module saved successfully");
   }
-      // Save only if no conflict
-      Module savedModule = moduleRepository.save(module);
-      return ResponseEntity.ok("module saved successfully");
-}
 }

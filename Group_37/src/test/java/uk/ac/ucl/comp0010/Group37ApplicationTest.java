@@ -2,6 +2,7 @@ package uk.ac.ucl.comp0010;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,5 +26,6 @@ public class Group37ApplicationTest {
 
     
   }
+
   
 }
