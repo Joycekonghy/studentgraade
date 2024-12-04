@@ -91,42 +91,45 @@ function Modules() {
       </div>
 
       <div className="students-table-wrapper">
-        <div className="table-header">
-          <h2>Modules List</h2>
-        </div>
-        
         {error && <div className="error-message">{error}</div>}
-        {!error && modules.length < 1 && (
+        {!error && modules.length === 0 ? (
           <div className="warning-message">No modules available</div>
+        ) : (
+          !error && modules.length > 0 && (
+            <>
+              <div className="table-header">
+                <h2>Modules List</h2>
+              </div>
+              <table className="students-table">
+                <thead>
+                  <tr>
+                    <th>Module Code</th>
+                    <th>Module Name</th>
+                    <th>Is MNC</th>
+                    <th>Enrolled</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {modules.map((module) => (
+                    <ModuleRow
+                      key={module.code}
+                      module={module}
+                      registrationCount={registrationCounts[module.id] || 0}
+                      updateModules={updateModules}
+                      onEdit={() => handleEditModule(module)}
+                    />
+                  ))}
+                </tbody>
+              </table>
+            </>
+          )
         )}
-        <table className="students-table">
-          <thead>
-            <tr>
-              <th>Module Code</th>
-              <th>Module Name</th>
-              <th>Is MNC</th>
-              <th>Enrolled</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {modules.map((module) => (
-              <ModuleRow
-                key={module.code}
-                module={module}
-                registrationCount={registrationCounts[module.id] || 0}
-                updateModules={updateModules}
-                onEdit={() => handleEditModule(module)}
-              />
-            ))}
-          </tbody>
-        </table>
       </div>
     </div>
   );
 }
 
-// Keep your existing ModuleRow component unchanged as it's working correctly
 const ModuleRow = ({ module, registrationCount, updateModules, onEdit }) => {
   const handleDelete = async () => {
     const confirmDelete = window.confirm(
@@ -137,14 +140,12 @@ const ModuleRow = ({ module, registrationCount, updateModules, onEdit }) => {
     try {
       console.log("Deleting registrations for module:", module);
 
-      // Fetch all registrations for the module
       const registrationsResponse = await axios.get(`${API_ENDPOINT}/registrations`);
       const registrations = registrationsResponse.data._embedded?.registrations || [];
       const moduleRegistrations = registrations.filter(
         (reg) => reg._links.module?.href.endsWith(`/${module.id}`)
       );
 
-      // Delete all registrations for this module
       if (moduleRegistrations.length > 0) {
         await Promise.all(
           moduleRegistrations.map((registration) =>
@@ -153,7 +154,6 @@ const ModuleRow = ({ module, registrationCount, updateModules, onEdit }) => {
         );
       }
 
-      // Delete the module itself
       const deleteModuleUrl = `${API_ENDPOINT}/modules/${module.id}`;
       console.log("DELETE URL:", deleteModuleUrl);
       await axios.delete(deleteModuleUrl);
