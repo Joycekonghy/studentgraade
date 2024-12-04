@@ -10,102 +10,58 @@ function Modules() {
   const [modules, setModules] = useState([]);
   const [registrationCounts, setRegistrationCounts] = useState({});
   const [error, setError] = useState("");
-  const [editingModule, setEditingModule] = useState(null);
+  const [moduleToEdit, setModuleToEdit] = useState(null);
 
   useEffect(() => {
     updateModules();
-    
+
     const intervalId = setInterval(() => {
       updateModules();
     }, 5000);
-    
+
     return () => clearInterval(intervalId);
   }, []);
 
-  const updateModules = async () => {
-    try {
-      const modulesResponse = await axios.get(`${API_ENDPOINT}/Module`);
-      const modules = Array.isArray(modulesResponse.data) 
-        ? modulesResponse.data 
-        : modulesResponse.data._embedded?.modules || [];
-      setModules(modules);
+  const updateModules = () => {
+    console.log("Fetching modules...");
+    axios
+      .get(`${API_ENDPOINT}/Module`)
+      .then(async (modulesResponse) => {
+        console.log("Modules response:", modulesResponse.data);
+        const modules = modulesResponse.data;
+        setModules(modules);
 
-      const registrationsResponse = await axios.get(`${API_ENDPOINT}/registrations/registrations`);
-      const registrations = Array.isArray(registrationsResponse.data)
-        ? registrationsResponse.data
-        : registrationsResponse.data._embedded?.registrations || [];
-      
-      const counts = {};
-      for (const registration of registrations) {
-        const moduleId = registration.module?.id || registration._links?.module?.href?.split('/').pop();
-        if (moduleId) {
-          counts[moduleId] = (counts[moduleId] || 0) + 1;
+        try {
+          const registrationsResponse = await axios.get(
+            `${API_ENDPOINT}/registrations`
+          );
+          console.log("Registrations response:", registrationsResponse.data);
+          const registrations = registrationsResponse.data._embedded?.registrations || [];
+
+          const counts = {};
+          registrations.forEach((registration) => {
+            const moduleId = registration.module?.id;
+            if (moduleId) {
+              counts[moduleId] = (counts[moduleId] || 0) + 1;
+            }
+          });
+          setRegistrationCounts(counts);
+        } catch (err) {
+          console.error("Error fetching registrations:", err);
         }
-      }
-      
-      setRegistrationCounts(counts);
-      setError("");
-    } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message || "Failed to fetch data.";
-      setError(errorMessage);
-      console.error("Error fetching data:", err);
-    }
+      })
+      .catch((err) => {
+        console.error("Error fetching modules:", err);
+        setError(err.message || "Failed to fetch modules.");
+      });
   };
 
-  const handleDelete = async (code) => {
-    try {
-      // First get the module to delete
-      const moduleToDelete = modules.find(m => m.code === code);
-      if (!moduleToDelete) {
-        setError("Module not found");
-        return;
-      }
-
-      // Check if there are any registrations
-      if (registrationCounts[moduleToDelete.id] > 0) {
-        setError("Cannot delete module with active registrations");
-        return;
-      }
-
-      await axios.delete(`${API_ENDPOINT}/Module/${moduleToDelete.id}`);
-      updateModules();
-      setError("");
-    } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message || "Failed to delete module.";
-      setError(errorMessage);
-      console.error("Error deleting module:", err);
-    }
+  const handleEditModule = (module) => {
+    setModuleToEdit(module);
   };
 
-  const handleEdit = (module) => {
-    setEditingModule({
-      id: module.id,
-      code: module.code,
-      name: module.name,
-      mnc: module.mnc
-    });
-  };
-
-  const handleSave = async (code, updatedModule) => {
-    try {
-      // Ensure we're sending the correct structure
-      const moduleToUpdate = {
-        id: updatedModule.id,
-        code: updatedModule.code,
-        name: updatedModule.name,
-        mnc: updatedModule.mnc || false
-      };
-
-      await axios.post(`${API_ENDPOINT}/Module`, moduleToUpdate);
-      setEditingModule(null);
-      updateModules();
-      setError("");
-    } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message || "Failed to update module.";
-      setError(errorMessage);
-      console.error("Error updating module:", err);
-      console.error("Module data sent:", updatedModule);
-    }
+  const clearEdit = () => {
+    setModuleToEdit(null);
   };
 
   return (
@@ -124,7 +80,11 @@ function Modules() {
       </div>
 
       <div className="add-student-section">
-        <AddModule update={updateModules} />
+        <AddModule 
+          update={updateModules}
+          moduleToEdit={moduleToEdit}
+          clearEdit={clearEdit}
+        />
       </div>
 
       <div className="students-table-wrapper">
@@ -144,54 +104,13 @@ function Modules() {
           </thead>
           <tbody>
             {modules.map((module) => (
-              <tr key={module.code}>
-                <td>{module.code}</td>
-                <td>
-                  {editingModule?.code === module.code ? (
-                    <input
-                      type="text"
-                      className="form-input"
-                      defaultValue={module.name}
-                      onChange={(e) => {
-                        setEditingModule({
-                          ...editingModule,
-                          name: e.target.value,
-                        });
-                      }}
-                    />
-                  ) : (
-                    module.name
-                  )}
-                </td>
-                <td>{module.mnc ? "Yes" : "No"}</td>
-                <td className="registration-count">
-                  {registrationCounts[module.id] || 0}
-                </td>
-                <td className="action-buttons">
-                  {editingModule?.code === module.code ? (
-                    <button
-                      className="edit-button"
-                      onClick={() => handleSave(module.code, editingModule)}
-                    >
-                      Save
-                    </button>
-                  ) : (
-                    <button
-                      className="edit-button"
-                      onClick={() => handleEdit(module)}
-                    >
-                      Edit
-                    </button>
-                  )}
-                  <button
-                    className="delete-button"
-                    onClick={() => handleDelete(module.code)}
-                    disabled={registrationCounts[module.id] > 0}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
+              <ModuleRow
+                key={module.code}
+                module={module}
+                registrationCount={registrationCounts[module.id] || 0}
+                updateModules={updateModules}
+                onEdit={() => handleEditModule(module)}
+              />
             ))}
           </tbody>
         </table>
@@ -199,5 +118,72 @@ function Modules() {
     </div>
   );
 }
+
+const ModuleRow = ({ module, registrationCount, updateModules, onEdit }) => {
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete module "${module.name}"? All registrations for this module will also be deleted.`
+    );
+    if (!confirmDelete) return;
+
+    try {
+      console.log("Deleting registrations for module:", module);
+
+      // Fetch all registrations for the module
+      const registrationsResponse = await axios.get(`${API_ENDPOINT}/registrations`);
+      const registrations = registrationsResponse.data._embedded?.registrations || [];
+      const moduleRegistrations = registrations.filter(
+        (reg) => reg._links.module?.href.endsWith(`/${module.id}`)
+      );
+
+      // Delete all registrations for this module
+      if (moduleRegistrations.length > 0) {
+        await Promise.all(
+          moduleRegistrations.map((registration) =>
+            axios.delete(registration._links.self.href)
+          )
+        );
+      }
+
+      // Delete the module itself
+      const deleteModuleUrl = `${API_ENDPOINT}/Module/${module.id}`;
+      console.log("DELETE URL:", deleteModuleUrl);
+      await axios.delete(deleteModuleUrl);
+
+      updateModules();
+      alert(`Module "${module.name}" and its registrations have been successfully deleted.`);
+    } catch (err) {
+      console.error("Failed to delete module or its registrations", err);
+
+      if (err.response?.status === 405) {
+        alert("Delete operation is not allowed. Check API permissions or backend logic.");
+      } else {
+        alert(
+          `An error occurred while deleting the module. Please check the console for details.`
+        );
+      }
+    }
+  };
+
+  return (
+    <tr>
+      <td>{module.code}</td>
+      <td>{module.name}</td>
+      <td>{module.mnc ? "Yes" : "No"}</td>
+      <td className="registration-count">{registrationCount}</td>
+      <td>
+        <button className="edit-button" onClick={onEdit}>
+          Edit
+        </button>
+        <button 
+          className="delete-button" 
+          onClick={handleDelete}
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  );
+};
 
 export default Modules;
