@@ -18,65 +18,80 @@ function Registrations() {
 
   const updateRegistrations = async () => {
     try {
-      console.log("Fetching registrations...");
-      const response = await axios.get(`${API_ENDPOINT}/registrations`);
-      const registrations = response.data._embedded?.registrations || [];
-      
-      // Get unique student URLs
-      const studentUrls = [...new Set(registrations.map(reg => reg._links.student.href))];
-      
-      // Fetch all student details in parallel
-      const studentDetails = await Promise.all(
-        studentUrls.map(url => axios.get(url))
-      );
-      
-      // Create student map
-      const studentMap = studentUrls.reduce((acc, url, index) => {
-        acc[url] = studentDetails[index].data;
-        return acc;
-      }, {});
-      
-      // Update state
-      setRegistrations(registrations);
-      setStudents(studentMap);
-      setError("");
-      
-      // Ensure expanded state is maintained for existing headers
-      setExpandedStudents(prev => {
-        const newState = { ...prev };
-        studentUrls.forEach(url => {
-          if (!(url in newState)) {
-            newState[url] = true; // Auto-expand newly added registrations
+        console.log("Fetching registrations...");
+        const response = await axios.get(`${API_ENDPOINT}/registrations`);
+        const registrations = response.data._embedded?.registrations || [];
+        
+        if (registrations.length === 0) {
+          setRegistrations([]);
+          setStudents({});
+          setError("No registrations available.");
+          return;
+        }
+    
+        // Get unique student URLs
+        const studentUrls = [...new Set(registrations.map((reg) => reg._links.student.href))];
+        console.log("Student URLs:", studentUrls);
+    
+        // Fetch all student details in parallel
+        const studentDetails = await Promise.all(
+          studentUrls.map((url) =>
+            axios.get(url).catch((err) => {
+              console.error(`Failed to fetch student details for ${url}`, err);
+              return null; // Avoid breaking the Promise.all chain
+            })
+          )
+        ).then(results => results.filter(detail => detail !== null)); // Filter out null values
+    
+        // Create student map
+        const studentMap = studentUrls.reduce((acc, url, index) => {
+          if (studentDetails[index]) {
+            acc[url] = studentDetails[index].data;
+          } else {
+            console.warn(`No student data for URL: ${url}`);
           }
-        });
-        return newState;
-      });
-      
-    } catch (err) {
-      const errorMessage = err.code === "ERR_NETWORK"
-        ? "Could not connect to server. Please check if the server is running."
-        : err.response?.data?.message || err.message || "Failed to fetch registrations.";
-      setError(errorMessage);
-      console.error("Error fetching registrations:", err);
-    }
-  };
+          return acc;
+        }, {});
+        console.log("Student map:", studentMap);
+    
+        // Update state
+        setRegistrations(registrations);
+        setStudents(studentMap);
+        setError("");
+      } catch (err) {
+        const errorMessage =
+          err.code === "ERR_NETWORK"
+            ? "Could not connect to server. Please check if the server is running."
+            : err.response?.data?.message || err.message || "Failed to fetch registrations.";
+        setError(errorMessage);
+        console.error("Error fetching registrations:", err);
+      }
+    };
 
   // Group registrations by student
   const groupedRegistrations = registrations.reduce((acc, reg) => {
     const studentUrl = reg._links.student.href;
-    if (!acc[studentUrl]) {
-      acc[studentUrl] = [];
+    const student = students[studentUrl];
+    if (!student) return acc;
+    const studentId = student.id;
+    if (!acc[studentId]) {
+        acc[studentId] = [];
+        console.log("Student URL:", studentUrl);
     }
-    acc[studentUrl].push(reg);
+    acc[studentId].push(reg);
+    console.log("Student ID:", studentId);
     return acc;
   }, {});
 
-  const toggleExpand = (studentUrl) => {
+
+
+  const toggleExpand = (studentId) => {
     setExpandedStudents(prev => ({
       ...prev,
-      [studentUrl]: !prev[studentUrl]
+      [studentId]: !prev[studentId]
     }));
   };
+  
 
   return (
     <div className="registration-page">
@@ -103,25 +118,25 @@ function Registrations() {
           <div className="warning-message">No registrations available</div>
         )}
 
-        {Object.entries(groupedRegistrations).map(([studentUrl, studentRegs]) => {
-          const student = students[studentUrl];
+        {Object.entries(groupedRegistrations).map(([studentId, studentRegs]) => {
+          const student = Object.values(students).find(s => s.id === Number(studentId));
           if (!student) return null;
 
           return (
-            <div key={studentUrl} className="student-section">
+            <div key={studentId} className="student-section">
               <div 
                 className="student-header" 
-                onClick={() => toggleExpand(studentUrl)}
+                onClick={() => toggleExpand(studentId)}
               >
                 <span className="student-info">
                   {student.firstName} {student.lastName} (ID: {student.id})
                 </span>
                 <span className="module-count">
-                  {studentRegs.length} module{studentRegs.length !== 1 ? 's' : ''} {expandedStudents[studentUrl] ? '▼' : '▶'}
+                  {studentRegs.length} module{studentRegs.length !== 1 ? 's' : ''} {expandedStudents[studentId] ? '▼' : '▶'}
                 </span>
               </div>
 
-              {expandedStudents[studentUrl] && (
+              {expandedStudents[studentId] && (
                 <div className="student-modules">
                   <table className="students-table">
                     <thead>
