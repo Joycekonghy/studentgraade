@@ -39,12 +39,15 @@ function Modules() {
           const registrations = registrationsResponse.data._embedded?.registrations || [];
 
           const counts = {};
-          registrations.forEach((registration) => {
-            const moduleId = registration.module?.id;
-            if (moduleId) {
+          for (const registration of registrations) {
+            if (registration._links.module) {
+              const moduleUrl = registration._links.module.href;
+              const moduleResponse = await axios.get(moduleUrl);
+              const moduleId = moduleResponse.data.id;
               counts[moduleId] = (counts[moduleId] || 0) + 1;
             }
-          });
+          }
+          console.log("Registration counts:", counts);
           setRegistrationCounts(counts);
         } catch (err) {
           console.error("Error fetching registrations:", err);
@@ -88,6 +91,10 @@ function Modules() {
       </div>
 
       <div className="students-table-wrapper">
+        <div className="table-header">
+          <h2>Modules List</h2>
+        </div>
+        
         {error && <div className="error-message">{error}</div>}
         {!error && modules.length < 1 && (
           <div className="warning-message">No modules available</div>
@@ -119,6 +126,7 @@ function Modules() {
   );
 }
 
+// Keep your existing ModuleRow component unchanged as it's working correctly
 const ModuleRow = ({ module, registrationCount, updateModules, onEdit }) => {
   const handleDelete = async () => {
     const confirmDelete = window.confirm(
@@ -146,7 +154,7 @@ const ModuleRow = ({ module, registrationCount, updateModules, onEdit }) => {
       }
 
       // Delete the module itself
-      const deleteModuleUrl = `${API_ENDPOINT}/Module/${module.id}`;
+      const deleteModuleUrl = `${API_ENDPOINT}/modules/${module.id}`;
       console.log("DELETE URL:", deleteModuleUrl);
       await axios.delete(deleteModuleUrl);
 
