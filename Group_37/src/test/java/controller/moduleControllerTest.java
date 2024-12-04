@@ -3,8 +3,6 @@ package controller;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
-import org.springframework.dao.DataIntegrityViolationException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +14,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.ac.ucl.comp0010.model.Module;
-import uk.ac.ucl.comp0010.model.Student;
 import uk.ac.ucl.comp0010.repository.ModuleRepository;
 import uk.ac.ucl.comp0010.controller.ModuleController;
 
