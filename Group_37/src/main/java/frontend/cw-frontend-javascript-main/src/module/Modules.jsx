@@ -1,50 +1,18 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { API_ENDPOINT } from "../config";
-import graduateStudent from "../Icons/graduate_student.png";
-import AddModule from "./AddModule";
-import "../styles/students.css";
 
-function Modules() {
-  const [modules, setModules] = useState([]);
-  const [error, setError] = useState(null);
-  const [expandedModules, setExpandedModules] = useState({});
-  const [moduleToEdit, setModuleToEdit] = useState(null);
 
   useEffect(() => {
     updateModules();
   }, []);
 
   const updateModules = () => {
+
     axios
       .get(`${API_ENDPOINT}/modules`)
       .then((response) => {
         const modules = response.data._embedded?.modules || [];
         setModules(modules);
-        setError(null);
-      })
-      .catch((err) => {
-        setError(
-          err.response?.data?.message || err.message || "Failed to fetch modules."
-        );
-      });
-  };
 
-  const handleToggleExpand = (moduleCode) => {
-    setExpandedModules((prev) => ({
-      ...prev,
-      [moduleCode]: !prev[moduleCode],
-    }));
-  };
-
-  const handleEditModule = (module) => {
-    setModuleToEdit(module);
-  };
-
-  const clearEdit = () => {
-    setModuleToEdit(null);
-  };
 
   return (
     <div className="modules-page">
@@ -64,39 +32,18 @@ function Modules() {
         </nav>
       </div>
 
-      {/* Add/Edit Module Section */}
-      <div className="add-module-section">
-        <AddModule
-          update={updateModules}
-          moduleToEdit={moduleToEdit}
-          clearEdit={clearEdit}
-        />
-      </div>
-
-      {/* Main Content */}
-      <div className="modules-table-wrapper">
-        {error && <div className="error-message">{error}</div>}
-        {!error && modules.length < 1 && (
-          <div className="warning-message">No modules available</div>
-        )}
 
         <table className="students-table">
           <thead>
             <tr>
               <th>Module Code</th>
               <th>Module Name</th>
-              <th>MNC</th>
-              <th>Actions</th>
+
             </tr>
           </thead>
           <tbody>
             {modules.map((module) => (
-              <ModuleRow
-                key={module.id}
-                module={module}
-                updateModules={updateModules}
-                onEdit={() => handleEditModule(module)}
-              />
+
             ))}
           </tbody>
         </table>
