@@ -69,17 +69,18 @@ public class GradeController {
   @PostMapping("/addGrades")
   public ResponseEntity<String> addGrade(@RequestBody Map<String, Object> payload) {
     // Extract data from the payload
-    Long studentId = ((Number) payload.get("student_id")).longValue();
-    Long moduleId = ((Number) payload.get("module_id")).longValue();
+    long studentId = ((Number) payload.get("student_id")).longValue();
+    long moduleId = ((Number) payload.get("module_id")).longValue();
     
-    Optional<Registration> existingRegistration = registrationRepository.findByStudentIdAndModuleId(studentId, moduleId);
+    Optional<Registration> existingRegistration = 
+                registrationRepository.findByStudentIdAndModuleId(studentId, moduleId);
     if (!existingRegistration.isPresent()) {
       return ResponseEntity.badRequest().body("Student is not registered for the module.");
     }
 
     List<Grade> existingGrades = (List<Grade>) gradeRepository.findAll();
     boolean gradeExists = existingGrades.stream()
-        .anyMatch(grade -> grade.getStudent().getId() == studentId 
+        .anyMatch(grade -> grade.getStudent().getId() == studentId
                 && grade.getModule().getId() == moduleId);
     if (gradeExists) {
       return ResponseEntity.badRequest().body("Grade already exists.");

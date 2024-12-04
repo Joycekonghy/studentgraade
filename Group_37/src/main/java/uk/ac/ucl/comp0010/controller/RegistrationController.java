@@ -3,8 +3,6 @@ package uk.ac.ucl.comp0010.controller;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,13 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ucl.comp0010.model.Module;
 import uk.ac.ucl.comp0010.model.Registration;
 import uk.ac.ucl.comp0010.model.Student;
-import uk.ac.ucl.comp0010.repository.RegistrationRepository;
 import uk.ac.ucl.comp0010.repository.ModuleRepository;
+import uk.ac.ucl.comp0010.repository.RegistrationRepository;
 import uk.ac.ucl.comp0010.repository.StudentRepository;
 
 /**
- * The RegistrationController class is a REST controller that handles HTTP requests related to Registrations.
- * It provides endpoints for getting all Registrations, getting a Registration by ID, and adding a new Registration.
+ * The RegistrationController class is a REST controller 
+ * that handles HTTP requests related to Registrations.
+ * It provides endpoints for getting all Registrations, 
+ * getting a Registration by ID, and adding a new Registration.
  */
 
 @RestController
@@ -34,7 +34,7 @@ public class RegistrationController {
   /**
  * Constructor for the RegistrationController class.
  *
- * @param registrationController The repository for registrations
+ * @param registrationRepository The repository for registrations
  * @param moduleRepository The repository for modules
  * @param studentRepository The repository for students
  */
@@ -62,8 +62,8 @@ public class RegistrationController {
   @PostMapping("/registerModules")
   public ResponseEntity<String> registerModule(@RequestBody Map<String, Object> payload) {
     // Extract data from the payload
-    Long studentId = ((Number) payload.get("student_id")).longValue();
-    Long moduleId = ((Number) payload.get("module_id")).longValue();
+    long studentId = ((Number) payload.get("student_id")).longValue();
+    long moduleId = ((Number) payload.get("module_id")).longValue();
     System.out.println("studentId: " + studentId);
     System.out.println("moduleId: " + moduleId);
     
@@ -78,18 +78,19 @@ public class RegistrationController {
       return ResponseEntity.badRequest().body("Module not found with ID: " + moduleId);
     }
 
-    List<Registration> existingRegistrations = (List<Registration>) registrationRepository.findAll();
-    boolean RegistrationExists = existingRegistrations.stream()
-        .anyMatch(Registration -> Registration.getStudent().getId() == studentId 
-                && Registration.getModule().getId() == moduleId);
-    if (RegistrationExists) {
+    List<Registration> existingRegistrations = 
+                (List<Registration>) registrationRepository.findAll();
+    boolean registrationExists = existingRegistrations.stream()
+        .anyMatch(registration -> registration.getStudent().getId() == studentId 
+                && registration.getModule().getId() == moduleId);
+    if (registrationExists) {
       return ResponseEntity.badRequest().body("Registration already exists.");
     }
     // Save the new Registration
-    Registration Registration = new Registration();
-    Registration.setStudent(existingStudent.get()); // Set the student entity
-    Registration.setModule(existingModule.get());   // Set the module entity                
-    registrationRepository.save(Registration);
+    Registration registration = new Registration();
+    registration.setStudent(existingStudent.get()); // Set the student entity
+    registration.setModule(existingModule.get());   // Set the module entity                
+    registrationRepository.save(registration);
     return ResponseEntity.ok("Registration saved successfully");
   }
 }
