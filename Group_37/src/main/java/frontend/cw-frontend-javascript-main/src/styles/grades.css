@@ -1,141 +1,149 @@
 /* Grades Page */
+/* Main container for the grades page */
 .grades-page {
-  background-color: #d2f0ff;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-family: "Albert Sans", sans-serif;
-  overflow: hidden;
+  background-color: #d2f0ff; /* Light blue background for a clean look */
+  min-height: 100vh; /* Ensures the page spans the full height of the viewport */
+  display: flex; /* Flexbox layout for easy alignment */
+  flex-direction: column; /* Stacks elements vertically */
+  font-family: "Albert Sans", sans-serif; /* Modern sans-serif font */
+  overflow: hidden; /* Prevents unwanted scrolling */
 }
 
 /* Navbar */
+/* Styling the navigation bar */
 .navbar {
-  background-color: #d2f0ff;
-  padding: 15px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  background-color: #d2f0ff; /* Matches page background for consistency */
+  padding: 15px 30px; /* Spacing around navbar content */
+  display: flex; /* Flexbox for horizontal alignment */
+  align-items: center; /* Vertically centers items */
+  justify-content: space-between; /* Spreads navbar sections to the edges */
 }
 
 .navbar-icon {
-  height: 50px;
-  margin-right: 5px;
+  height: 50px; /* Fixed height for the icon */
+  margin-right: 5px; /* Spacing to the right of the icon */
 }
 
 .navbar-text {
-  font-size: 35px;
-  font-weight: bold;
-  color: #1c3a63;
-  margin-right: auto;
+  font-size: 35px; /* Large font size for brand text */
+  font-weight: bold; /* Bold font for emphasis */
+  color: #1c3a63; /* Dark blue for readability */
+  margin-right: auto; /* Pushes text to the left */
 }
 
 .navbar-links a {
-  text-decoration: none;
-  color: #1c3a63;
-  margin: 0 15px;
-  font-size: 25px;
+  text-decoration: none; /* Removes underline from links */
+  color: #1c3a63; /* Matches dark blue theme */
+  margin: 0 15px; /* Spacing between links */
+  font-size: 25px; /* Medium font size for readability */
 }
 
 .navbar-links a:hover {
-  text-decoration: underline;
+  text-decoration: underline; /* Adds underline on hover for clarity */
 }
 
 .navbar-links .active-link {
-  text-decoration: underline;
-  font-weight: bold;
+  text-decoration: underline; /* Indicates the active link */
+  font-weight: bold; /* Highlights the active link */
 }
 
 /* Table Styles */
+/* Wrapper for the students' grades table */
 .students-table-wrapper {
-  padding: 20px;
-  margin: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px; /* Internal padding for spacing */
+  margin: 20px; /* External spacing from surrounding elements */
+  background-color: white; /* White background for a clean appearance */
+  border-radius: 8px; /* Rounded corners for modern look */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .students-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+  width: 100%; /* Full-width table */
+  border-collapse: collapse; /* Removes spacing between table cells */
+  margin-top: 20px; /* Spacing above the table */
 }
 
 .students-table th {
-  background-color: #1c3a63;
-  color: white;
-  text-align: left;
-  padding: 12px;
-  font-weight: 500;
+  background-color: #1c3a63; /* Dark blue background for table headers */
+  color: white; /* White text for contrast */
+  text-align: left; /* Aligns text to the left */
+  padding: 12px; /* Internal padding for readability */
+  font-weight: 500; /* Medium font weight for emphasis */
 }
 
 .students-table td {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
+  padding: 12px; /* Consistent padding for table cells */
+  border-bottom: 1px solid #ddd; /* Light gray border between rows */
 }
 
 .students-table tr:hover {
-  background-color: #f5f5f5;
+  background-color: #f5f5f5; /* Light gray background on hover */
 }
 
 /* Button Styles */
+/* Styling for edit buttons */
 .edit-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-right: 8px;
+  background-color: #4CAF50; /* Green background for edit button */
+  color: white; /* White text for contrast */
+  padding: 8px 16px; /* Internal padding for better click area */
+  border: none; /* Removes default border */
+  border-radius: 4px; /* Rounded corners for modern look */
+  cursor: pointer; /* Pointer cursor for interactivity */
+  margin-right: 8px; /* Adds spacing between buttons */
 }
 
 .edit-button:hover {
-  background-color: #45a049;
+  background-color: #45a049; /* Darker green on hover for feedback */
 }
 
+/* Styling for delete buttons */
 .delete-button {
-  background-color: #f44336;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  background-color: #f44336; /* Red background for delete button */
+  color: white; /* White text for contrast */
+  padding: 8px 16px; /* Internal padding for better click area */
+  border: none; /* Removes default border */
+  border-radius: 4px; /* Rounded corners for modern look */
+  cursor: pointer; /* Pointer cursor for interactivity */
 }
 
 .delete-button:hover {
-  background-color: #da190b;
+  background-color: #da190b; /* Darker red on hover for feedback */
 }
 
 /* Form Styles */
+/* Styling for the add or update grade form container */
 .add-student-section {
-  padding: 20px;
-  margin: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px; /* Internal padding for spacing */
+  margin: 20px; /* External spacing from surrounding elements */
+  background-color: white; /* White background for a clean appearance */
+  border-radius: 8px; /* Rounded corners for modern look */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .update-grade-form {
-  padding: 16px;
-  background-color: #f5f5f5;
-  border-radius: 4px;
-  margin: 8px 0;
+  padding: 16px; /* Internal padding for spacing */
+  background-color: #f5f5f5; /* Light gray background for form container */
+  border-radius: 4px; /* Rounded corners for modern look */
+  margin: 8px 0; /* Vertical spacing for form separation */
 }
 
 /* Message Styles */
+/* Styling for error messages */
 .error-message {
-  background-color: #ffebee;
-  color: #c62828;
-  padding: 12px;
-  margin: 20px;
-  border-radius: 4px;
-  border: 1px solid #ef9a9a;
+  background-color: #ffebee; /* Light red background for error message */
+  color: #c62828; /* Dark red text for visibility */
+  padding: 12px; /* Internal padding for spacing */
+  margin: 20px; /* External spacing from surrounding elements */
+  border-radius: 4px; /* Rounded corners for modern look */
+  border: 1px solid #ef9a9a; /* Light red border for structure */
 }
 
+/* Styling for warning messages */
 .warning-message {
-  background-color: #fff3e0;
-  color: #ef6c00;
-  padding: 12px;
-  margin: 20px;
-  border-radius: 4px;
-  border: 1px solid #ffcc80;
+  background-color: #fff3e0; /* Light orange background for warning message */
+  color: #ef6c00; /* Dark orange text for visibility */
+  padding: 12px; /* Internal padding for spacing */
+  margin: 20px; /* External spacing from surrounding elements */
+  border-radius: 4px; /* Rounded corners for modern look */
+  border: 1px solid #ffcc80; /* Light orange border for structure */
 }
