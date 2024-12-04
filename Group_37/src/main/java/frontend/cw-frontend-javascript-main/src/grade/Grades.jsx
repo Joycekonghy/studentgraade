@@ -22,7 +22,7 @@ function Grades() {
       console.log("Fetching grades...");
       const response = await axios.get(`${API_ENDPOINT}/grades`);
       const grades = response.data._embedded?.grades || [];
-      
+
       if (grades.length === 0) {
         setGrades([]);
         setStudents({});
@@ -31,7 +31,7 @@ function Grades() {
       }
 
       const studentUrls = [...new Set(grades.map((grade) => grade._links.student.href))];
-      
+
       const studentDetails = await Promise.all(
         studentUrls.map((url) =>
           axios.get(url).catch((err) => {
@@ -99,8 +99,10 @@ function Grades() {
   return (
     <div className="grades-page">
       <div className="navbar">
-        <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
-        <span className="navbar-text">MyGrades</span>
+        <div className="navbar-logo">
+          <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
+          <span className="navbar-text">MyGrades</span>
+        </div>
         <nav className="navbar-links">
           <Link to="/">Home</Link>
           <Link to="/students">Students</Link>

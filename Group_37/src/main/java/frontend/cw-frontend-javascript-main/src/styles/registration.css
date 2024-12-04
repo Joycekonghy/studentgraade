@@ -23,6 +23,11 @@
   margin-right: 5px;
 }
 
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
 .navbar-text {
   font-size: 35px;
   font-weight: bold;

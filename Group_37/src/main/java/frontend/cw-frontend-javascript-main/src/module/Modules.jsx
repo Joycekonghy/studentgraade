@@ -70,8 +70,10 @@ function Modules() {
   return (
     <div className="modules-page">
       <div className="navbar">
-        <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
-        <span className="navbar-text">MyGrades</span>
+        <div className="navbar-logo">
+          <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
+          <span className="navbar-text">MyGrades</span>
+        </div>
         <nav className="navbar-links">
           <Link to="/">Home</Link>
           <Link to="/students">Students</Link>
@@ -83,7 +85,7 @@ function Modules() {
       </div>
 
       <div className="add-student-section">
-        <AddModule 
+        <AddModule
           update={updateModules}
           moduleToEdit={moduleToEdit}
           clearEdit={clearEdit}
@@ -183,8 +185,8 @@ const ModuleRow = ({ module, registrationCount, updateModules, onEdit }) => {
         <button className="edit-button" onClick={onEdit}>
           Edit
         </button>
-        <button 
-          className="delete-button" 
+        <button
+          className="delete-button"
           onClick={handleDelete}
         >
           Delete

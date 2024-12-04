@@ -11,8 +11,10 @@ function Home() {
     <div className="home-page">
       {/* Navbar */}
       <div className="navbar">
-        <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
-        <span className="navbar-text">MyGrades</span>
+        <div className="navbar-logo">
+          <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
+          <span className="navbar-text">MyGrades</span>
+        </div>
         <nav className="navbar-links">
           <Link to="/" className="active-link">Home</Link>
           <Link to="/students">Students</Link>
