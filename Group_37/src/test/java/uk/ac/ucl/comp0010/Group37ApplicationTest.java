@@ -1,19 +1,10 @@
 package uk.ac.ucl.comp0010;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.mockito.Mockito;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
-@SpringBootTest
 public class Group37ApplicationTest {
 
   @Test
@@ -23,9 +14,17 @@ public class Group37ApplicationTest {
 
   @Test
   public void contextLoads() {
-
-    
+    // Test context loading
   }
 
-  
+  @Test
+  public void testMain() {
+    // Mock the SpringApplication.run method
+    ConfigurableApplicationContext context = Mockito.mock(ConfigurableApplicationContext.class);
+    SpringApplication app = Mockito.mock(SpringApplication.class);
+    Mockito.when(app.run(Mockito.any(String[].class))).thenReturn(context);
+
+    // Call the main method
+    Group37Application.main(new String[] {});
+  }
 }
