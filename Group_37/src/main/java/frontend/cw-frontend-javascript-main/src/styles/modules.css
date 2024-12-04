@@ -16,6 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .navbar-icon {
@@ -46,53 +47,140 @@
   font-weight: bold;
 }
 
-/* Table Styles */
-.students-table-wrapper {
-  padding: 20px;
-  margin: 20px;
-  background-color: white;
+/* Add Module Form Styles */
+.add-module-section {
+  padding: 20px 30px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1400px;
+  background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.students-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.students-table th {
-  background-color: #1c3a63;
-  color: white;
-  text-align: left;
-  padding: 12px;
+.add-module-section h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
   font-weight: 500;
 }
 
-.students-table td {
+.add-module-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-input {
+  width: 100%;
   padding: 12px;
-  border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
 }
 
-.students-table tr:hover {
-  background-color: #f5f5f5;
+.form-input:focus {
+  border-color: #1976d2;
+  outline: none;
 }
 
-/* Form Section */
-.add-student-section {
-  padding: 20px;
-  margin: 20px;
+.toggle-switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.add-button {
+  background-color: #1976d2;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.add-button:hover {
+  background-color: #1565c0;
+}
+
+/* Module Table Styles */
+.modules-table-wrapper {
+  padding: 0 30px;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 1450px;
+}
+
+.modules-table {
+  width: 100%;
+  border-collapse: collapse;
   background-color: white;
-  border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-/* Message Styles */
+.modules-table th {
+  background-color: #1c3a63;
+  color: white;
+  padding: 15px;
+  text-align: left;
+  font-weight: 500;
+}
+
+.modules-table td {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.modules-table tr:hover {
+  background-color: #f5f8ff;
+}
+
+/* Button Styles */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.delete-button {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.edit-button:hover {
+  background-color: #45a049;
+}
+
+.delete-button:hover {
+  background-color: #cc0000;
+}
+
+/* Messages */
 .error-message {
   background-color: #ffebee;
   color: #c62828;
-  padding: 12px;
-  margin: 20px;
+  padding: 10px;
+  margin-bottom: 20px;
   border-radius: 4px;
   border: 1px solid #ef9a9a;
 }
@@ -100,69 +188,8 @@
 .warning-message {
   background-color: #fff3e0;
   color: #ef6c00;
-  padding: 12px;
-  margin: 20px;
+  padding: 10px;
+  margin-bottom: 20px;
   border-radius: 4px;
-  border: 1px solid #ffcc80;
-}
-
-/* Button Styles */
-.edit-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-right: 8px;
-}
-
-.edit-button:hover {
-  background-color: #45a049;
-}
-
-.delete-button {
-  background-color: #f44336;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.delete-button:hover {
-  background-color: #da190b;
-}
-
-/* Form Input Styles */
-.form-input {
-  width: 100%;
-  padding: 8px;
-  margin: 8px 0;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: #1c3a63;
-  box-shadow: 0 0 5px rgba(28, 58, 99, 0.2);
-}
-
-/* Form Group */
-.form-group {
-  margin-bottom: 16px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  color: #1c3a63;
-  font-weight: 500;
-}
-
-/* Container Spacing */
-.content-container {
-  padding: 20px;
-  margin-top: 20px;
+  border: 1px solid #ffe0b2;
 }

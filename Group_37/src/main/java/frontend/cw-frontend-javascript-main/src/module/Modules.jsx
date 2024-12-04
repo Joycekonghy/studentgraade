@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -10,6 +9,7 @@ import "../styles/modules.css";
 function Modules() {
   const [modules, setModules] = useState([]);
   const [error, setError] = useState("");
+  const [editingModule, setEditingModule] = useState(null);
 
   useEffect(() => {
     updateModules();
@@ -28,6 +28,35 @@ function Modules() {
         const errorMessage = err.response?.data?.message || err.message || "Failed to fetch modules.";
         setError(errorMessage);
         console.error("Error fetching modules:", err);
+      });
+  };
+
+  const handleDelete = (code) => {
+    axios
+      .delete(`${API_ENDPOINT}/modules/${code}`)
+      .then(() => {
+        updateModules();
+      })
+      .catch((err) => {
+        const errorMessage = err.response?.data?.message || err.message || "Failed to delete module.";
+        setError(errorMessage);
+      });
+  };
+
+  const handleEdit = (module) => {
+    setEditingModule(module);
+  };
+
+  const handleSave = (code, updatedModule) => {
+    axios
+      .put(`${API_ENDPOINT}/modules/${code}`, updatedModule)
+      .then(() => {
+        setEditingModule(null);
+        updateModules();
+      })
+      .catch((err) => {
+        const errorMessage = err.response?.data?.message || err.message || "Failed to update module.";
+        setError(errorMessage);
       });
   };
 
@@ -58,7 +87,6 @@ function Modules() {
         {!error && modules.length < 1 && (
           <div className="warning-message">No modules available</div>
         )}
-
         {/* Render Modules Table */}
         <table className="students-table">
           <thead>
@@ -66,14 +94,54 @@ function Modules() {
               <th>Module Code</th>
               <th>Module Name</th>
               <th>Is MNC</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {modules.map((module) => (
               <tr key={module.code}>
                 <td>{module.code}</td>
-                <td>{module.name}</td>
+                <td>
+                  {editingModule?.code === module.code ? (
+                    <input
+                      type="text"
+                      className="form-input"
+                      defaultValue={module.name}
+                      onChange={(e) => {
+                        setEditingModule({
+                          ...editingModule,
+                          name: e.target.value,
+                        });
+                      }}
+                    />
+                  ) : (
+                    module.name
+                  )}
+                </td>
                 <td>{module.mnc ? "Yes" : "No"}</td>
+                <td className="action-buttons">
+                  {editingModule?.code === module.code ? (
+                    <button
+                      className="edit-button"
+                      onClick={() => handleSave(module.code, editingModule)}
+                    >
+                      Save
+                    </button>
+                  ) : (
+                    <button
+                      className="edit-button"
+                      onClick={() => handleEdit(module)}
+                    >
+                      Edit
+                    </button>
+                  )}
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDelete(module.code)}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

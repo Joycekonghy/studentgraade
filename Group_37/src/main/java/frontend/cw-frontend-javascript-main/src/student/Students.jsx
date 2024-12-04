@@ -44,11 +44,10 @@ function Students() {
   };
 
   return (
-    <div className="students-page">
-      {/* Navbar */}
+    <div className="registration-page">
       <div className="navbar">
         <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
-        <span className="navbar-text">Students</span>
+        <span className="navbar-text">MyGrades</span>
         <nav className="navbar-links">
           <Link to="/">Home</Link>
           <Link to="/students" className="active-link">Students</Link>

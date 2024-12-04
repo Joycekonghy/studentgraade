@@ -153,7 +153,7 @@
   align-self: flex-start;
   height: 40px;
   padding: 0 24px;
-  background-color: #3276b1;
+  background-color: #1976d2;
   color: white;
   border: none;
   border-radius: 4px;
@@ -163,6 +163,7 @@
   text-transform: uppercase;
   transition: background-color 0.2s ease;
   margin-top: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .register-button:hover {
