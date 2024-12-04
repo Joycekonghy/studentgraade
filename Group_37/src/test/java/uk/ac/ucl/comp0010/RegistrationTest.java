@@ -69,6 +69,19 @@ public class RegistrationTest {
   }
 
   @Test
+  public void testGetId() {
+    // Verify that the ID is null for a new registration object
+    assertNull(registration.getId(), "ID should be null before it's persisted in the database");
+  }
+
+  @Test
+  public void testSetId() {
+    // Test if setting the ID works correctly
+    registration.setId(1L);
+    assertEquals(1L, registration.getId(), "ID should be updated to the new value");
+  }
+
+  @Test
   public void testDefaultConstructor() {
     // Create a Registration object using the default constructor
     Registration newRegistration = new Registration();
