@@ -34,7 +34,9 @@ public class Grade {
     @JoinColumn(name = "module_id", nullable = false)
     private Module module;
 
-    public Grade() {}
+    public Grade() {
+      this.score = 0.0;
+    }
 
     /**
      * Creates a new grade with the given student, module, and score.

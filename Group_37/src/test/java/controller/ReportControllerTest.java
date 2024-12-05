@@ -7,8 +7,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletResponse;
-
-import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import uk.ac.ucl.comp0010.model.Grade;
 import uk.ac.ucl.comp0010.model.Module;
@@ -23,7 +21,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
@@ -57,11 +54,11 @@ class ReportControllerTest {
 
         Grade grade1 = new Grade();
         grade1.setModule(module1);
-        grade1.setScore(85);
+        grade1.setScore(85D);
 
         Grade grade2 = new Grade();
         grade2.setModule(module2);
-        grade2.setScore(90);
+        grade2.setScore(90D);
 
         List<Grade> grades = new ArrayList<>();
         grades.add(grade1);
@@ -145,7 +142,7 @@ class ReportControllerTest {
     for (int i = 0; i < 60; i++) { // Assume each page can hold around 40 rows
         Grade grade = new Grade();
         grade.setModule(module);
-        grade.setScore(75 + i % 5); // Some mock scores
+        grade.setScore((double)75 + i % 5); // Some mock scores
         grades.add(grade);
     }
 
@@ -186,7 +183,7 @@ class ReportControllerTest {
         Module module = new Module("Software Engineering", "COMP0010", true);
         Grade grade = new Grade();
         grade.setModule(module);
-        grade.setScore(85);
+        grade.setScore(85D);
 
         List<Grade> grades = new ArrayList<>();
         grades.add(grade);
@@ -220,7 +217,7 @@ class ReportControllerTest {
         Module module = new Module("Software Engineering", "COMP0010", true);
         Grade grade = new Grade();
         grade.setModule(module);
-        grade.setScore(85);
+        grade.setScore(85D);
     
         List<Grade> grades = new ArrayList<>();
         grades.add(grade);
