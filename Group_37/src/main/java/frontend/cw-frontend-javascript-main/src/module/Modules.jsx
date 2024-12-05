@@ -4,6 +4,7 @@ import axios from "axios";
 import AddModule from "./AddModule";
 import { API_ENDPOINT } from "../config";
 import graduateStudent from "../Icons/graduate_student.png";
+import { useTheme } from "../App";  // Импортируем хук из App.js
 import "../styles/modules.css";
 
 function Modules() {
@@ -11,6 +12,10 @@ function Modules() {
   const [registrationCounts, setRegistrationCounts] = useState({});
   const [error, setError] = useState("");
   const [moduleToEdit, setModuleToEdit] = useState(null);
+
+  const { isDarkMode, toggleTheme } = useTheme();  // Используем хук для темы
+  console.log('isDarkMode in Students:', isDarkMode);  // Логируем состояние темы
+
 
   useEffect(() => {
     updateModules();
@@ -68,7 +73,7 @@ function Modules() {
   };
 
   return (
-    <div className="modules-page">
+    <div className={`modules-page ${isDarkMode ? 'dark-mode' : ''}`}>
       <div className="navbar">
         <div className="navbar-logo">
           <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
@@ -81,10 +86,19 @@ function Modules() {
           <Link to="/registrations">Registrations</Link>
           <Link to="/grades">Grades</Link>
           <Link to="/advice">Advice</Link>
+
+          {/* Кнопка для переключения темы */}
+          <button className="theme-toggle-button" onClick={() => {
+            toggleTheme();
+            console.log('Theme toggled, isDarkMode now:', isDarkMode);
+          }}>
+            <span className={`sun-icon ${isDarkMode ? 'hidden' : ''}`}>🌞</span>
+            <span className={`moon-icon ${isDarkMode ? '' : 'hidden'}`}>🌑</span>
+          </button>
         </nav>
       </div>
 
-      <div className="add-student-section">
+      <div className={`add-student-section ${isDarkMode ? 'dark-mode' : ''}`}>
         <AddModule
           update={updateModules}
           moduleToEdit={moduleToEdit}
@@ -92,7 +106,7 @@ function Modules() {
         />
       </div>
 
-      <div className="students-table-wrapper">
+      <div className={`students-table-wrapper ${isDarkMode ? 'dark-mode' : ''}`}>
         {error && <div className="error-message">{error}</div>}
         {!error && modules.length === 0 ? (
           <div className="warning-message">No modules available</div>
@@ -128,7 +142,7 @@ function Modules() {
           )
         )}
       </div>
-    </div>
+    </div >
   );
 }
 
