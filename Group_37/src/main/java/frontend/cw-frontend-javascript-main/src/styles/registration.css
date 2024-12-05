@@ -9,6 +9,14 @@
   position: relative;
 }
 
+/* Добавляем для всей страницы темную тему */
+.registration-page.dark-mode {
+  background-color: #2c3e50;
+  /* Темный фон */
+  color: white;
+  /* Белый текст на темном фоне */
+}
+
 /* Navbar */
 .navbar {
   background-color: #d2f0ff;
@@ -98,12 +106,96 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Стили для светлой темы */
+.paper-light {
+  background-color: #f9f9f9;
+  /* Мягкий светлый фон */
+  color: #000;
+}
+
+/* Стили для темной темы */
+.paper-dark {
+  background-color: #121212 !important;
+  /* Устанавливаем фон */
+  border: none !important;
+  /* Убираем возможные белые рамки */
+  box-shadow: none !important;
+  /* Убираем тени */
+  color: #fff;
+  /* Текст белый */
+}
+
+.header-light {
+  color: #000;
+  /* Черный цвет для светлой темы */
+}
+
+.header-dark {
+  color: #fff;
+  /* Белый цвет для темной темы */
+}
+
+
+/* Button Styles */
+.button-light {
+  align-self: flex-start;
+  height: 40px;
+  padding: 0 24px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease;
+  margin-top: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.button-light:hover {
+  background-color: #2867a0;
+}
+
+.button-dark {
+  align-self: flex-start;
+  height: 40px;
+  padding: 0 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-top: 16px;
+  background-color: #6200ea;
+  /* Темная кнопка */
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.button-dark:hover {
+  background-color: #4a00c4;
+  /* Темнее при наведении */
+}
+
 /* Form Controls */
 .register-controls {
   display: flex;
   flex-direction: column;
   gap: 16px;
   margin-top: 20px;
+}
+
+.dark-theme .register-select {
+  background-color: #444444;
+  /* Фон для Select */
+  color: #ffffff;
+  /* Цвет текста */
+  border: 1px solid #666666;
+  /* Темная рамка */
+  border-radius: 4px;
 }
 
 .select-group {
@@ -119,6 +211,16 @@
 .register-select {
   width: 100% !important;
   height: 40px !important;
+}
+
+.register-select-dark {
+  background-color: #444444;
+  /* Фон для Select */
+  color: #ffffff;
+  /* Цвет текста */
+  border: 1px solid #666666;
+  /* Темная рамка */
+  border-radius: 4px;
 }
 
 /* Table Styles */

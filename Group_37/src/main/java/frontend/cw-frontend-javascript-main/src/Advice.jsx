@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import graduateStudent from "./Icons/graduate_student.png";
 import "./styles/advice.css";
+import { useTheme } from "./App";  // Импортируем хук из App.js
 
 function Advice() {
   const [open, setOpen] = useState(null);
+
+  const { isDarkMode, toggleTheme } = useTheme();
 
   const toggleOpen = (index) => {
     setOpen(open === index ? null : index);
@@ -179,7 +182,7 @@ function Advice() {
 
 
   return (
-    <div className="advice-page">
+    <div className={`advice-page ${isDarkMode ? 'dark-mode' : ''}`}>
       {/* Navbar */}
       <div className="navbar">
         <div className="navbar-logo">
@@ -193,6 +196,14 @@ function Advice() {
           <Link to="/registrations">Registrations</Link>
           <Link to="/grades">Grades</Link>
           <Link to="/advice" className="active-link">Advice</Link>
+
+          <button className="theme-toggle-button" onClick={() => {
+            toggleTheme();
+            console.log('Theme toggled, isDarkMode now:', isDarkMode);
+          }}>
+            <span className={`sun-icon ${isDarkMode ? 'hidden' : ''}`}>🌞</span>
+            <span className={`moon-icon ${isDarkMode ? '' : 'hidden'}`}>🌑</span>
+          </button>
         </nav>
       </div>
 

@@ -1,77 +1,72 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Paper, TextField, Button, Typography, Alert } from "@mui/material"; // Material UI components
+import { Paper, TextField, Button, Typography, Alert } from "@mui/material";
 import { API_ENDPOINT } from "../config";
+import { useTheme } from "../App";  // Импортируем хук из App.js
+import "../styles/students.css";
 
-function AddStudent({ update, studentToEdit, clearEdit }) {
-  // State to hold form data for the student
+function AddStudent({ update, studentToEdit, clearEdi }) {
   const [student, setStudent] = useState(studentToEdit || {});
-  // State to manage form errors
   const [error, setError] = useState(null);
 
+  const { isDarkMode, toggleTheme } = useTheme();  // Используем хук для темы
+  console.log('isDarkMode in AddStudents:', isDarkMode);  // Логируем состояние темы
+
+
   useEffect(() => {
-    // Update the form when `studentToEdit` changes
     if (studentToEdit) {
-      setStudent(studentToEdit); // Populate the form with the student's data if editing
+      setStudent(studentToEdit);
     } else {
-      setStudent({}); // Clear the form when adding a new student
+      setStudent({});
     }
   }, [studentToEdit]);
 
   const handleInputChange = (field, value) => {
-    // Update the corresponding field in the student object
     setStudent({ ...student, [field]: value });
-    setError(null); // Clear any existing error messages
+    setError(null);
   };
 
   const handleSubmit = () => {
-    // Validate that required fields are not empty
     if (!student.firstName || !student.lastName || !student.email) {
-      setError("All fields are required."); // Show an error message
+      setError("All fields are required.");
       return;
     }
 
     if (studentToEdit) {
-      // Update an existing student
       axios
         .patch(`${API_ENDPOINT}/students/${student.id}`, student)
         .then(() => {
-          update(); // Refresh the students list
-          clearEdit(); // Clear the form and editing state
+          update();
+          clearEdit();
         })
-        .catch((err) => {
-          // Handle errors from the API call
-          setError(err.response?.data?.error || "Failed to update student.");
-        });
+        .catch((err) => setError(err.response?.data?.error || "Failed to update student."));
     } else {
-      // Add a new student
       axios
         .post(`${API_ENDPOINT}/students`, student)
         .then(() => {
-          update(); // Refresh the students list
-          setStudent({}); // Reset the form
+          update();
+          setStudent({});
         })
-        .catch((err) => {
-          // Handle errors from the API call
-          setError(err.response?.data?.error || "Failed to add student.");
-        });
+        .catch((err) => setError(err.response?.data?.error || "Failed to add student."));
     }
   };
 
   return (
-    <Paper sx={{ padding: "30px" }}>
-      {/* Title changes based on whether adding or editing */}
-      <Typography variant="h5">
+    <Paper
+      className={`paper ${isDarkMode ? 'paper-dark' : 'paper-light'}`}
+    >
+      <Typography variant="h5"
+        className={isDarkMode ? "header-dark" : "header-light"}
+        sx={{ marginBottom: "16px" }}>
         {studentToEdit ? "Edit Student" : "Add Student"}
       </Typography>
-      <br />
-      {/* Form fields for student details */}
       <TextField
         label="Student ID"
         value={student.id || ""}
         onChange={(e) => handleInputChange("id", e.target.value)}
-        disabled={!!studentToEdit} // ID field is read-only when editing
+        disabled={!!studentToEdit}
         fullWidth
+        className={isDarkMode ? "input-dark" : "input-light"}
         sx={{ marginBottom: "16px" }}
       />
       <TextField
@@ -79,6 +74,7 @@ function AddStudent({ update, studentToEdit, clearEdit }) {
         value={student.username || ""}
         onChange={(e) => handleInputChange("username", e.target.value)}
         fullWidth
+        className={isDarkMode ? "input-dark" : "input-light"}
         sx={{ marginBottom: "16px" }}
       />
       <TextField
@@ -86,6 +82,7 @@ function AddStudent({ update, studentToEdit, clearEdit }) {
         value={student.email || ""}
         onChange={(e) => handleInputChange("email", e.target.value)}
         fullWidth
+        className={isDarkMode ? "input-dark" : "input-light"}
         sx={{ marginBottom: "16px" }}
       />
       <TextField
@@ -93,6 +90,7 @@ function AddStudent({ update, studentToEdit, clearEdit }) {
         value={student.firstName || ""}
         onChange={(e) => handleInputChange("firstName", e.target.value)}
         fullWidth
+        className={isDarkMode ? "input-dark" : "input-light"}
         sx={{ marginBottom: "16px" }}
       />
       <TextField
@@ -100,31 +98,29 @@ function AddStudent({ update, studentToEdit, clearEdit }) {
         value={student.lastName || ""}
         onChange={(e) => handleInputChange("lastName", e.target.value)}
         fullWidth
+        className={isDarkMode ? "input-dark" : "input-light"}
         sx={{ marginBottom: "16px" }}
       />
-      {/* Submit button to handle form submission */}
       <Button
         variant="contained"
         color="primary"
         onClick={handleSubmit}
-        sx={{ marginTop: "16px", marginRight: "16px" }}
+        className={isDarkMode ? "button-dark" : "button-light"}
       >
-        {studentToEdit ? "Edit Student" : "Add Student"} {/* Dynamic button label */}
+        {studentToEdit ? "Edit Student" : "Add Student"}
       </Button>
-      {/* Cancel button only shown when editing */}
       {studentToEdit && (
         <Button
           variant="outlined"
           color="secondary"
-          onClick={clearEdit} // Clear the editing state
-          sx={{ marginTop: "16px" }}
+          onClick={clearEdit}
+          className={isDarkMode ? "button-dark" : "button-light"}
         >
           Cancel
         </Button>
       )}
-      {/* Display error messages, if any */}
       {error && (
-        <Alert severity="error" sx={{ marginTop: "16px" }}>
+        <Alert severity="error" className={isDarkMode ? "alert-dark" : "alert-light"}>
           {error}
         </Alert>
       )}
@@ -133,3 +129,4 @@ function AddStudent({ update, studentToEdit, clearEdit }) {
 }
 
 export default AddStudent;
+

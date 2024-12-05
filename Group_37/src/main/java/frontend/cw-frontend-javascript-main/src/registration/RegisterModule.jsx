@@ -8,12 +8,18 @@ import {
   Alert,
 } from "@mui/material";
 import { API_ENDPOINT } from "../config";
+import { useTheme } from "../App";  // Импортируем хук из App.js
+import "../styles/registration.css";
 
 function RegisterModule(props) {
   const [registration, setRegistration] = useState({});
   const [students, setStudents] = useState([]);
   const [modules, setModules] = useState([]);
   const [error, setError] = useState("");
+
+  const { isDarkMode, toggleTheme } = useTheme();  // Используем хук для темы
+  console.log('isDarkMode in RegisterModule:', isDarkMode);  // Логируем состояние темы
+
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -56,20 +62,22 @@ function RegisterModule(props) {
       setError("");
       props.update(); // Update parent component
     } catch (err) {
-      const errorMessage = err.response?.data?.message || 
-                          err.response?.data?.error || 
-                          err.message || 
-                          "Failed to register module";
+      const errorMessage = err.response?.data?.message ||
+        err.response?.data?.error ||
+        err.message ||
+        "Failed to register module";
       setError(String(errorMessage));
       console.error("Error registering module:", err);
     }
   };
 
   return (
-    <Paper className="register-module-form-container">
-      <Typography variant="h5">Register module</Typography>
+    <Paper
+      className={`register-module-form-container ${isDarkMode ? 'paper-dark' : 'paper-light'}`}>
+      <Typography variant="h5" className={isDarkMode ? "header-dark" : "header-light"}
+        sx={{ marginBottom: "16px" }}>Register module</Typography>
       {error && <Alert severity="error" className="error-alert">{error}</Alert>}
-      
+
       <div className="register-controls">
         <div className="select-group">
           <div className="select-wrapper">
@@ -77,7 +85,7 @@ function RegisterModule(props) {
               value={registration.student_id ?? ""}
               onChange={(e) => setRegistration({ ...registration, student_id: e.target.value })}
               displayEmpty
-              className="register-select"
+              className={`register-select ${isDarkMode ? 'paper-dark' : 'paper-light'}`}
             >
               <MenuItem value="" disabled>
                 Select Student
@@ -109,7 +117,7 @@ function RegisterModule(props) {
           </div>
         </div>
 
-        <button className="register-button" onClick={handleRegisterModule}>
+        <button onClick={handleRegisterModule} className={isDarkMode ? "button-dark" : "button-light"}>
           REGISTER
         </button>
       </div>

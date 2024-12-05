@@ -1,14 +1,16 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTheme } from "./App";  // Импортируем хук из App.js
 import graduateBoy from "./Icons/graduate_boy.png";
 import graduateStudent from "./Icons/graduate_student.png";
 import "./styles/home.css";
 
 function Home() {
+  const { isDarkMode, toggleTheme } = useTheme();  // Используем хук для темы
   const navigate = useNavigate();
 
   return (
-    <div className="home-page">
+    <div className={`home-page ${isDarkMode ? "dark-mode" : ""}`}>
       {/* Navbar */}
       <div className="navbar">
         <div className="navbar-logo">
@@ -22,6 +24,12 @@ function Home() {
           <Link to="/registrations">Registrations</Link>
           <Link to="/grades">Grades</Link>
           <Link to="/advice">Advice</Link>
+
+          {/* Кнопка для переключения темы */}
+          <button className="theme-toggle-button" onClick={toggleTheme}>
+            <span className={`sun-icon ${isDarkMode ? 'hidden' : ''}`}>🌞</span>
+            <span className={`moon-icon ${isDarkMode ? '' : 'hidden'}`}>🌑</span>
+          </button>
         </nav>
       </div>
 
@@ -48,4 +56,3 @@ function Home() {
 }
 
 export default Home;
-

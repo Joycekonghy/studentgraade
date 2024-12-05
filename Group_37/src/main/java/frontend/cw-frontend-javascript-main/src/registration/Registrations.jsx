@@ -4,6 +4,7 @@ import axios from "axios";
 import RegisterModule from "./RegisterModule";
 import { API_ENDPOINT } from "../config";
 import graduateStudent from "../Icons/graduate_student.png";
+import { useTheme } from "../App";  // Импортируем хук из App.js
 import "../styles/registration.css";
 
 function Registrations() {
@@ -11,6 +12,10 @@ function Registrations() {
   const [error, setError] = useState("");
   const [expandedStudents, setExpandedStudents] = useState({});
   const [students, setStudents] = useState({});
+
+  const { isDarkMode, toggleTheme } = useTheme();  // Используем хук для темы
+  console.log('isDarkMode in Registrations:', isDarkMode);  // Логируем состояние темы
+
 
   useEffect(() => {
     updateRegistrations();
@@ -89,7 +94,7 @@ function Registrations() {
   };
 
   return (
-    <div className="registration-page">
+    <div className={`registration-page ${isDarkMode ? 'dark-mode' : ''}`}>
       <div className="navbar">
         <div className="navbar-logo">
           <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
@@ -102,14 +107,23 @@ function Registrations() {
           <Link to="/registrations" className="active-link">Registrations</Link>
           <Link to="/grades">Grades</Link>
           <Link to="/advice">Advice</Link>
+
+          {/* Кнопка для переключения темы */}
+          <button className="theme-toggle-button" onClick={() => {
+            toggleTheme();
+            console.log('Theme toggled, isDarkMode now:', isDarkMode);
+          }}>
+            <span className={`sun-icon ${isDarkMode ? 'hidden' : ''}`}>🌞</span>
+            <span className={`moon-icon ${isDarkMode ? '' : 'hidden'}`}>🌑</span>
+          </button>
         </nav>
       </div>
 
-      <div className="add-student-section">
+      <div className={`add-student-section ${isDarkMode ? 'dark-mode' : ''}`}>
         <RegisterModule update={updateRegistrations} />
       </div>
 
-      <div className="students-table-wrapper">
+      <div className={`students-table-wrapper ${isDarkMode ? 'dark-mode' : ''}`}>
         {error && <div className="error-message">{error}</div>}
         {!error && Object.keys(groupedRegistrations).length === 0 && (
           <div className="warning-message">No registrations available</div>
