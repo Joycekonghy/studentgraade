@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_ENDPOINT } from "../config";
 import graduateStudent from "../Icons/graduate_student.png";
 import AddStudent from "./AddStudent";
+import { useTheme } from "../App";  // Импортируем хук из App.js
+import "../styles/students.css";
 
 function Students() {
   const [students, setStudents] = useState([]);
   const [error, setError] = useState(null);
   const [expandedStudents, setExpandedStudents] = useState({});
   const [studentToEdit, setStudentToEdit] = useState(null);
+
+  const { isDarkMode, toggleTheme } = useTheme();  // Используем хук для темы
+  console.log('isDarkMode in Students:', isDarkMode);  // Логируем состояние темы
 
   useEffect(() => {
     updateStudents();
@@ -44,7 +49,7 @@ function Students() {
   };
 
   return (
-    <div className="registration-page">
+    <div className={`students-page ${isDarkMode ? 'dark-mode' : ''}`}>
       <div className="navbar">
         <div className="navbar-logo">
           <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
@@ -57,10 +62,19 @@ function Students() {
           <Link to="/registrations">Registrations</Link>
           <Link to="/grades">Grades</Link>
           <Link to="/advice">Advice</Link>
+
+          {/* Кнопка для переключения темы */}
+          <button className="theme-toggle-button" onClick={() => {
+            toggleTheme();
+            console.log('Theme toggled, isDarkMode now:', isDarkMode);
+          }}>
+            <span className={`sun-icon ${isDarkMode ? 'hidden' : ''}`}>🌞</span>
+            <span className={`moon-icon ${isDarkMode ? '' : 'hidden'}`}>🌑</span>
+          </button>
         </nav>
       </div>
 
-      <div className="add-student-section">
+      <div className={`add-student-section ${isDarkMode ? 'dark-mode' : ''}`}>
         <AddStudent
           update={updateStudents}
           studentToEdit={studentToEdit}
@@ -68,7 +82,7 @@ function Students() {
         />
       </div>
 
-      <div className="students-table-wrapper">
+      <div className={`students-table-wrapper ${isDarkMode ? 'dark-mode' : ''}`}>
         {error && <div className="error-message">{error}</div>}
         {!error && students.length === 0 ? (
           <div className="warning-message">No students available</div>
@@ -131,3 +145,4 @@ const StudentRow = ({ student, updateStudents, onEdit }) => {
 };
 
 export default Students;
+
