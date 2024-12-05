@@ -1,12 +1,12 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useTheme } from "./App";  // Импортируем хук из App.js
+import { useTheme } from "./App";
 import graduateBoy from "./Icons/graduate_boy.png";
 import graduateStudent from "./Icons/graduate_student.png";
 import "./styles/home.css";
 
 function Home() {
-  const { isDarkMode, toggleTheme } = useTheme();  // Используем хук для темы
+  const { isDarkMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   return (
@@ -25,7 +25,6 @@ function Home() {
           <Link to="/grades">Grades</Link>
           <Link to="/advice">Advice</Link>
 
-          {/* Кнопка для переключения темы */}
           <button className="theme-toggle-button" onClick={toggleTheme}>
             <span className={`sun-icon ${isDarkMode ? 'hidden' : ''}`}>🌞</span>
             <span className={`moon-icon ${isDarkMode ? '' : 'hidden'}`}>🌑</span>

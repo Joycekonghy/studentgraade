@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Paper, TextField, Button, Typography, Alert } from "@mui/material";
 import { API_ENDPOINT } from "../config";
-import { useTheme } from "../App";  // Импортируем хук из App.js
+import { useTheme } from "../App";
 import "../styles/students.css";
 
 function AddStudent({ update, studentToEdit, clearEdi }) {
   const [student, setStudent] = useState(studentToEdit || {});
   const [error, setError] = useState(null);
 
-  const { isDarkMode, toggleTheme } = useTheme();  // Используем хук для темы
-  console.log('isDarkMode in AddStudents:', isDarkMode);  // Логируем состояние темы
+  const { isDarkMode, toggleTheme } = useTheme();
+  console.log('isDarkMode in AddStudents:', isDarkMode);
 
 
   useEffect(() => {

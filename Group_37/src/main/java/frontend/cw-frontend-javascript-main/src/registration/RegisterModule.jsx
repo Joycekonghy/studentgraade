@@ -8,7 +8,7 @@ import {
   Alert,
 } from "@mui/material";
 import { API_ENDPOINT } from "../config";
-import { useTheme } from "../App";  // Импортируем хук из App.js
+import { useTheme } from "../App";
 import "../styles/registration.css";
 
 function RegisterModule(props) {
@@ -17,8 +17,8 @@ function RegisterModule(props) {
   const [modules, setModules] = useState([]);
   const [error, setError] = useState("");
 
-  const { isDarkMode, toggleTheme } = useTheme();  // Используем хук для темы
-  console.log('isDarkMode in RegisterModule:', isDarkMode);  // Логируем состояние темы
+  const { isDarkMode, toggleTheme } = useTheme();
+  console.log('isDarkMode in RegisterModule:', isDarkMode);
 
 
   React.useEffect(() => {
