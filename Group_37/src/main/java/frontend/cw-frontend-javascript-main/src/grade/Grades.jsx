@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import AddGrade from "./AddGrade";
 import UpdateGrade from "./UpdateGrade";
+import GenerateReport from "./GenerateReport";
 import { API_ENDPOINT } from "../config";
 import graduateStudent from "../Icons/graduate_student.png";
 import { useTheme } from "../App";
@@ -114,10 +115,7 @@ function Grades() {
           <Link to="/grades" className="active-link">Grades</Link>
           <Link to="/advice">Advice</Link>
 
-          <button className="theme-toggle-button" onClick={() => {
-            toggleTheme();
-            console.log('Theme toggled, isDarkMode now:', isDarkMode);
-          }}>
+          <button className="theme-toggle-button" onClick={toggleTheme}>
             <span className={`sun-icon ${isDarkMode ? 'hidden' : ''}`}>🌞</span>
             <span className={`moon-icon ${isDarkMode ? '' : 'hidden'}`}>🌑</span>
           </button>
@@ -163,6 +161,9 @@ function Grades() {
                     </span>
                   </div>
                 </div>
+                <div className="download-report">
+                  <GenerateReport studentId={studentId} />
+                </div>
               </div>
 
               {expandedStudents[studentId] && (
@@ -201,11 +202,17 @@ const GradeRow = ({ grade, updateGrades }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    if (grade._links.module) {
-      axios.get(grade._links.module.href)
-        .then(res => setModule(res.data))
-        .catch(err => console.error("Error fetching module:", err));
-    }
+    const fetchModule = async () => {
+      if (grade._links.module) {
+        try {
+          const res = await axios.get(grade._links.module.href);
+          setModule(res.data);
+        } catch (err) {
+          console.error("Error fetching module:", err);
+        }
+      }
+    };
+    fetchModule();
   }, [grade]);
 
   const handleDelete = async () => {
