@@ -27,29 +27,57 @@ function AddStudent({ update, studentToEdit, clearEdi }) {
   };
 
   const handleSubmit = () => {
-    if (!student.firstName || !student.lastName || !student.email) {
-      setError("All fields are required.");
+    // Validation checks
+    if (!student.id) {
+      setError("Student ID is required.");
       return;
     }
-
+    if (!student.firstName) {
+      setError("First name is required.");
+      return;
+    }
+    if (!student.lastName) {
+      setError("Last name is required.");
+      return;
+    }
+    if (!student.email) {
+      setError("Email is required.");
+      return;
+    }
+    if (!student.username) {
+      setError("Username is required.");
+      return;
+    }
+  
+    const handleError = (err) => {
+      if (err.response?.status === 409) {
+        setError("Student username or email already exists.");
+      } else {
+        setError(err.response?.data?.error || "Failed to add student.");
+      }
+    };
+  
     if (studentToEdit) {
+      // Update existing student
       axios
         .patch(`${API_ENDPOINT}/students/${student.id}`, student)
         .then(() => {
           update();
           clearEdit();
         })
-        .catch((err) => setError(err.response?.data?.error || "Failed to update student."));
+        .catch(handleError);
     } else {
+      // Add new student
       axios
         .post(`${API_ENDPOINT}/students`, student)
         .then(() => {
           update();
           setStudent({});
         })
-        .catch((err) => setError(err.response?.data?.error || "Failed to add student."));
+        .catch(handleError);
     }
   };
+  
 
   return (
     <Paper

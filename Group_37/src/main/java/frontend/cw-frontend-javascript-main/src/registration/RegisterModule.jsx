@@ -46,30 +46,45 @@ function RegisterModule(props) {
   }, []);
 
   const handleRegisterModule = async () => {
-    if (!registration.student_id || !registration.module_id) {
-      setError("Please select both a student and a module");
+    if (!registration.student_id) {
+      setError("Please select a student.");
       return;
     }
-
+    if (!registration.module_id) {
+      setError("Please select a module.");
+      return;
+    }
+  
+    const handleError = (err) => {
+      if (err.response?.status === 400) {
+        return "Module already registered for student.";
+      } else {
+        return err.response?.data?.error || "Failed to register module.";
+      }
+    };
+  
     try {
       const payload = {
         student_id: Number(registration.student_id),
         module_id: Number(registration.module_id),
       };
-
+  
       await axios.post(`${API_ENDPOINT}/registrations/registerModules`, payload);
-      setRegistration({});  // Clear the form
-      setError("");
+      setRegistration({}); // Clear the form
+      setError(""); // Clear any previous errors
       props.update(); // Update parent component
     } catch (err) {
-      const errorMessage = err.response?.data?.message ||
-        err.response?.data?.error ||
-        err.message ||
-        "Failed to register module";
-      setError(String(errorMessage));
-      console.error("Error registering module:", err);
+      if (err.response) {
+        // Extract the error message and set it
+        const errorMessage = handleError(err);
+        setError(errorMessage);
+      } else {
+        // Handle network or unexpected errors
+        setError("An unexpected error occurred. Please try again later.");
+      }
     }
   };
+  
 
   return (
     <Paper

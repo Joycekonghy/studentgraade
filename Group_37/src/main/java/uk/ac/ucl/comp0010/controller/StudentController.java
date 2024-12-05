@@ -81,7 +81,7 @@ public class StudentController {
             .body("A student with this id already exists.");
       }
       // Save only if no conflict
-      Student savedStudent = studentRepository.save(student);
+      studentRepository.save(student);
       return ResponseEntity.ok("student saved successfully");
     } catch (Exception e) {
       return ResponseEntity.status(500).body("An unexpected error occurred: " + e.getMessage());
