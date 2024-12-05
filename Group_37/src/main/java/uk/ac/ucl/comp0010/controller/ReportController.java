@@ -105,6 +105,7 @@ public class ReportController {
           verticalPos -= 20;
 
           contentStream.beginText();
+          contentStream.setFont(PDType1Font.HELVETICA, 12);
           contentStream.newLineAtOffset(50, verticalPos);
           contentStream.showText(grade.getModule().getName()); // Module Name
           contentStream.newLineAtOffset(200, 0); // Move to Module Code column
