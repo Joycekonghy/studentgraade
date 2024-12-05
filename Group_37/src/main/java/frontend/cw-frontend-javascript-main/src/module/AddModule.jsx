@@ -12,6 +12,7 @@ import {
 import { API_ENDPOINT } from "../config";
 import { useTheme } from "../App";
 import "../styles/modules.css";
+import { ReplyTwoTone } from "@mui/icons-material";
 
 function AddModule({ update, moduleToEdit, clearEdit }) {
   const [module, setModule] = useState(moduleToEdit || {});
@@ -34,33 +35,47 @@ function AddModule({ update, moduleToEdit, clearEdit }) {
   };
 
   const handleSubmit = () => {
-    if (!module.code || !module.name) {
-      setError("All fields are required.");
+    // Validate module code
+    if (!module.code) {
+      setError("Module code is required.");
       return;
     }
-
+  
+    // Validate module name
+    if (!module.name) {
+      setError("Module name is required.");
+      return;
+    }
+  
+    // Error handling function
+    const handleError = (err) => {
+      if (err.response?.status === 409) {
+        setError("Module code already exists.");
+      } else {
+        setError(err.response?.data?.error || "Failed to add module.");
+      }
+    };
+  
+    // Check if module is being edited or created
     if (moduleToEdit) {
       axios
         .patch(`${API_ENDPOINT}/modules/${module.id}`, module)
         .then(() => {
-          update();
-          clearEdit();
+          update(); // Call the update function
+          clearEdit(); // Clear the edit state
         })
-        .catch((err) => {
-          setError(err.response?.data?.error || "Failed to update module.");
-        });
+        .catch(handleError);
     } else {
       axios
         .post(`${API_ENDPOINT}/modules`, module)
         .then(() => {
-          update();
-          setModule({});
+          update(); // Call the update function
+          setModule({}); // Reset the module state
         })
-        .catch((err) => {
-          setError(err.response?.data?.error || "Failed to add module.");
-        });
+        .catch(handleError);
     }
   };
+  
 
   return (
     <Paper className={`paper ${isDarkMode ? 'paper-dark' : 'paper-light'}`}>
@@ -122,4 +137,4 @@ function AddModule({ update, moduleToEdit, clearEdit }) {
   );
 }
 
-export default AddModule;
+export default AddModule
