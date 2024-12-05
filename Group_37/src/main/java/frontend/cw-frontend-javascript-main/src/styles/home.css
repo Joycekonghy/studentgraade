@@ -26,18 +26,14 @@ body {
   /* Smooth transition for theme change */
 }
 
-/* Добавляем для всей страницы темную тему */
 .home-page.dark-mode {
   background-color: #2c3e50;
-  /* Темный фон */
   color: white;
-  /* Белый текст на темном фоне */
 }
 
 /* Theme Toggle Button */
 .theme-toggle-button {
   background-color: #1c3a63;
-  /* Темный фон */
   border: none;
   border-radius: 30px;
   width: 70px;
@@ -45,62 +41,45 @@ body {
   position: relative;
   cursor: pointer;
   overflow: hidden;
-  /* Убираем всё лишнее */
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease;
 }
 
-/* Солнце и Луна */
 .sun-icon,
 .moon-icon {
   font-size: 20px;
   position: absolute;
   top: 50%;
   transform-origin: center center;
-  /* Вращение из центра кнопки */
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
-/* Солнце: изначально слева */
 .sun-icon {
   left: 10px;
-  /* Левый край кнопки */
   transform: translateY(-50%) rotate(0deg);
-  /* Без вращения */
   opacity: 1;
-  /* Полностью видно */
 }
 
-/* Луна: изначально справа */
 .moon-icon {
   left: 40px;
-  /* Правый край кнопки */
   transform: translateY(-50%) rotate(-360deg);
-  /* Скрыто с вращением */
   opacity: 0;
-  /* Невидимо */
 }
 
-/* Темная тема */
 .home-page.dark-mode .theme-toggle-button {
   background-color: #f39c12;
-  /* Светлый фон */
 }
 
 .home-page.dark-mode .sun-icon {
   transform: translateY(-50%) rotate(360deg);
-  /* Вращается и исчезает */
   opacity: 0;
-  /* Скрывается */
 }
 
 .home-page.dark-mode .moon-icon {
   transform: translateY(-50%) rotate(0deg);
-  /* Вращается на место */
   opacity: 1;
-  /* Появляется */
 }
 
 
@@ -123,15 +102,12 @@ body {
 
 .home-page.dark-mode .navbar {
   background-color: #2c3e50;
-  /* Темная версия navbar */
 }
 
 .home-page.dark-mode .navbar-links a {
   color: white;
-  /* Белые ссылки в темной теме */
 }
 
-/* Добавление темных цветов для текста */
 .home-page.dark-mode .main-heading,
 .home-page.dark-mode .subtext {
   color: white;
@@ -143,10 +119,8 @@ body {
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Для картинок в темной теме, если нужно */
 .home-page.dark-mode .main-image {
   filter: brightness(0.7);
-  /* Уменьшаем яркость для темной темы */
 }
 
 .navbar-logo {
@@ -160,18 +134,13 @@ body {
   margin-right: 0;
 }
 
-/* Обычная тема */
 .navbar-logo img {
   filter: none;
-  /* Без изменений */
   transition: filter 0.3s ease;
-  /* Плавный переход */
 }
 
-/* Тёмная тема */
 .home-page.dark-mode .navbar-logo img {
   filter: brightness(0) invert(1) opacity(0.95);
-  /* Делает изображение белым */
 }
 
 .navbar .navbar-text {
@@ -189,10 +158,8 @@ body {
   display: inline-block;
 }
 
-/* Цвет текста в темной теме */
 .home-page.dark-mode .navbar-text {
   color: #ffffff;
-  /* Белый текст */
 }
 
 .navbar-links {
@@ -308,20 +275,14 @@ body {
   /* Subtle shadow for depth */
 }
 
-/* Эффекты при наведении */
 .cta-button:hover {
   background-color: #669bbc;
-  /* Светло-синий на hover для светлой темы */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  /* Глубокая тень на hover */
 }
 
-/* Эффекты на кнопке в темной теме */
 .dark-mode .cta-button:hover {
   background-color: #4a6883;
-  /* Светло-синий для темной темы на hover */
   box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
-  /* Легкая светлая тень на hover */
 }
 
 /* Image Section */

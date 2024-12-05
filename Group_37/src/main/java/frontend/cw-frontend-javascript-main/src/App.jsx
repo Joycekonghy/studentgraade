@@ -4,19 +4,17 @@ import Home from "./Home";
 import Grades from "./grade/Grades";
 import Modules from "./module/Modules";
 import Students from "./student/Students";
-import AddStudent from './student/AddStudent'; // Импортируем твой компонент
+import AddStudent from './student/AddStudent';
 import Registrations from "./registration/Registrations";
 import Advice from "./Advice";
 import "./styles/home.css";
 
-// Создаем контекст для темы
-export const ThemeContext = createContext();  // Экспортируем ThemeContext
+export const ThemeContext = createContext();
 
-// Создаем провайдер для темы
 const ThemeProvider = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem("isDarkMode");
-    return savedTheme ? JSON.parse(savedTheme) : false; // По умолчанию светлая тема
+    return savedTheme ? JSON.parse(savedTheme) : false;
   });
 
   const toggleTheme = () => {
@@ -34,14 +32,12 @@ const ThemeProvider = ({ children }) => {
   );
 };
 
-// Хук для использования темы
 export const useTheme = () => {
   return useContext(ThemeContext);
 };
 
 function App() {
   return (
-    // Оборачиваем все приложение в ThemeProvider
     <ThemeProvider>
       <Router>
         <AppWithTheme />
@@ -51,11 +47,11 @@ function App() {
 }
 
 function AppWithTheme() {
-  const { isDarkMode, toggleTheme } = useTheme(); // Получаем тему из контекста
+  const { isDarkMode, toggleTheme } = useTheme();
 
   return (
     <ThemeProvider>
-      <div className={isDarkMode ? "dark-mode" : ""}> {/* Применяем класс на весь App */}
+      <div className={isDarkMode ? "dark-mode" : ""}>
         <div className={`app-container ${isDarkMode ? 'dark-mode' : ''}`}>
           <Routes>
             <Route path="/" element={<Home />} />

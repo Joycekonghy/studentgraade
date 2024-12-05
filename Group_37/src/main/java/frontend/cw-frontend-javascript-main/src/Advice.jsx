@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import graduateStudent from "./Icons/graduate_student.png";
 import "./styles/advice.css";
-import { useTheme } from "./App";  // Импортируем хук из App.js
+import { useTheme } from "./App";
 
 function Advice() {
   const [open, setOpen] = useState(null);

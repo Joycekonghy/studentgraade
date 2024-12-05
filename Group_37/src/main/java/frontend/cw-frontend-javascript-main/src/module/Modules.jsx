@@ -4,7 +4,7 @@ import axios from "axios";
 import AddModule from "./AddModule";
 import { API_ENDPOINT } from "../config";
 import graduateStudent from "../Icons/graduate_student.png";
-import { useTheme } from "../App";  // Импортируем хук из App.js
+import { useTheme } from "../App";
 import "../styles/modules.css";
 
 function Modules() {
@@ -13,8 +13,8 @@ function Modules() {
   const [error, setError] = useState("");
   const [moduleToEdit, setModuleToEdit] = useState(null);
 
-  const { isDarkMode, toggleTheme } = useTheme();  // Используем хук для темы
-  console.log('isDarkMode in Students:', isDarkMode);  // Логируем состояние темы
+  const { isDarkMode, toggleTheme } = useTheme();
+  console.log('isDarkMode in Students:', isDarkMode);
 
 
   useEffect(() => {
@@ -87,7 +87,6 @@ function Modules() {
           <Link to="/grades">Grades</Link>
           <Link to="/advice">Advice</Link>
 
-          {/* Кнопка для переключения темы */}
           <button className="theme-toggle-button" onClick={() => {
             toggleTheme();
             console.log('Theme toggled, isDarkMode now:', isDarkMode);
