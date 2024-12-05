@@ -14,6 +14,9 @@ import {
 } from "@mui/material";
 import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
 import { API_ENDPOINT } from "../config";
+import { useTheme } from "../App";
+import "../styles/students.css";
+
 
 function CircularProgressWithLabel({ value }) {
   const getColor = (value) => {
@@ -52,7 +55,7 @@ function CircularProgressWithLabel({ value }) {
         <Typography
           variant="caption"
           component="div"
-          sx={{ 
+          sx={{
             fontWeight: 'bold',
             fontSize: '1rem',
             color: getColor(value)
@@ -73,6 +76,8 @@ function AddGrade(props) {
   const [components, setComponents] = useState([
     { name: '', score: '', weight: '' }
   ]);
+
+  const { isDarkMode, toggleTheme } = useTheme();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -140,7 +145,7 @@ function AddGrade(props) {
       return false;
     }
 
-    const allFilled = components.every(comp => 
+    const allFilled = components.every(comp =>
       comp.name && comp.score && comp.weight
     );
     if (!allFilled) {
@@ -148,7 +153,7 @@ function AddGrade(props) {
       return false;
     }
 
-    const validScores = components.every(comp => 
+    const validScores = components.every(comp =>
       Number(comp.score) >= 0 && Number(comp.score) <= 100
     );
     if (!validScores) {
@@ -193,31 +198,28 @@ function AddGrade(props) {
   const classification = getUKClassification(currentAverage);
 
   return (
-    <Paper sx={{ 
-      padding: "30px",
-      borderRadius: "12px",
-      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
-    }}>
+    <Paper className={`paper ${isDarkMode ? 'paper-dark' : 'paper-light'}`}>
       <Typography variant="h5" sx={{ mb: 3, color: '#1c3a63', fontWeight: 600 }}>
         Add Grade Components
       </Typography>
-      
+
       {error && <Alert severity="error" sx={{ mt: 2, mb: 3 }}>{error}</Alert>}
-      
-      <Box sx={{ 
+
+      <Box sx={{
         mb: 4,
         p: 3,
-        backgroundColor: '#f8f9fa',
+        backgroundColor: isDarkMode ? '#333' : '#f8f9fa',
         borderRadius: '8px',
-        border: '1px solid #e9ecef'
+        border: isDarkMode ? '1px solid #555' : '1px solid #e9ecef',
       }}>
         <Select
-          sx={{ 
-            minWidth: "300px", 
+          sx={{
+            minWidth: "300px",
             mr: 2,
-            backgroundColor: 'white',
+            backgroundColor: isDarkMode ? '#444' : 'white',
+            color: isDarkMode ? '#fff' : 'black',
             '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#e0e0e0'
+              borderColor: isDarkMode ? '#666' : '#e0e0e0'
             }
           }}
           value={grade.student_id ?? ""}
@@ -233,11 +235,12 @@ function AddGrade(props) {
         </Select>
 
         <Select
-          sx={{ 
+          sx={{
             minWidth: "300px",
-            backgroundColor: 'white',
+            backgroundColor: isDarkMode ? '#444' : 'white',
+            color: isDarkMode ? '#fff' : 'black',
             '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#e0e0e0'
+              borderColor: isDarkMode ? '#666' : '#e0e0e0'
             }
           }}
           value={grade.module_id ?? ""}
@@ -253,49 +256,65 @@ function AddGrade(props) {
         </Select>
       </Box>
 
-      <Box sx={{ mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-          <Typography variant="h6" sx={{ color: '#1c3a63' }}>
+      <Box sx={{
+        mb: 3,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: isDarkMode ? '#333' : '#fff',
+        padding: 2,
+        borderRadius: 2,
+        boxShadow: isDarkMode ? '0 4px 8px rgba(0, 0, 0, 0.3)' : 'none',
+      }}>
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 3,
+        }}>
+          <Typography variant="h6" sx={{ color: isDarkMode ? '#fff' : '#1c3a63' }}>
             Grade Components
           </Typography>
-          <Box sx={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
+          <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
-            gap: 1 
+            gap: 1
           }}>
             <CircularProgressWithLabel value={calculateTotalWeight()} />
-            <Typography variant="caption" sx={{ color: '#666' }}>
+            <Typography variant="caption" sx={{ color: isDarkMode ? '#bbb' : '#666' }}>
               Total Weight
             </Typography>
           </Box>
         </Box>
-        
-        <Box sx={{ 
-          display: 'flex', 
-          alignItems: 'center', 
+
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
           gap: 2,
-          backgroundColor: '#f8f9fa',
+          backgroundColor: isDarkMode ? '#333' : '#f8f9fa',
           padding: '8px 16px',
           borderRadius: '8px',
-          border: '1px solid #e9ecef'
+          border: isDarkMode ? '1px solid #444' : '1px solid #e9ecef',
         }}>
-          <Typography variant="body1" sx={{ fontWeight: 500 }}>
+          <Typography variant="body1" sx={{
+            fontWeight: 500,
+            color: isDarkMode ? '#fff' : '#000',
+          }}>
             Current Average: {currentAverage.toFixed(1)}%
           </Typography>
-          <Box sx={{ 
+          <Box sx={{
             py: 0.5,
             px: 1.5,
             borderRadius: '4px',
             fontWeight: 500,
             fontSize: '0.875rem',
-            backgroundColor: 
+            backgroundColor:
               classification === "First Class (1st)" ? '#4caf50' :
-              classification === "Upper Second Class (2:1)" ? '#2196F3' :
-              classification === "Lower Second Class (2:2)" ? '#FF9800' :
-              classification === "Third Class (3rd)" ? '#FF5722' : '#f44336',
+                classification === "Upper Second Class (2:1)" ? '#2196F3' :
+                  classification === "Lower Second Class (2:2)" ? '#FF9800' :
+                    classification === "Third Class (3rd)" ? '#FF5722' : '#f44336',
             color: 'white',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            boxShadow: isDarkMode ? '0 2px 4px rgba(255, 255, 255, 0.1)' : '0 2px 4px rgba(0, 0, 0, 0.1)',
           }}>
             {classification}
           </Box>
@@ -303,18 +322,18 @@ function AddGrade(props) {
       </Box>
 
       {components.map((component, index) => (
-        <Box key={index} sx={{ 
+        <Box key={index} sx={{
           display: 'flex',
           gap: 2,
           mb: 2,
           p: 2,
-          backgroundColor: '#f8f9fa',
+          backgroundColor: isDarkMode ? '#333' : '#f8f9fa',
           borderRadius: '8px',
-          border: '1px solid #e9ecef',
+          border: isDarkMode ? '1px solid #444' : '1px solid #e9ecef',
           transition: 'all 0.2s ease',
           '&:hover': {
-            backgroundColor: '#fff',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+            backgroundColor: isDarkMode ? '#444' : '#fff',
+            boxShadow: isDarkMode ? '0 2px 4px rgba(255, 255, 255, 0.1)' : '0 2px 4px rgba(0,0,0,0.05)',
             transform: 'translateY(-1px)'
           }
         }}>
@@ -322,7 +341,16 @@ function AddGrade(props) {
             label="Component Name"
             value={component.name}
             onChange={(e) => handleComponentChange(index, 'name', e.target.value)}
-            sx={{ flex: 2 }}
+            sx={{
+              flex: 2,
+              '& .MuiInputBase-root': {
+                backgroundColor: isDarkMode ? '#555' : '#fff',
+                color: isDarkMode ? '#fff' : '#000'
+              },
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: isDarkMode ? '#444' : '#e9ecef'
+              }
+            }}
             size="small"
           />
           <TextField
@@ -330,7 +358,16 @@ function AddGrade(props) {
             type="number"
             value={component.score}
             onChange={(e) => handleComponentChange(index, 'score', e.target.value)}
-            sx={{ flex: 1 }}
+            sx={{
+              flex: 1,
+              '& .MuiInputBase-root': {
+                backgroundColor: isDarkMode ? '#555' : '#fff',
+                color: isDarkMode ? '#fff' : '#000'
+              },
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: isDarkMode ? '#444' : '#e9ecef'
+              }
+            }}
             size="small"
           />
           <TextField
@@ -338,25 +375,42 @@ function AddGrade(props) {
             type="number"
             value={component.weight}
             onChange={(e) => handleComponentChange(index, 'weight', e.target.value)}
-            sx={{ flex: 1 }}
+            sx={{
+              flex: 1,
+              '& .MuiInputBase-root': {
+                backgroundColor: isDarkMode ? '#555' : '#fff',
+                color: isDarkMode ? '#fff' : '#000'
+              },
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: isDarkMode ? '#444' : '#e9ecef'
+              }
+            }}
             size="small"
           />
           {components.length > 1 && (
-            <IconButton 
+            <IconButton
               onClick={() => removeComponent(index)}
               color="error"
               size="small"
-              sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}
+              sx={{
+                opacity: 0.8,
+                '&:hover': { opacity: 1 },
+                color: isDarkMode ? '#ff6666' : '#f44336'
+              }}
             >
               <RemoveIcon />
             </IconButton>
           )}
           {index === components.length - 1 && calculateTotalWeight() < 100 && (
-            <IconButton 
+            <IconButton
               onClick={addComponent}
               color="primary"
               size="small"
-              sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}
+              sx={{
+                opacity: 0.8,
+                '&:hover': { opacity: 1 },
+                color: isDarkMode ? '#bb86fc' : '#2196F3'
+              }}
             >
               <AddIcon />
             </IconButton>
@@ -368,7 +422,7 @@ function AddGrade(props) {
         variant="contained"
         onClick={handleAddGrade}
         disabled={calculateTotalWeight() !== 100}
-        sx={{ 
+        sx={{
           mt: 3,
           backgroundColor: calculateTotalWeight() === 100 ? '#4caf50' : '#1976d2',
           '&:hover': {
