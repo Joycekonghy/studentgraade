@@ -15,7 +15,87 @@
   /* Prevents scrolling if content overflows */
   position: relative;
   /* Allows child elements to use absolute positioning */
+  transition: background-color 0.3s ease;
+  /* Smooth transition for theme change */
 }
+
+/* Добавляем для всей страницы темную тему */
+.students-page.dark-mode {
+  background-color: #2c3e50;
+  /* Темный фон */
+  color: white;
+  /* Белый текст на темном фоне */
+}
+
+/* Theme Toggle Button */
+.theme-toggle-button {
+  background-color: #1c3a63;
+  /* Темный фон */
+  border: none;
+  border-radius: 30px;
+  width: 70px;
+  height: 35px;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  /* Убираем всё лишнее */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+/* Солнце и Луна */
+.sun-icon,
+.moon-icon {
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  transform-origin: center center;
+  /* Вращение из центра кнопки */
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+/* Солнце: изначально слева */
+.sun-icon {
+  left: 10px;
+  /* Левый край кнопки */
+  transform: translateY(-50%) rotate(0deg);
+  /* Без вращения */
+  opacity: 1;
+  /* Полностью видно */
+}
+
+/* Луна: изначально справа */
+.moon-icon {
+  left: 40px;
+  /* Правый край кнопки */
+  transform: translateY(-50%) rotate(-360deg);
+  /* Скрыто с вращением */
+  opacity: 0;
+  /* Невидимо */
+}
+
+/* Темная тема */
+.dark-mode .theme-toggle-button {
+  background-color: #f39c12;
+  /* Светлый фон */
+}
+
+.dark-mode .sun-icon {
+  transform: translateY(-50%) rotate(360deg);
+  /* Вращается и исчезает */
+  opacity: 0;
+  /* Скрывается */
+}
+
+.dark-mode .moon-icon {
+  transform: translateY(-50%) rotate(0deg);
+  /* Вращается на место */
+  opacity: 1;
+  /* Появляется */
+}
+
 
 /* Navbar */
 /* Styling the navigation bar */
@@ -30,6 +110,24 @@
   /* Vertically centers items within the navbar */
   justify-content: space-between;
   /* Ensures space between navbar sections */
+  transition: background-color 0.3s ease;
+  /* Smooth transition for theme change */
+}
+
+.dark-mode .navbar {
+  background-color: #2c3e50;
+  /* Темная версия navbar */
+}
+
+.dark-mode .navbar-links a {
+  color: white;
+  /* Белые ссылки в темной теме */
+}
+
+/* Тёмная тема */
+.dark-mode .navbar-logo img {
+  filter: brightness(0) invert(1) opacity(0.95);
+  /* Делает изображение белым */
 }
 
 /* Styling the navbar icon (e.g., logo or image) */
@@ -55,6 +153,14 @@
   /* Deep blue color for contrast and visibility */
   margin-right: auto;
   /* Pushes the text to the left, separating it from links */
+  transition: color 0.3s ease;
+  /* Smooth transition for text color */
+}
+
+/* Цвет текста в темной теме */
+.dark-mode .navbar-text {
+  color: #ffffff;
+  /* Белый текст */
 }
 
 /* Styling the links in the navbar */
@@ -67,6 +173,14 @@
   /* Adds horizontal spacing between links */
   font-size: 25px;
   /* Sets a readable font size for links */
+  transition: color 0.3s ease;
+  /* Smooth transition for link color */
+}
+
+/* Dark theme links */
+.navbar-links a.dark-mode {
+  color: #ffffff;
+  /* White links in dark mode */
 }
 
 /* Hover effect for links in the navbar */
@@ -81,4 +195,236 @@
   /* Underline to indicate the active page */
   font-weight: bold;
   /* Makes the active link visually distinct */
+}
+
+/* Dark theme for active link */
+.navbar-links .active-link.dark-mode {
+  color: #f1f1f1;
+  /* Lighter color for active link in dark mode */
+}
+
+/* Темный режим для students-table-wrapper */
+.dark-mode .students-table-wrapper {
+  background-color: #121212;
+  /* Темный фон */
+  color: white;
+  /* Белый текст */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Темный режим для таблицы студентов */
+.dark-mode .students-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #121212;
+  /* Темный фон */
+  color: white;
+  /* Белый текст */
+}
+
+/* Заголовки таблицы */
+.dark-mode .students-table th {
+  background-color: #1e1e1e;
+  /* Немного светлее для выделения */
+  color: white;
+  /* Белый текст */
+  padding: 10px;
+  text-align: left;
+}
+
+/* Стили для ячеек таблицы */
+.dark-mode .students-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+  /* Темные границы */
+}
+
+/* Строки таблицы с чередующимися цветами фона */
+.dark-mode .students-table tr:nth-child(even) {
+  background-color: #2a2a2a;
+  /* Немного светлее для четных строк */
+}
+
+.dark-mode .students-table tr:nth-child(odd) {
+  background-color: #1f1f1f;
+  /* Немного темнее для нечетных строк */
+}
+
+/* Сообщение об ошибке и предупреждения */
+.dark-mode .error-message,
+.dark-mode .warning-message {
+  color: white;
+  background-color: #2a2a2a;
+  /* Красный цвет для ошибки */
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+/* Стили для светлой и темной темы */
+
+/* Темный режим для таблицы студентов */
+.dark-mode .add-student-section {
+  width: 95%;
+  border-collapse: collapse;
+  background-color: #121212;
+  /* Темный фон */
+  color: white;
+  /* Белый текст */
+}
+
+/* Общие стили */
+.paper {
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  /* Добавляет тень */
+  border: none;
+  /* Убирает рамку */
+  transition: all 0.3s ease-in-out;
+  /* Плавный переход для тем */
+}
+
+/* Стили для светлой темы */
+.paper-light {
+  background-color: #f9f9f9;
+  /* Мягкий светлый фон */
+  color: #000;
+}
+
+.input-light {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ddd;
+  /* Светлая граница */
+  border-radius: 5px;
+  /* Сглаженные края */
+}
+
+/* Стили для темной темы */
+.paper-dark {
+  background-color: #121212 !important;
+  /* Устанавливаем фон */
+  border: none !important;
+  /* Убираем возможные белые рамки */
+  box-shadow: none !important;
+  /* Убираем тени */
+  color: #fff;
+  /* Текст белый */
+}
+
+/* Дополнительные стили для внутренних элементов */
+.paper-dark .MuiInputBase-root {
+  background-color: #222 !important;
+  /* Темный фон для инпутов */
+  color: #fff !important;
+  /* Белый текст */
+}
+
+.paper-dark .MuiOutlinedInput-notchedOutline {
+  border-color: #555 !important;
+  /* Темная рамка для инпутов */
+}
+
+.paper-dark .MuiButton-containedPrimary {
+  background-color: #6200ea !important;
+  /* Темная кнопка */
+  color: #fff !important;
+}
+
+.header-light {
+  color: #000;
+  /* Черный цвет для светлой темы */
+}
+
+.header-dark {
+  color: #fff;
+  /* Белый цвет для темной темы */
+}
+
+.paper-dark .MuiTypography-root.header-dark {
+  color: #fff;
+  /* Белый текст для темной темы */
+}
+
+.paper-light .MuiTypography-root.header-light {
+  color: #000;
+  /* Черный текст для светлой темы */
+}
+
+.paper-dark .MuiFormLabel-root {
+  color: #bbb !important;
+  /* Более мягкий цвет для лейблов */
+}
+
+.input-dark {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+  /* Темная граница */
+  border-radius: 5px;
+}
+
+.button-light {
+  background-color: #1976d2;
+  /* Светлая кнопка */
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.button-light:hover {
+  background-color: #145ca4;
+  /* Темнее при наведении */
+}
+
+.button-dark {
+  background-color: #6200ea;
+  /* Темная кнопка */
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.button-dark:hover {
+  background-color: #4a00c4;
+  /* Темнее при наведении */
+}
+
+.cancel-button-light {
+  border: 1px solid #000;
+  color: #000;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.cancel-button-dark {
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.alert-light {
+  color: #000;
+  background-color: #fdecea;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.alert-dark {
+  color: #fff;
+  background-color: #3e2723;
+  border: 1px solid #5d4037;
+  padding: 10px;
+  border-radius: 5px;
 }
