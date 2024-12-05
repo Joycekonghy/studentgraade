@@ -107,6 +107,12 @@
     <version>4.0.0</version>
     <scope>test</scope>
 </dependency>
+            <!-- SLF4J API -->
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+    </dependency>
+
     </dependencies>
 
     <build>
