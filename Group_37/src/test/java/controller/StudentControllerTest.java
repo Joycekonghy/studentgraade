@@ -13,8 +13,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import uk.ac.ucl.comp0010.model.Registration;
 import uk.ac.ucl.comp0010.model.Student;
 import uk.ac.ucl.comp0010.repository.StudentRepository;
 import uk.ac.ucl.comp0010.controller.StudentController;

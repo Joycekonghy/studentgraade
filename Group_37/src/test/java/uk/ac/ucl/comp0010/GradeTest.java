@@ -28,7 +28,7 @@ public class GradeTest {
     assertNotNull(grade, "Grade object should be created");
     assertEquals(student, grade.getStudent(), "Student should match the provided student");
     assertEquals(module, grade.getModule(), "Module should match the provided module");
-    assertEquals(85, grade.getScore(), "Score should be equal to the provided score");
+    assertEquals(85.0, grade.getScore(), "Score should be equal to the provided score");
   }
 
   @Test
@@ -40,6 +40,10 @@ public class GradeTest {
 
     assertThrows(IllegalArgumentException.class, () -> {
       new Grade(student, module, 101.0); // Invalid score greater than 100
+    }, "Score must be between 0 and 100");
+
+    assertThrows(IllegalArgumentException.class, () -> {
+      new Grade(student, module, null); // Invalid null score
     }, "Score must be between 0 and 100");
   }
 
@@ -54,6 +58,10 @@ public class GradeTest {
 
     assertThrows(IllegalArgumentException.class, () -> {
       grade.setScore(105.0); // Invalid score greater than 100
+    }, "Score must be between 0 and 100");
+
+    assertThrows(IllegalArgumentException.class, () -> {
+      grade.setScore(null); // Invalid null score
     }, "Score must be between 0 and 100");
   }
 
