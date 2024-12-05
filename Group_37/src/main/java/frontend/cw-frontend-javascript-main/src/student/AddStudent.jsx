@@ -44,11 +44,18 @@ function AddStudent({ update, studentToEdit, clearEdit }) {
       setError("Email is required.");
       return;
     }
+    // Email validation regex
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(student.email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
     if (!student.username) {
       setError("Username is required.");
       return;
     }
-  
+
     const handleError = (err) => {
       if (err.response?.status === 409) {
         setError("Student username or email already exists.");
@@ -56,7 +63,7 @@ function AddStudent({ update, studentToEdit, clearEdit }) {
         setError(err.response?.data?.error || "Failed to add student.");
       }
     };
-  
+
     if (studentToEdit) {
       // Update existing student
       axios
@@ -77,7 +84,7 @@ function AddStudent({ update, studentToEdit, clearEdit }) {
         .catch(handleError);
     }
   };
-  
+
 
   return (
     <Paper
