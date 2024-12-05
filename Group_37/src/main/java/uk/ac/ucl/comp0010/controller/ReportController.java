@@ -83,7 +83,7 @@ public class ReportController {
         contentStream.showText("Id: " + student.getId());
         contentStream.endText();
 
-        verticalPos -= 2ç0;
+        verticalPos -= 20;
         // Add Grades Table Header
         verticalPos -= 50;
         contentStream.beginText();

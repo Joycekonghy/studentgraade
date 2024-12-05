@@ -79,7 +79,7 @@ public class ModuleController {
           .body("A module with this code already exists.");
     }
     // Save only if no conflict
-    Module savedModule = moduleRepository.save(module);
+    moduleRepository.save(module);
     return ResponseEntity.ok("module saved successfully");
   }
 }
