@@ -5,6 +5,7 @@ import AddGrade from "./AddGrade";
 import UpdateGrade from "./UpdateGrade";
 import { API_ENDPOINT } from "../config";
 import graduateStudent from "../Icons/graduate_student.png";
+import { useTheme } from "../App";
 import "../styles/grades.css";
 
 function Grades() {
@@ -12,6 +13,8 @@ function Grades() {
   const [error, setError] = useState("");
   const [expandedStudents, setExpandedStudents] = useState({});
   const [students, setStudents] = useState({});
+
+  const { isDarkMode, toggleTheme } = useTheme();
 
   useEffect(() => {
     updateGrades();
@@ -97,7 +100,7 @@ function Grades() {
   };
 
   return (
-    <div className="grades-page">
+    <div className={`grades-page ${isDarkMode ? 'dark-mode' : ''}`}>
       <div className="navbar">
         <div className="navbar-logo">
           <img src={graduateStudent} alt="Student Icon" className="navbar-icon" />
@@ -110,14 +113,22 @@ function Grades() {
           <Link to="/registrations">Registrations</Link>
           <Link to="/grades" className="active-link">Grades</Link>
           <Link to="/advice">Advice</Link>
+
+          <button className="theme-toggle-button" onClick={() => {
+            toggleTheme();
+            console.log('Theme toggled, isDarkMode now:', isDarkMode);
+          }}>
+            <span className={`sun-icon ${isDarkMode ? 'hidden' : ''}`}>🌞</span>
+            <span className={`moon-icon ${isDarkMode ? '' : 'hidden'}`}>🌑</span>
+          </button>
         </nav>
       </div>
 
-      <div className="add-student-section">
+      <div className={`add-student-section ${isDarkMode ? 'dark-mode' : ''}`}>
         <AddGrade update={updateGrades} />
       </div>
 
-      <div className="students-table-wrapper">
+      <div className={`students-table-wrapper ${isDarkMode ? 'dark-mode' : ''}`}>
         {error && <div className="error-message">{error}</div>}
         {!error && Object.keys(groupedGrades).length === 0 && (
           <div className="warning-message">No grades available</div>
@@ -126,11 +137,11 @@ function Grades() {
         {Object.entries(groupedGrades).map(([studentId, { student, grades: studentGrades }]) => {
           const average = calculateAverage(studentGrades);
           const classification = getUKClassification(average);
-          
+
           return (
             <div key={studentId} className="student-section">
-              <div 
-                className="student-header" 
+              <div
+                className="student-header"
                 onClick={() => toggleExpand(studentId)}
               >
                 <div className="header-content">
@@ -141,7 +152,7 @@ function Grades() {
                     <span className="average-grade">
                       Average: {average}%
                     </span>
-                    <span 
+                    <span
                       className="uk-classification"
                       data-classification={classification}
                     >
@@ -223,13 +234,13 @@ const GradeRow = ({ grade, updateGrades }) => {
         <td>{grade.score}</td>
         <td>
           <div className="action-buttons">
-            <button 
-              className="edit-button" 
+            <button
+              className="edit-button"
               onClick={() => setIsEditing(true)}
             >
               Update
             </button>
-            <button 
+            <button
               className="delete-button"
               onClick={confirmDelete}
             >
