@@ -10,10 +10,15 @@ import {
   Switch,
 } from "@mui/material";
 import { API_ENDPOINT } from "../config";
+import { useTheme } from "../App";  // Импортируем хук из App.js
+import "../styles/modules.css";
 
 function AddModule({ update, moduleToEdit, clearEdit }) {
   const [module, setModule] = useState(moduleToEdit || {});
   const [error, setError] = useState(null);
+
+  const { isDarkMode, toggleTheme } = useTheme();  // Используем хук для темы
+  console.log('isDarkMode in AddStudents:', isDarkMode);  // Логируем состояние темы
 
   useEffect(() => {
     if (moduleToEdit) {
@@ -58,8 +63,9 @@ function AddModule({ update, moduleToEdit, clearEdit }) {
   };
 
   return (
-    <Paper sx={{ padding: "30px" }}>
-      <Typography variant="h5">
+    <Paper className={`paper ${isDarkMode ? 'paper-dark' : 'paper-light'}`}>
+      <Typography className={isDarkMode ? "header-dark" : "header-light"}
+        sx={{ marginBottom: "16px" }}>
         {moduleToEdit ? "Edit Module" : "Add Module"}
       </Typography>
       <br />
@@ -68,6 +74,7 @@ function AddModule({ update, moduleToEdit, clearEdit }) {
         value={module.code || ""}
         onChange={(e) => handleInputChange("code", e.target.value)}
         fullWidth
+        className={isDarkMode ? "input-dark" : "input-light"}
         sx={{ marginBottom: "16px" }}
       />
       <TextField
@@ -75,9 +82,11 @@ function AddModule({ update, moduleToEdit, clearEdit }) {
         value={module.name || ""}
         onChange={(e) => handleInputChange("name", e.target.value)}
         fullWidth
+        className={isDarkMode ? "input-dark" : "input-light"}
         sx={{ marginBottom: "16px" }}
       />
       <FormControlLabel
+        className={isDarkMode ? "form-control-label-dark" : "form-control-label-light"}
         control={
           <Switch
             checked={module.mnc ?? false}
@@ -90,7 +99,7 @@ function AddModule({ update, moduleToEdit, clearEdit }) {
         variant="contained"
         color="primary"
         onClick={handleSubmit}
-        sx={{ marginTop: "16px", marginRight: "16px" }}
+        className={isDarkMode ? "button-dark" : "button-light"}
       >
         {moduleToEdit ? "Edit Module" : "Add Module"}
       </Button>
@@ -99,7 +108,7 @@ function AddModule({ update, moduleToEdit, clearEdit }) {
           variant="outlined"
           color="secondary"
           onClick={clearEdit}
-          sx={{ marginTop: "16px" }}
+          className={isDarkMode ? "button-dark" : "button-light"}
         >
           Cancel
         </Button>
