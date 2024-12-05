@@ -9,8 +9,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-
-
 /**
  * Represents a grade in the system.
  * <p>
@@ -20,77 +18,75 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "grade")
 public class Grade {
-    
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
 
-  @ManyToOne
-  @JoinColumn(name = "student_id", nullable = false)
-  private Student student;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  @Column(nullable = false)
-  private int score;
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
 
-  @ManyToOne
-  @JoinColumn(name = "module_id", nullable = false)
-  private Module module;
+    @Column(nullable = false)
+    private Double score; // Changed to Double to accommodate both integers and doubles.
 
-  public Grade() {}
-  
-  /**
-   * Creates a new grade with the given student, module, and score.
-   *
-   * @param student the student who received the grade
-   * @param module the module for which the grade was received
-   * @param score the score of the grade
-   */
+    @ManyToOne
+    @JoinColumn(name = "module_id", nullable = false)
+    private Module module;
 
-  public Grade(Student student, Module module, int score) {
-    validateScore(score);
-    this.student = student;
-    this.module = module;
-    this.score = score;
-  }
+    public Grade() {}
 
-  private void validateScore(int score) {
-    if (score < 0 || score > 100) {
-      throw new IllegalArgumentException("Score must be between 0 and 100");
+    /**
+     * Creates a new grade with the given student, module, and score.
+     *
+     * @param student the student who received the grade
+     * @param module  the module for which the grade was received
+     * @param score   the score of the grade
+     */
+    public Grade(Student student, Module module, Double score) {
+        validateScore(score);
+        this.student = student;
+        this.module = module;
+        this.score = score;
     }
-  }
-    
-  // Get/Setters
-  public Module getModule() {
-    return module;
-  }
 
-  public void setModule(Module module) {
-    this.module =  module;
-  }
+    private void validateScore(Double score) {
+        if (score == null || score < 0 || score > 100) {
+            throw new IllegalArgumentException("Score must be between 0 and 100");
+        }
+    }
 
-  public Student getStudent() {
-    return student;
-  }
+    // Getters and setters
+    public Module getModule() {
+        return module;
+    }
 
-  public void setStudent(Student student) {
-    this.student =  student;
-  }
+    public void setModule(Module module) {
+        this.module = module;
+    }
 
-  public int getScore() {
-    return score;
-  }
-  
-  public Long getId() {
-    return id;
-  }
-  
-  public void setId(Long id) {
-    this.id = id;
-  }
+    public Student getStudent() {
+        return student;
+    }
 
-  public void setScore(Integer score2) {
-    validateScore(score2);
-    this.score =  score2;
-  }
-    
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        validateScore(score);
+        this.score = score;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

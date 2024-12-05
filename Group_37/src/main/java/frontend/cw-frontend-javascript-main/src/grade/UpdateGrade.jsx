@@ -136,8 +136,7 @@ function UpdateGrade({ grade, onClose, onUpdate }) {
             type="number"
             value={component.score}
             onChange={(e) => handleComponentChange(index, 'score', e.target.value)}
-            inputProps={{ min: 0, max: 100 }}
-            sx={{ flex: 1 }}
+            inputProps={{ step: 0.01, min: 0, max: 100 }}
             size="small"
           />
           <TextField

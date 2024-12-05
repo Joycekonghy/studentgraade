@@ -31,8 +31,8 @@ public class StudentTest {
     module1 = new Module("Computer Science", "COMP001", false);
     module2 = new Module("Mathematics", "MATH001", false);
 
-    grade1 = new Grade(student, module1, 85);
-    grade2 = new Grade(student, module2, 95);
+    grade1 = new Grade(student, module1, 85.0);
+    grade2 = new Grade(student, module2, 95.0);
 
     student.addGrade(grade1);
     student.addGrade(grade2);

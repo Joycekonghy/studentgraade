@@ -19,23 +19,24 @@ import "../styles/students.css";
 
 
 function CircularProgressWithLabel({ value }) {
-  const getColor = (value) => {
+  // Ensure value doesn't exceed 100 for display
+  const displayValue = Math.min(value, 100);
+  
+  const getColor = () => {
+    if (value > 100) return '#f44336'; // Red for over 100
     if (value === 100) return '#4caf50';
-    if (value >= 75) return '#2196F3';
-    if (value >= 50) return '#FF9800';
-    if (value >= 25) return '#FF5722';
-    return '#f44336';
+    return '#1976d2'; // Primary blue for all other cases
   };
 
   return (
     <Box sx={{ position: 'relative', display: 'inline-flex' }}>
       <CircularProgress
         variant="determinate"
-        value={value}
+        value={displayValue}
         size={80}
         thickness={5}
         sx={{
-          color: getColor(value),
+          color: getColor(),
           backgroundColor: '#f5f5f5',
           borderRadius: '50%',
         }}
@@ -48,6 +49,7 @@ function CircularProgressWithLabel({ value }) {
           right: 0,
           position: 'absolute',
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
         }}
@@ -55,14 +57,26 @@ function CircularProgressWithLabel({ value }) {
         <Typography
           variant="caption"
           component="div"
-          sx={{
+          sx={{ 
             fontWeight: 'bold',
             fontSize: '1rem',
-            color: getColor(value)
+            color: getColor()
           }}
         >
           {`${value}%`}
         </Typography>
+        {value > 100 && (
+          <Typography
+            variant="caption"
+            sx={{ 
+              color: '#f44336',
+              fontSize: '0.7rem',
+              fontWeight: 'bold'
+            }}
+          >
+            Max 100%
+          </Typography>
+        )}
       </Box>
     </Box>
   );
@@ -123,8 +137,22 @@ function AddGrade(props) {
 
   const handleComponentChange = (index, field, value) => {
     const newComponents = [...components];
+    
+    if (field === 'weight') {
+      const newWeight = parseFloat(value) || 0;
+      const otherWeights = components
+        .filter((_, i) => i !== index)
+        .reduce((sum, comp) => sum + (parseFloat(comp.weight) || 0), 0);
+        
+      if (otherWeights + newWeight > 100) {
+        setError("Total weight cannot exceed 100%");
+        return;
+      }
+    }
+    
     newComponents[index][field] = value;
     setComponents(newComponents);
+    setError("");
   };
 
   const addComponent = () => {
@@ -358,6 +386,7 @@ function AddGrade(props) {
             type="number"
             value={component.score}
             onChange={(e) => handleComponentChange(index, 'score', e.target.value)}
+            inputProps={{ step: 0.01, min: 0, max: 100 }} // Allow decimal values
             sx={{
               flex: 1,
               '& .MuiInputBase-root': {

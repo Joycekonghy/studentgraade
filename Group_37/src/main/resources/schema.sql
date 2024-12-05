@@ -20,9 +20,9 @@ CREATE TABLE module (
 );
 
 
-CREATE TABLE grade(
+CREATE TABLE grade (
   id SERIAL PRIMARY KEY,
-  score INT,
+  score DOUBLE PRECISION, 
   student_id INT,
   module_id VARCHAR(10),
   FOREIGN KEY (student_id)
