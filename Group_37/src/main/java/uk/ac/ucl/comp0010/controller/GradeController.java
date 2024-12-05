@@ -68,34 +68,36 @@ public class GradeController {
  */
   @PostMapping("/addGrades")
   public ResponseEntity<String> addGrade(@RequestBody Map<String, Object> payload) {
-    // Extract data from the payload
-    long studentId = ((Number) payload.get("student_id")).longValue();
-    long moduleId = ((Number) payload.get("module_id")).longValue();
-    
-    Optional<Registration> existingRegistration = 
-                registrationRepository.findByStudentIdAndModuleId(studentId, moduleId);
-    if (!existingRegistration.isPresent()) {
-      return ResponseEntity.badRequest().body("Student is not registered for the module.");
-    }
+      // Extract data from the payload
+      long studentId = ((Number) payload.get("student_id")).longValue();
+      long moduleId = ((Number) payload.get("module_id")).longValue();
+      
+      Optional<Registration> existingRegistration = 
+                  registrationRepository.findByStudentIdAndModuleId(studentId, moduleId);
+      if (!existingRegistration.isPresent()) {
+          return ResponseEntity.badRequest().body("Student is not registered for the module.");
+      }
 
-    List<Grade> existingGrades = (List<Grade>) gradeRepository.findAll();
-    boolean gradeExists = existingGrades.stream()
-        .anyMatch(grade -> grade.getStudent().getId() == studentId
-                && grade.getModule().getId() == moduleId);
-    if (gradeExists) {
-      return ResponseEntity.badRequest().body("Grade already exists.");
-    }
-    // Save the new grade
-    Integer score = (Integer) payload.get("score");
-    Grade grade = new Grade();
-    Registration registration = existingRegistration.get();
-    grade.setStudent(registration.getStudent()); // Set the student entity
-    grade.setModule(registration.getModule());   // Set the module entity
-    grade.setScore(score);                   // Set the score
-    gradeRepository.save(grade);
-    return ResponseEntity.ok("Grade saved successfully");
+      List<Grade> existingGrades = (List<Grade>) gradeRepository.findAll();
+      boolean gradeExists = existingGrades.stream()
+          .anyMatch(grade -> grade.getStudent().getId() == studentId
+                  && grade.getModule().getId() == moduleId);
+      if (gradeExists) {
+          return ResponseEntity.badRequest().body("Grade already exists.");
+      }
+
+      // Save the new grade
+      Double score = ((Number) payload.get("score")).doubleValue(); // Accepting double values
+      Grade grade = new Grade();
+      Registration registration = existingRegistration.get();
+      grade.setStudent(registration.getStudent()); // Set the student entity
+      grade.setModule(registration.getModule());   // Set the module entity
+      grade.setScore(score);                       // Set the score
+      gradeRepository.save(grade);
+      return ResponseEntity.ok("Grade saved successfully");
   }
 }
+
 
 
 

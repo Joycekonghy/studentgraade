@@ -160,7 +160,7 @@ class GradeControllerTest {
         Grade newGrade = new Grade();
         newGrade.setStudent(mockRegistration.getStudent());
         newGrade.setModule(mockRegistration.getModule());
-        newGrade.setScore(85);
+        newGrade.setScore(85.0);
 
         when(gradeRepository.save(any(Grade.class))).thenReturn(newGrade);
 
@@ -190,7 +190,7 @@ class GradeControllerTest {
         module.setId(123L);
         Registration mockRegistration = new Registration(student, module);
 
-        Grade newGrades = new Grade(student, module, 85);
+        Grade newGrades = new Grade(student, module, 85.0);
         List<Grade> existingGrades = new ArrayList<>(); 
         existingGrades.add(newGrades);
 
@@ -200,7 +200,7 @@ class GradeControllerTest {
         Grade newGrade = new Grade();
         newGrade.setStudent(mockRegistration.getStudent());
         newGrade.setModule(mockRegistration.getModule());
-        newGrade.setScore(85);
+        newGrade.setScore(85.0);
 
         when(gradeRepository.save(any(Grade.class))).thenReturn(newGrade);
 
@@ -231,7 +231,7 @@ class GradeControllerTest {
         module.setId(moduleId);
         Registration mockRegistration = new Registration(student, module);
 
-        Grade newGrades = new Grade(student, module, 85);
+        Grade newGrades = new Grade(student, module, 85.0);
         List<Grade> existingGrades = new ArrayList<>(); 
         existingGrades.add(newGrades);
 
@@ -241,7 +241,7 @@ class GradeControllerTest {
         Grade newGrade = new Grade();
         newGrade.setStudent(mockRegistration.getStudent());
         newGrade.setModule(mockRegistration.getModule());
-        newGrade.setScore(85);
+        newGrade.setScore(85.0);
 
         when(gradeRepository.save(any(Grade.class))).thenReturn(newGrade);
 

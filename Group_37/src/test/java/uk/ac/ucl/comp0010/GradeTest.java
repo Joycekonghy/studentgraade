@@ -23,7 +23,7 @@ public class GradeTest {
 
   @Test
   public void testGradeConstructor() {
-    Grade grade = new Grade(student, module, 85);
+    Grade grade = new Grade(student, module, 85.0);
 
     assertNotNull(grade, "Grade object should be created");
     assertEquals(student, grade.getStudent(), "Student should match the provided student");
@@ -35,31 +35,31 @@ public class GradeTest {
   public void testInvalidScoreThrowsException() {
     // Test if an exception is thrown for invalid scores
     assertThrows(IllegalArgumentException.class, () -> {
-      new Grade(student, module, -1); // Invalid negative score
+      new Grade(student, module, -1.0); // Invalid negative score
     }, "Score must be between 0 and 100");
 
     assertThrows(IllegalArgumentException.class, () -> {
-      new Grade(student, module, 101); // Invalid score greater than 100
+      new Grade(student, module, 101.0); // Invalid score greater than 100
     }, "Score must be between 0 and 100");
   }
 
   @Test
   public void testSetScoreWithInvalidValue() {
-    Grade grade = new Grade(student, module, 85);
+    Grade grade = new Grade(student, module, 85.0);
 
     // Test if setting invalid scores throws an exception
     assertThrows(IllegalArgumentException.class, () -> {
-      grade.setScore(-5); // Invalid negative score
+      grade.setScore(-5.0); // Invalid negative score
     }, "Score must be between 0 and 100");
 
     assertThrows(IllegalArgumentException.class, () -> {
-      grade.setScore(105); // Invalid score greater than 100
+      grade.setScore(105.0); // Invalid score greater than 100
     }, "Score must be between 0 and 100");
   }
 
   @Test
   public void testSetModule() {
-    Grade grade = new Grade(student, module, 85);
+    Grade grade = new Grade(student, module, 85.0);
 
     // Create a new module
     Module newModule = new Module("Physics", "PHYS101", false);
@@ -73,7 +73,7 @@ public class GradeTest {
 
   @Test
   public void testSetStudent() {
-    Grade grade = new Grade(student, module, 85);
+    Grade grade = new Grade(student, module, 85.0);
 
     // Create a new student
     Student newStudent = new Student(2L, "Jane", "Doe", "janedoe", "janedoe@example.com");
@@ -87,16 +87,16 @@ public class GradeTest {
 
   @Test
   public void testSetScoreWithValidValue() {
-    Grade grade = new Grade(student, module, 85);
+    Grade grade = new Grade(student, module, 85.0);
 
     // Test if setting valid scores works correctly
-    grade.setScore(90);
+    grade.setScore(90.0);
     assertEquals(90, grade.getScore(), "Score should be updated to the valid value");
   }
 
   @Test
   public void testGetId() {
-    Grade grade = new Grade(student, module, 85);
+    Grade grade = new Grade(student, module, 85.0);
 
     // Test if ID is null for a new grade object
     assertNull(grade.getId(), "ID should be null before it's persisted in the database");
@@ -104,7 +104,7 @@ public class GradeTest {
 
   @Test
   public void testSetId() {
-    Grade grade = new Grade(student, module, 85);
+    Grade grade = new Grade(student, module, 85.0);
 
     // Test if setting the ID works correctly
     grade.setId(1L);
