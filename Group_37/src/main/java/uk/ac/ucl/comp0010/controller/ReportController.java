@@ -74,13 +74,16 @@ public class ReportController {
         // Add Student Information
         verticalPos -= 50;
         contentStream.beginText();
-        contentStream.setFont(PDType1Font.HELVETICA, 14);
+        contentStream.setFont(PDType1Font.HELVETICA, 8);
         contentStream.newLineAtOffset(50, verticalPos);
         contentStream.showText("Name: " + student.getFirstName() + " " + student.getLastName());
         contentStream.newLineAtOffset(0, -20);
         contentStream.showText("Email: " + student.getEmail());
+        contentStream.newLineAtOffset(0, -20);
+        contentStream.showText("Id: " + student.getId());
         contentStream.endText();
 
+        verticalPos -= 2ç0;
         // Add Grades Table Header
         verticalPos -= 50;
         contentStream.beginText();
