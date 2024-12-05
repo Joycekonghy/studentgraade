@@ -5,7 +5,7 @@ import { API_ENDPOINT } from "../config";
 import { useTheme } from "../App";
 import "../styles/students.css";
 
-function AddStudent({ update, studentToEdit, clearEdi }) {
+function AddStudent({ update, studentToEdit, clearEdit }) {
   const [student, setStudent] = useState(studentToEdit || {});
   const [error, setError] = useState(null);
 
