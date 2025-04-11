@@ -12,3 +12,4 @@ Do not run the frontend on a shared machine.
 - Run the command, `npm run dev`, in the frontend folder
 - Open your browser and access http://localhost:5173
 # studentgraade
+# studentgraade
