@@ -1,0 +1,368 @@
+/* Grades Page */
+.grades-page {
+  background-color: #d2f0ff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Albert Sans", sans-serif;
+  overflow: hidden;
+}
+
+.grades-page.dark-mode {
+  background-color: #2c3e50;
+  color: white;/
+}
+
+
+.paper {
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  border: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.paper-light {
+  background-color: #f9f9f9;
+  color: #000;
+}
+
+.paper-dark {
+  background-color: #121212 !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #fff;
+}
+
+.input-light {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.input-dark {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 5px;
+}
+
+.paper-dark .MuiInputBase-root {
+  background-color: #222 !important;
+  color: #fff !important;
+}
+
+.paper-dark .MuiOutlinedInput-notchedOutline {
+  border-color: #555 !important;
+}
+
+.paper-dark .MuiButton-containedPrimary {
+  background-color: #6200ea !important;
+  color: #fff !important;
+}
+
+.header-dark {
+  color: #fff;
+}
+
+.paper-dark .MuiTypography-root.header-dark {
+  color: #fff;
+}
+
+.paper-light .MuiTypography-root.header-light {
+  color: #000;
+}
+
+.paper-dark .MuiFormLabel-root {
+  color: #bbb !important;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #d2f0ff;
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-icon {
+  height: 50px;
+  margin-right: 5px;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-text {
+  font-size: 35px;
+  font-weight: bold;
+  color: #1c3a63;
+  margin-right: auto;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: #1c3a63;
+  margin: 0 15px;
+  font-size: 25px;
+}
+
+.navbar-links a:hover {
+  text-decoration: underline;
+}
+
+.navbar-links .active-link {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/* Student Section Styles */
+.student-section {
+  margin: 0 20px 16px 20px;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.student-header {
+  background: linear-gradient(135deg, #1c3a63 0%, #2c4a73 100%);
+  color: white;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.student-header:hover {
+  background: linear-gradient(135deg, #2c4a73 0%, #3c5a83 100%);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.student-info {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.grade-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.average-grade {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.uk-classification {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.uk-classification[data-classification="First Class (1st)"] {
+  background-color: rgba(76, 175, 80, 0.3);
+}
+
+.uk-classification[data-classification="Upper Second Class (2:1)"] {
+  background-color: rgba(33, 150, 243, 0.3);
+}
+
+.uk-classification[data-classification="Lower Second Class (2:2)"] {
+  background-color: rgba(255, 152, 0, 0.3);
+}
+
+.uk-classification[data-classification="Third Class (3rd)"] {
+  background-color: rgba(255, 87, 34, 0.3);
+}
+
+.uk-classification[data-classification="Fail"] {
+  background-color: rgba(244, 67, 54, 0.3);
+}
+
+.module-count {
+  font-size: 14px;
+  opacity: 0.9;
+  min-width: 80px;
+  text-align: right;
+}
+
+/* Table Styles */
+.students-table-wrapper {
+  padding: 0;
+  margin: 20px 0;
+  background-color: transparent;
+}
+
+.students-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0;
+}
+
+.students-table th {
+  background-color: #f5f5f5;
+  color: #1c3a63;
+  text-align: left;
+  padding: 12px;
+  font-weight: 600;
+  border-bottom: 2px solid #1c3a63;
+}
+
+.students-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.students-table td:last-child {
+  padding: 8px 12px;
+  width: 200px;
+}
+
+.students-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.edit-button:hover {
+  background-color: #45a049;
+  transform: translateY(-1px);
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.delete-button:hover {
+  background-color: #da190b;
+  transform: translateY(-1px);
+}
+
+/* Form Styles */
+.add-student-section {
+  padding: 20px;
+  margin: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.update-grade-form {
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #ddd;
+}
+
+/* Component Form Styles */
+.component-form {
+  margin-bottom: 16px;
+  padding: 12px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+  transition: all 0.2s ease;
+}
+
+.component-form:hover {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+
+/* Message Styles */
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 12px;
+  margin: 20px;
+  border-radius: 4px;
+  border: 1px solid #ef9a9a;
+}
+
+.warning-message {
+  background-color: #fff3e0;
+  color: #ef6c00;
+  padding: 12px;
+  margin: 20px;
+  border-radius: 4px;
+  border: 1px solid #ffcc80;
+}
+
+/* Student Modules Section */
+.student-modules {
+  padding: 16px;
+  background-color: white;
+}
+
+/* Hover and Animation Effects */
+.student-section {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.student-section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .grade-info {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .students-table td:last-child {
+    width: auto;
+  }
+}
