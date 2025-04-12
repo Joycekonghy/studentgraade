@@ -1,0 +1,354 @@
+/* General Styles */
+/* Styling the main container for the students page */
+.students-page {
+  background-color: #d2f0ff;
+  /* Light blue background for the entire page */
+  min-height: 100vh;
+  /* Ensures the page takes up the full viewport height */
+  display: flex;
+  /* Enables flexbox layout */
+  flex-direction: column;
+  /* Arranges elements vertically */
+  font-family: "Albert Sans", sans-serif;
+  /* Sets the font for the page */
+  overflow: hidden;
+  /* Prevents scrolling if content overflows */
+  position: relative;
+  /* Allows child elements to use absolute positioning */
+  transition: background-color 0.3s ease;
+  /* Smooth transition for theme change */
+}
+
+.students-page.dark-mode {
+  background-color: #2c3e50;
+  color: white;/
+}
+
+/* Theme Toggle Button */
+.theme-toggle-button {
+  background-color: #1c3a63;
+  border: none;
+  border-radius: 30px;
+  width: 70px;
+  height: 35px;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.sun-icon,
+.moon-icon {
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  transform-origin: center center;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.sun-icon {
+  left: 10px;
+  transform: translateY(-50%) rotate(0deg);
+  opacity: 1;
+}
+
+.moon-icon {
+  left: 40px;
+  transform: translateY(-50%) rotate(-360deg);
+  opacity: 0;
+}
+
+.dark-mode .theme-toggle-button {
+  background-color: #f39c12;
+}
+
+.dark-mode .sun-icon {
+  transform: translateY(-50%) rotate(360deg);
+  opacity: 0;
+}
+
+.dark-mode .moon-icon {
+  transform: translateY(-50%) rotate(0deg);
+  opacity: 1;
+}
+
+
+/* Navbar */
+/* Styling the navigation bar */
+.navbar {
+  background-color: #d2f0ff;
+  /* Matches the page background */
+  padding: 15px 30px;
+  /* Adds spacing around the navbar content */
+  display: flex;
+  /* Flexbox for horizontal alignment of items */
+  align-items: center;
+  /* Vertically centers items within the navbar */
+  justify-content: space-between;
+  /* Ensures space between navbar sections */
+  transition: background-color 0.3s ease;
+  /* Smooth transition for theme change */
+}
+
+.dark-mode .navbar {
+  background-color: #2c3e50;
+}
+
+.dark-mode .navbar-links a {
+  color: white;
+}
+
+.dark-mode .navbar-logo img {
+  filter: brightness(0) invert(1) opacity(0.95);
+}
+
+/* Styling the navbar icon (e.g., logo or image) */
+.navbar-icon {
+  height: 50px;
+  /* Sets a fixed height for the icon */
+  margin-right: 5px;
+  /* Adds space to the right of the icon */
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+/* Styling the main text in the navbar */
+.navbar-text {
+  font-size: 35px;
+  /* Larger font size for prominence */
+  font-weight: bold;
+  /* Makes the text bold */
+  color: #1c3a63;
+  /* Deep blue color for contrast and visibility */
+  margin-right: auto;
+  /* Pushes the text to the left, separating it from links */
+  transition: color 0.3s ease;
+  /* Smooth transition for text color */
+}
+
+.dark-mode .navbar-text {
+  color: #ffffff;
+}
+
+/* Styling the links in the navbar */
+.navbar-links a {
+  text-decoration: none;
+  /* Removes underlines from links */
+  color: #1c3a63;
+  /* Matches the deep blue theme */
+  margin: 0 15px;
+  /* Adds horizontal spacing between links */
+  font-size: 25px;
+  /* Sets a readable font size for links */
+  transition: color 0.3s ease;
+  /* Smooth transition for link color */
+}
+
+/* Dark theme links */
+.navbar-links a.dark-mode {
+  color: #ffffff;
+  /* White links in dark mode */
+}
+
+/* Hover effect for links in the navbar */
+.navbar-links a:hover {
+  text-decoration: underline;
+  /* Adds underline on hover for emphasis */
+}
+
+/* Styling the active link in the navbar */
+.navbar-links .active-link {
+  text-decoration: underline;
+  /* Underline to indicate the active page */
+  font-weight: bold;
+  /* Makes the active link visually distinct */
+}
+
+/* Dark theme for active link */
+.navbar-links .active-link.dark-mode {
+  color: #f1f1f1;
+  /* Lighter color for active link in dark mode */
+}
+
+.dark-mode .students-table-wrapper {
+  background-color: #121212;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.dark-mode .students-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #121212;
+  color: white;
+}
+
+.dark-mode .students-table th {
+  background-color: #1e1e1e;
+  color: white;
+  padding: 10px;
+  text-align: left;
+}
+
+.dark-mode .students-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+}
+
+.dark-mode .students-table tr:nth-child(even) {
+  background-color: #2a2a2a;
+}
+
+.dark-mode .students-table tr:nth-child(odd) {
+  background-color: #1f1f1f;
+}
+
+.dark-mode .error-message,
+.dark-mode .warning-message {
+  color: white;
+  background-color: #2a2a2a;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+.dark-mode .add-student-section {
+  width: 95%;
+  border-collapse: collapse;
+  background-color: #121212;
+  color: white;
+}
+
+.paper {
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  border: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.paper-light {
+  background-color: #f9f9f9;
+  color: #000;
+}
+
+.input-light {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.paper-dark {
+  background-color: #121212 !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #fff;
+}
+
+.paper-dark .MuiInputBase-root {
+  background-color: #222 !important;
+  color: #fff !important;
+}
+
+.paper-dark .MuiOutlinedInput-notchedOutline {
+  border-color: #555 !important;
+}
+
+.paper-dark .MuiButton-containedPrimary {
+  background-color: #6200ea !important;
+  color: #fff !important;
+}
+
+.header-light {
+  color: #000;
+}
+
+.header-dark {
+  color: #fff;
+}
+
+.paper-dark .MuiTypography-root.header-dark {
+  color: #fff;
+}
+
+.paper-light .MuiTypography-root.header-light {
+  color: #000;
+}
+
+.paper-dark .MuiFormLabel-root {
+  color: #bbb !important;
+}
+
+.input-dark {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 5px;
+}
+
+.button-light {
+  background-color: #1976d2;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.button-light:hover {
+  background-color: #145ca4;
+}
+
+.button-dark {
+  background-color: #6200ea;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.button-dark:hover {
+  background-color: #4a00c4;
+}
+
+.cancel-button-light {
+  border: 1px solid #000;
+  color: #000;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.cancel-button-dark {
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.alert-light {
+  color: #000;
+  background-color: #fdecea;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.alert-dark {
+  color: #fff;
+  background-color: #3e2723;
+  border: 1px solid #5d4037;
+  padding: 10px;
+  border-radius: 5px;
+}
